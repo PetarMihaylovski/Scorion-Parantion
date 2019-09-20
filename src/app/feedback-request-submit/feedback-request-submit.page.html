@@ -1,5 +1,5 @@
 <ion-header >
-  <ion-toolbar class="headerColor">
+  <ion-toolbar class="header-color">
     <ion-title>Feedback request: </ion-title>
     <ion-text>
       Proffesor name <!-- to be made dynamic --> 
@@ -10,8 +10,22 @@
 
 <ion-content>
 <div>
-  <ion-input type="text" placeholder = "Some kind of input, i dunno?"></ion-input>
+  <ion-item class="context">
+    <ion-label>Choose the context</ion-label>
+    <ion-select interface="popover">
+      <ion-select-option value="context1">context1</ion-select-option>
+      <ion-select-option value="context2">context2</ion-select-option>
+      <ion-select-option value="context3">context3</ion-select-option>
+      <!-- add context in here -->
+    </ion-select>
+  </ion-item>
+
+  <ion-item class = "remarks">
+    <ion-label position="stacked">Remarks on topic</ion-label>
+    <ion-textarea></ion-textarea>
+  </ion-item>
 </div>
+
 <div>
     <button ion-button icon-start>
         <ion-icon name="attach"></ion-icon>
