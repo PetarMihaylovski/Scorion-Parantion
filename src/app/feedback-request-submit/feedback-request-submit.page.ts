@@ -12,4 +12,7 @@ export class FeedbackRequestSubmitPage implements OnInit {
   ngOnInit() {
   }
 
+  alert() {
+    window.alert(`i work`);
+  }
 }

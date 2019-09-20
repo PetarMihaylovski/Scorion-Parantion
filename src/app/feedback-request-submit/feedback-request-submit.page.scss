@@ -16,6 +16,8 @@ ion-icon{
     border-color: #3d3d3d;
     border-radius: 25px;
     border-width: thin;
+    width: 75%;
+    margin: auto;
 }
 
 .remarks ion-label{
@@ -25,4 +27,38 @@ ion-icon{
 .remarks ion-textarea{
     padding: 0 0 5em 0;
     font-size: 1em;
+}
+
+.centrally-aligned {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.attachment{
+    margin:2em 2em;
+}
+.attachment button{
+    background-color: transparent;
+
+}
+ 
+.active{
+    --background: #e36307;
+}
+
+.inactive{
+    --background: #3d3d3d;   
+}
+
+.bottom-menu{
+    margin-top: 28%;
+    margin-bottom: 0%;
+    bottom: 0;
+    width: 75%;
+}
+
+.bottom-menu ion-row{
+    border-radius: 25px;
+    background-color: #3d3d3d;
 }

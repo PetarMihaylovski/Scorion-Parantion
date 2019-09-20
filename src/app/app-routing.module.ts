@@ -7,7 +7,7 @@ const routes: Routes = [
     //loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
     loadChildren: () => import('./feedback-request-submit/feedback-request-submit.module').then(m => m.FeedbackRequestSubmitPageModule)
   }//,
-  //{ path: 'feedback-request-submit', loadChildren: './feedback-request-submit/feedback-request-submit.module#FeedbackRequestSubmitPageModule' }
+  // { path: 'feedback-request-submit', loadChildren: './feedback-request-submit/feedback-request-submit.module#FeedbackRequestSubmitPageModule' }
 ];
 @NgModule({
   imports: [
