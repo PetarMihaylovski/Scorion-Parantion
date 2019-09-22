@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar class="home">
+    <ion-icon name="person" slot="start"></ion-icon>
+    <ion-title>Student</ion-title>
+    <ion-buttons slot="end">
+      <ion-button><ion-icon name="menu"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-list-header class="latest-feedback">Latest Feedback</ion-list-header>
+    <ion-item>
+        <ion-avatar slot="start">
+            <ion-icon color="medium" name="person"></ion-icon>
+          </ion-avatar>
+      <ion-label>
+        <h2>Sender name</h2>
+        <h3>Feedback title</h3>
+        <p>This is a placeholder!</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="md-mic"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
