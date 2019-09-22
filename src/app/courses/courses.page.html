@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar class="headerColor">
+    <ion-icon name="school" slot="start"></ion-icon>
+      <ion-title>
+          Courses
+      </ion-title>
+    <ion-icon name="menu" slot="end"></ion-icon>
+  </ion-toolbar>    
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Software engineering</ion-label>
+      <ion-icon name="arrow-dropright" slot="end" class="iconColor"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>Management</ion-label>
+      <ion-icon name="arrow-dropright" slot="end" class="iconColor"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>Web tech</ion-label>
+      <ion-icon name="arrow-dropdown" slot="end" class="iconColor"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>your lecturer</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>[your lecturer]</ion-label>
+          <ion-icon name="arrow-dropdown" slot="end" class="iconColor"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>other lecturer</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>[other lecturer]</ion-label>
+          <ion-icon name="arrow-dropdown" slot="end" class="iconColor"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  
+
+  <!-- https://codepen.io/shengoo/pen/bNbvdO/
+  js still needs to be implemented.
+uncomment when done-->
+  <!-- <ion-list>
+      <div ng-repeat="group in groups">
+        <ion-item class="item-stable"
+                  ng-click="toggleGroup(group)"
+                  ng-class="{active: isGroupShown(group)}">
+            <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
+          &nbsp;
+          Group {{group.name}}
+        </ion-item>
+        <ion-item class="item-accordion"
+                  ng-repeat="item in group.items"
+                  ng-show="isGroupShown(group)">
+          {{item}}
+        </ion-item>
+      </div>
+    </ion-list> -->
+
+</ion-content>
