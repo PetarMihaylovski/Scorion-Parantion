@@ -14,11 +14,7 @@ export class LecturerFeedbackGivenPage implements OnInit {
     this.feedbacksGiven = [
       'Feedback 1',
       'Feedback 2',
-      'Feedback 3',
-      'Feedback 4',
-      'Feedback 5',
-      'Feedback 6',
-      'Feedback 7'
+      'Feedback 3'
     ];
   }
 
