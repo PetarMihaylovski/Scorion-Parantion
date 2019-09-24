@@ -1,0 +1,73 @@
+<ion-header>
+    <ion-toolbar class="home">
+      <ion-icon name="school" slot="start"></ion-icon>
+      <ion-title>Lecturer</ion-title>
+      <ion-buttons slot="end">
+        <ion-button><ion-icon name="menu"></ion-icon></ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item class="list-option">
+        <ion-label> Classes </ion-label>
+        <ion-icon name="arrow-dropright" slot="end"></ion-icon>
+      </ion-item>
+      <ion-item class="list-option">
+          <ion-label> Feedback Given  </ion-label>
+          <ion-icon name="arrow-dropright" slot="end"></ion-icon>
+        </ion-item>
+    </ion-list>
+  <ion-title class="latest-feedback">Latest Requested Feedback</ion-title>
+  <ion-list class="feedback">
+    <ion-item>
+        <ion-label> Request 1 </ion-label>
+    </ion-item>
+
+    <ion-item>
+        <ion-label> Request 2 </ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label> Request 3 </ion-label>
+    </ion-item>
+  </ion-list>
+  
+  </ion-content>
+
+.ios,
+.md,
+.wp {
+    .home {
+        --background: #e36307;
+        color: #f2f2f2;
+    }
+
+    ion-icon {
+        font-size: 3rem;
+    }
+
+    ion-title {
+        font-size: 3rem;
+    }
+
+    .latest-feedback {
+        font-size: 1rem;
+        color: #7b7b7b;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .list-option {
+        --background: #f2f2f2;
+        color: #3d3d3d;
+    }
+
+    ion-label {
+        text-align: center;
+        font-size: 2rem;
+    }
+}
+
+ion-list {
+    padding-top: 0em;
+}
