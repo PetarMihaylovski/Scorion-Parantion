@@ -6,9 +6,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
   },
+  { path: 'feedback-request-submit',
+  loadChildren: './feedback-request-submit/feedback-request-submit.module#FeedbackRequestSubmitPageModule' },
   { path: 'courses', loadChildren: './courses/courses.module#CoursesPageModule' },
   { path: 'classes', loadChildren: './classes/classes.module#ClassesPageModule' }
-
 ];
 @NgModule({
   imports: [
