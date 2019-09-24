@@ -11,7 +11,9 @@ const routes: Routes = [
   { path: 'feedback-request-submit',
   loadChildren: './feedback-request-submit/feedback-request-submit.module#FeedbackRequestSubmitPageModule' },
   { path: 'courses', loadChildren: './courses/courses.module#CoursesPageModule' },
-  { path: 'classes', loadChildren: './classes/classes.module#ClassesPageModule' }
+  { path: 'classes', loadChildren: './classes/classes.module#ClassesPageModule' },
+  { path: 'lecturer-feedback-given',
+  loadChildren: './lecturer-feedback-given/lecturer-feedback-given.module#LecturerFeedbackGivenPageModule'}
 ];
 @NgModule({
   imports: [
