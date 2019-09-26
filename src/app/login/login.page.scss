@@ -2,7 +2,26 @@ body {
     color: #3d3d3d;
 }
 
-button {
+/*button {
+    margin: 0.5em;
+    padding: 1em;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #f2f2f2;
+    background-color: #e36307;
+}*/
+
+form {
+    width: 60%;
+    margin: auto;
+}
+
+ion-checkbox {
+    --background-checked: #e36307;
+    --border-color-checked: #7b7b7b;
+}
+
+.valid_form {
     margin: 0.5em;
     padding: 1em;
     border-radius: 5px;
@@ -11,7 +30,16 @@ button {
     background-color: #e36307;
 }
 
-.form {
-    width: 80%;
-    margin: auto;
+.invalid_form {
+    margin: 0.5em;
+    padding: 1em;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #f2f2f2;
+    background-color: #3d3d3d;
+}
+
+ion-item { 
+    --highlight-color-valid: #e36307;
+    --highlight-color-invalid: #3d3d3d;
 }

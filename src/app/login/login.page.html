@@ -1,25 +1,29 @@
 <ion-header>
+  <title>Login</title>
 </ion-header>
 
 <ion-content>
-  <div class="form">
+  <form id="form" (keyup)="checkCurrentForm()" (ngSubmit)="submitInputs()">
     <ion-text>
       <h1 class="ion-text-center">Login</h1>
     </ion-text>
+    <!-- TODO: fix ion-item and ion-input mismatch with a custom css class or something -->
     <ion-item>
       <ion-label>Username</ion-label>
-      <ion-input placeholder="Username"></ion-input>
+      <ion-input (ngKeyUp)="checkCurrentForm()" type="text" placeholder="Username" [(ngModel)]="user.username" name="username" id="username"
+      minLength="8" maxLength="8" #username="ngModel" required="true"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Password</ion-label>
-      <ion-input placeholder="Password"></ion-input>
+      <ion-input type="password" placeholder="Password" [(ngModel)]="user.password" name="password" id="password"
+      minLength="8" maxLength="12" #password="ngModel" required="true"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Do you want to be remembered?</ion-label>
-      <ion-checkbox></ion-checkbox> 
+      <ion-checkbox [(ngModel)]="user.remembered" name="remembered" id="remembered"></ion-checkbox>
     </ion-item>
     <div class="ion-text-center">
-      <button>Log in</button>
+      <button type="submit" [ngClass]="isFormValid ? 'valid_form' : 'invalid_form'">Log in</button>
     </div>
-  </div>
+  </form>
 </ion-content>
