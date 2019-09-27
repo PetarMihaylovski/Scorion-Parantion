@@ -1,29 +1,46 @@
-<ion-header>
-    <ion-toolbar class="home">
-      <ion-icon name="school" slot="start"></ion-icon>
-      <ion-title>Lecturer</ion-title>
-      <ion-buttons slot="end">
-        <ion-button><ion-icon name="menu"></ion-icon></ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-      <ion-list>
-          <ion-list-header class="latest-feedback">Latest Feedback Requests</ion-list-header>
-          <ion-item>
-              <ion-avatar slot="start">
-                  <ion-icon color="medium" name="person"></ion-icon>
-                </ion-avatar>
-            <ion-label>
-              <h2>Sender name</h2>
-              <h3>Request title</h3>
-              <p>This is a placeholder!</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-          <ion-fab-button>
-            <ion-icon name="md-mic"></ion-icon>
-          </ion-fab-button>
-        </ion-fab> 
-  </ion-content>
+  
+<ion-toolbar class="main-toolbar">
+  <ion-buttons slot="secondary">
+    <ion-button>
+      <ion-icon slot="icon-only" name="search"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="primary">
+    <ion-button>
+      <ion-icon slot="icon-only" name="more"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Home Lecturer</ion-title>
+</ion-toolbar>
+
+<ion-toolbar class="secondary-toolbar">
+  <ion-segment>
+    <ion-segment-button value="all" checked>
+      Students
+    </ion-segment-button>
+    <ion-segment-button value="favorites">
+      Courses
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+<ion-content>
+  <!--<ion-list-header class="latest-feedback">Latest Feedback Requests</ion-list-header>-->
+  <ion-list>
+    <ion-item *ngFor="let feedbackRequest of feedbackRequests">
+      <ion-avatar slot="start">
+        <ion-icon color="medium" name="person"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ feedbackRequest.sender }}</h2>
+        <h3>{{ feedbackRequest.context }}</h3>
+        <p>{{ feedbackRequest.date }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="md-mic"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> 
+</ion-content>
