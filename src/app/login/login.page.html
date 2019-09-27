@@ -8,15 +8,15 @@
       <h1 class="ion-text-center">Login</h1>
     </ion-text>
     <!-- TODO: fix ion-item and ion-input mismatch with a custom css class or something -->
-    <ion-item>
+    <ion-item [ngClass]="isUsernameValid ? 'valid_input' : 'invalid_input'">
       <ion-label>Username</ion-label>
-      <ion-input (ngKeyUp)="checkCurrentForm()" type="text" placeholder="Username" [(ngModel)]="user.username" name="username" id="username"
-      minLength="8" maxLength="8" #username="ngModel" required="true"></ion-input>
+      <ion-input  type="text" placeholder="Username" name="username" id="username"
+      [(ngModel)]="user.username" minLength="8" maxLength="8" #username="ngModel"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item [ngClass]="isPasswordValid ? 'valid_input' : 'invalid_input'">
       <ion-label>Password</ion-label>
-      <ion-input type="password" placeholder="Password" [(ngModel)]="user.password" name="password" id="password"
-      minLength="8" maxLength="12" #password="ngModel" required="true"></ion-input>
+      <ion-input type="password" placeholder="Password" name="password" id="password"
+      [(ngModel)]="user.password" minLength="8" maxLength="12" #password="ngModel"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Do you want to be remembered?</ion-label>

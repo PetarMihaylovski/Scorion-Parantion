@@ -39,7 +39,14 @@ ion-checkbox {
     background-color: #3d3d3d;
 }
 
-ion-item { 
+ion-item.valid_input {
+    --highlight-color-focused: #e36307;
+    --highlight-color-invalid: #e36307;
     --highlight-color-valid: #e36307;
+}
+
+ion-item.invalid_input {
+    --highlight-color-focused: #3d3d3d;
     --highlight-color-invalid: #3d3d3d;
+    --highlight-color-valid: #3d3d3d;
 }
