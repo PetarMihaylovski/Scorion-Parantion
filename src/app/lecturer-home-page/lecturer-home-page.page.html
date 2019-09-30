@@ -1,4 +1,3 @@
-  
 <ion-toolbar class="main-toolbar">
   <ion-buttons slot="secondary">
     <ion-button>
@@ -7,7 +6,7 @@
   </ion-buttons>
   <ion-buttons slot="primary">
     <ion-button>
-      <ion-icon slot="icon-only" name="more"></ion-icon>
+      <ion-icon slot="icon-only" name="settings"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Home Lecturer</ion-title>
@@ -15,21 +14,20 @@
 
 <ion-toolbar class="secondary-toolbar">
   <ion-segment>
-    <ion-segment-button value="all" checked>
-      Students
+    <ion-segment-button value="all" checked ion-button (click)="toggleRequestsGivenScreen()">
+      Requests
     </ion-segment-button>
-    <ion-segment-button value="favorites">
-      Courses
+    <ion-segment-button value="favorites" ion-button (click)="toggleRequestsGivenScreen()">
+      Given
     </ion-segment-button>
   </ion-segment>
 </ion-toolbar>
 
 <ion-content>
-  <!--<ion-list-header class="latest-feedback">Latest Feedback Requests</ion-list-header>-->
-  <ion-list>
+  <ion-list *ngIf="areRequestsToggled">
     <ion-item *ngFor="let feedbackRequest of feedbackRequests">
       <ion-avatar slot="start">
-        <ion-icon color="medium" name="person"></ion-icon>
+        <ion-icon color="medium" name="alert"></ion-icon>
       </ion-avatar>
       <ion-label>
         <h2>{{ feedbackRequest.sender }}</h2>
@@ -38,9 +36,24 @@
       </ion-label>
     </ion-item>
   </ion-list>
+  <ion-list *ngIf="!areRequestsToggled">
+    <ion-item *ngFor="let feedbackGiven of feedbacksGiven">
+      <ion-avatar slot="start">
+        <ion-icon color="medium" name="today"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ feedbackGiven.recipient }}</h2>
+        <h3>{{ feedbackGiven.date }}</h3>
+        <p>{{ feedbackGiven.context }}</p>
+      </ion-label> 
+      <ion-fab-button class="simple-button" [disabled]="!feedbackGiven.hasBeenOpened" button (click)="openGivenFeedbackOptions()">
+        <ion-icon [ngClass]="feedbackGiven.hasBeenOpened ? 'valid_icon' : 'invalid_icon'" name="more"></ion-icon>
+      </ion-fab-button>
+    </ion-item>
+  </ion-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="md-mic"></ion-icon>
+    <ion-fab-button button (click)="goToStudentCoursesPage()">
+      <ion-icon name="md-add"></ion-icon>
     </ion-fab-button>
   </ion-fab> 
 </ion-content>

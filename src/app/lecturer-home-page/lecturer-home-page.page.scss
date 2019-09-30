@@ -14,6 +14,16 @@ ion-icon {
     color: #f2f2f2;
 }
 
+ion-icon.valid_icon {
+    font-size: 2rem;
+    color: #3d3d3d;
+}
+
+ion-icon.invalid_icon {
+    font-size: 2rem;
+    color: #f2f2f2;
+}
+
 ion-title {
     font-size: 2rem;
 }
@@ -50,6 +60,19 @@ ion-list {
 
 ion-fab-button {
     --background: #ff9340; // contrast color to the main orange we use
+    --background-hover: #ff7b16;
+    --background-focused: #ff7b16;
+    --background-activated: #ff7b16;
+}
+
+ion-fab-button.simple-button {
+    --background: none; 
+    --background-activated: #ff9340;
+    --background-hover: #ff9340;
+    --background-focused: #ff9340;
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    --box-shadow: inset 1px -1px 11px -5px rgba(0,0,0,0.48);
 }
 
 .request-list {
