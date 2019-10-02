@@ -22,9 +22,7 @@ export class HomeFeedbackOptionsPopoverComponent implements OnInit {
   }
 
   delete() {
-    alert("are you sure you want to delete it popover...");
     this.isDeleteButtonClicked = true;
-    //this.popoverController.dismiss();
   }
 
   confirmDeletion() {
