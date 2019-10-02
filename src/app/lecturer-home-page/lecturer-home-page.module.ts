@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { LecturerHomePagePage } from './lecturer-home-page.page';
+import { HomeFeedbackOptionsPopoverComponent } from '../home-feedback-options-popover/home-feedback-options-popover.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [LecturerHomePagePage]
+  entryComponents: [HomeFeedbackOptionsPopoverComponent],
+  declarations: [LecturerHomePagePage, HomeFeedbackOptionsPopoverComponent]
 })
 export class LecturerHomePagePageModule {}

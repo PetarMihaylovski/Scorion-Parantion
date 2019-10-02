@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
+import { HomeFeedbackOptionsPopoverComponent } from '../home-feedback-options-popover/home-feedback-options-popover.component';
 
 @Component({
   selector: 'app-lecturer-home-page',
@@ -10,7 +12,7 @@ export class LecturerHomePagePage implements OnInit {
   feedbacksGiven: any;
   areRequestsToggled = true;
   
-  constructor() { 
+  constructor(public popoverController: PopoverController) { 
     this.feedbackRequests = [
       {
         sender: "John",
@@ -113,12 +115,16 @@ export class LecturerHomePagePage implements OnInit {
     this.areRequestsToggled = !this.areRequestsToggled;
   }
 
-  openGivenFeedbackOptions() {
-    alert("choose delete or edit unseen feedback");
-  }
-
   goToStudentCoursesPage() {
     alert("go to Student/Courses page");
+  }
+
+  async presentPopover(event) {
+    const popover = await this.popoverController.create({
+      component: HomeFeedbackOptionsPopoverComponent,
+      event: event
+    });
+    return await popover.present();
   }
 
   ngOnInit() {

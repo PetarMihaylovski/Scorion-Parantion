@@ -46,13 +46,13 @@
         <h3>{{ feedbackGiven.date }}</h3>
         <p>{{ feedbackGiven.context }}</p>
       </ion-label> 
-      <ion-fab-button class="simple-button" [disabled]="!feedbackGiven.hasBeenOpened" button (click)="openGivenFeedbackOptions()">
+      <ion-fab-button class="simple-button" [disabled]="!feedbackGiven.hasBeenOpened" button (click)="presentPopover()">
         <ion-icon [ngClass]="feedbackGiven.hasBeenOpened ? 'valid_icon' : 'invalid_icon'" name="more"></ion-icon>
       </ion-fab-button>
     </ion-item>
   </ion-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button button (click)="goToStudentCoursesPage()">
+    <ion-fab-button button (click)="goToStudentCoursesPage($event)">
       <ion-icon name="md-add"></ion-icon>
     </ion-fab-button>
   </ion-fab> 
