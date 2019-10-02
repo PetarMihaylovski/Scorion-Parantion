@@ -5,7 +5,7 @@
     </ion-button>
   </ion-buttons>
   <ion-buttons slot="primary">
-    <ion-button>
+    <ion-button button (click)="settingsPopover($event)">
       <ion-icon slot="icon-only" name="settings"></ion-icon>
     </ion-button>
   </ion-buttons>
@@ -46,7 +46,7 @@
         <h3>{{ feedbackGiven.date }}</h3>
         <p>{{ feedbackGiven.context }}</p>
       </ion-label> 
-      <ion-fab-button class="simple-button" [disabled]="!feedbackGiven.hasBeenOpened" button (click)="presentPopover()">
+      <ion-fab-button class="simple-button" [disabled]="!feedbackGiven.hasBeenOpened" button (click)="feedbackOptionsPopover($event)">
         <ion-icon [ngClass]="feedbackGiven.hasBeenOpened ? 'valid_icon' : 'invalid_icon'" name="more"></ion-icon>
       </ion-fab-button>
     </ion-item>

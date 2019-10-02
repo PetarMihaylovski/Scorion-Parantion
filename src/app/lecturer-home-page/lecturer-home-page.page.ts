@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { HomeFeedbackOptionsPopoverComponent } from '../home-feedback-options-popover/home-feedback-options-popover.component';
+import { SettingsPopoverComponent } from '../settings-popover/settings-popover.component';
 
 @Component({
   selector: 'app-lecturer-home-page',
@@ -119,9 +120,17 @@ export class LecturerHomePagePage implements OnInit {
     alert("go to Student/Courses page");
   }
 
-  async presentPopover(event) {
+  async feedbackOptionsPopover(event) {
     const popover = await this.popoverController.create({
       component: HomeFeedbackOptionsPopoverComponent,
+      event: event
+    });
+    return await popover.present();
+  }
+
+  async settingsPopover(event) {
+    const popover = await this.popoverController.create({
+      component: SettingsPopoverComponent,
       event: event
     });
     return await popover.present();
