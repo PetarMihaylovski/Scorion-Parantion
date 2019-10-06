@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-student-home-page',
@@ -8,8 +8,12 @@ import { MenuController } from '@ionic/angular';
 })
 export class StudentHomePagePage implements OnInit {
 
-  constructor(private menu: MenuController) { }
+  constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
+  }
+
+  requestFeedback() {
+    this.navCtrl.navigateForward('/request-feedback/tabs/lecturers');
   }
 }
