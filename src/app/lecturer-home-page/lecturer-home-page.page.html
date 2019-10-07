@@ -1,29 +1,59 @@
-<ion-header>
-    <ion-toolbar class="home">
-      <ion-icon name="school" slot="start"></ion-icon>
-      <ion-title>Lecturer</ion-title>
-      <ion-buttons slot="end">
-        <ion-button><ion-icon name="menu"></ion-icon></ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-      <ion-list>
-          <ion-list-header class="latest-feedback">Latest Feedback Requests</ion-list-header>
-          <ion-item>
-              <ion-avatar slot="start">
-                  <ion-icon color="medium" name="person"></ion-icon>
-                </ion-avatar>
-            <ion-label>
-              <h2>Sender name</h2>
-              <h3>Request title</h3>
-              <p>This is a placeholder!</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-          <ion-fab-button (click)="sendFeedback()">
-            <ion-icon name="add"></ion-icon>
-          </ion-fab-button>
-        </ion-fab> 
-  </ion-content>
+<ion-toolbar class="main-toolbar">
+  <ion-buttons slot="secondary">
+    <ion-button>
+      <ion-icon slot="icon-only" name="search"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-buttons slot="primary">
+    <ion-button button (click)="settingsPopover($event)">
+      <ion-icon slot="icon-only" name="settings"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Home Lecturer</ion-title>
+</ion-toolbar>
+
+<ion-toolbar class="secondary-toolbar">
+  <ion-segment>
+    <ion-segment-button value="all" checked ion-button (click)="toggleRequestsGivenScreen()">
+      Requests
+    </ion-segment-button>
+    <ion-segment-button value="favorites" ion-button (click)="toggleRequestsGivenScreen()">
+      Given
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+<ion-content>
+  <ion-list *ngIf="areRequestsToggled">
+    <ion-item *ngFor="let feedbackRequest of feedbackRequests">
+      <ion-avatar slot="start" button (click)="showFeedbackRequestModal(feedbackRequest)">
+        <ion-icon color="medium" name="alert"></ion-icon>
+      </ion-avatar>
+      <ion-label button (click)="showFeedbackRequestModal(feedbackRequest)">
+        <h2>{{ feedbackRequest.sender }}</h2>
+        <h3>{{ feedbackRequest.context }}</h3>
+        <p>{{ feedbackRequest.date }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="!areRequestsToggled">
+    <ion-item *ngFor="let feedbackGiven of feedbacksGiven">
+      <ion-avatar slot="start" button (click)="showFeedbackGivenModal(feedbackGiven)">
+        <ion-icon color="medium" name="today"></ion-icon>
+      </ion-avatar>
+      <ion-label button (click)="showFeedbackGivenModal(feedbackGiven)">
+        <h2>{{ feedbackGiven.recipient }}</h2>
+        <h3>{{ feedbackGiven.date }}</h3>
+        <p>{{ feedbackGiven.context }}</p>
+      </ion-label> 
+      <ion-fab-button class="simple-button" [disabled]="!feedbackGiven.hasBeenOpened" button (click)="feedbackOptionsPopover($event)">
+        <ion-icon [ngClass]="feedbackGiven.hasBeenOpened ? 'valid_icon' : 'invalid_icon'" name="more"></ion-icon>
+      </ion-fab-button>
+    </ion-item>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button button (click)="goToStudentCoursesPage($event)">
+      <ion-icon name="md-add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> 
+</ion-content>

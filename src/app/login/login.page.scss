@@ -2,7 +2,21 @@ body {
     color: #3d3d3d;
 }
 
-button {
+form {
+    width: 60%;
+    margin: auto;
+}
+
+h1 {
+    color: #e36307;
+}
+
+ion-checkbox {
+    --background-checked: #e36307;
+    --border-color-checked: #7b7b7b;
+}
+
+.valid_form {
     margin: 0.5em;
     padding: 1em;
     border-radius: 5px;
@@ -11,7 +25,23 @@ button {
     background-color: #e36307;
 }
 
-.form {
-    width: 80%;
-    margin: auto;
+.invalid_form {
+    margin: 0.5em;
+    padding: 1em;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #f2f2f2;
+    background-color: #3d3d3d;
+}
+
+ion-item.valid_input {
+    --highlight-color-focused: #e36307;
+    --highlight-color-invalid: #e36307;
+    --highlight-color-valid: #e36307;
+}
+
+ion-item.invalid_input {
+    --highlight-color-focused: #3d3d3d;
+    --highlight-color-invalid: #3d3d3d;
+    --highlight-color-valid: #3d3d3d;
 }

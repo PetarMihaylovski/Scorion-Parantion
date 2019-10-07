@@ -1,25 +1,32 @@
 <ion-header>
+  <title>Login</title>
 </ion-header>
 
 <ion-content>
-  <div class="form">
+  <form id="form" (keyup)="checkCurrentForm()" (ngSubmit)="submitInputs()">
     <ion-text>
       <h1 class="ion-text-center">Login</h1>
     </ion-text>
-    <ion-item>
-      <ion-label>Username</ion-label>
-      <ion-input placeholder="Username"></ion-input>
+    <ion-item [ngClass]="isUsernameValid ? 'valid_input' : 'invalid_input'">
+      <ion-label>
+        Username <ion-icon [name]="isUsernameValid ? 'checkmark' : 'close'"></ion-icon>
+      </ion-label>
+      <ion-input  type="text" placeholder="Username" name="username" id="username"
+      [(ngModel)]="user.username" minLength="8" maxLength="8" #username="ngModel"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label>Password</ion-label>
-      <ion-input placeholder="Password"></ion-input>
+    <ion-item [ngClass]="isPasswordValid ? 'valid_input' : 'invalid_input'">
+      <ion-label>
+        Password <ion-icon [name]="isPasswordValid ? 'checkmark' : 'close'"></ion-icon>
+      </ion-label>
+      <ion-input type="password" placeholder="Password" name="password" id="password"
+      [(ngModel)]="user.password" minLength="8" maxLength="12" #password="ngModel"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Do you want to be remembered?</ion-label>
-      <ion-checkbox></ion-checkbox> 
+      <ion-checkbox [(ngModel)]="user.remembered" name="remembered" id="remembered"></ion-checkbox>
     </ion-item>
     <div class="ion-text-center">
-      <button>Log in</button>
+      <button type="submit" [ngClass]="isFormValid ? 'valid_form' : 'invalid_form'" [disabled]="!isFormValid">Log in</button>
     </div>
-  </div>
+  </form>
 </ion-content>
