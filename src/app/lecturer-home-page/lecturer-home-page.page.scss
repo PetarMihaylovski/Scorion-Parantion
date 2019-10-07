@@ -9,6 +9,12 @@
     --color-unchecked: #f2f2f2;
 }
 
+.secondary-toolbar ion-segment-button {
+    --background-hover: #f2f2f2;
+    --color-checked: #e36307;
+    --color-unchecked: #f2f2f2;
+}
+
 ion-icon {
     font-size: 3rem;
     color: #f2f2f2;

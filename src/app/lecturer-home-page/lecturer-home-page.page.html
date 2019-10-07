@@ -26,10 +26,10 @@
 <ion-content>
   <ion-list *ngIf="areRequestsToggled">
     <ion-item *ngFor="let feedbackRequest of feedbackRequests">
-      <ion-avatar slot="start">
+      <ion-avatar slot="start" button (click)="showFeedbackRequestModal(feedbackRequest)">
         <ion-icon color="medium" name="alert"></ion-icon>
       </ion-avatar>
-      <ion-label>
+      <ion-label button (click)="showFeedbackRequestModal(feedbackRequest)">
         <h2>{{ feedbackRequest.sender }}</h2>
         <h3>{{ feedbackRequest.context }}</h3>
         <p>{{ feedbackRequest.date }}</p>
@@ -38,10 +38,10 @@
   </ion-list>
   <ion-list *ngIf="!areRequestsToggled">
     <ion-item *ngFor="let feedbackGiven of feedbacksGiven">
-      <ion-avatar slot="start">
+      <ion-avatar slot="start" button (click)="showFeedbackGivenModal(feedbackGiven)">
         <ion-icon color="medium" name="today"></ion-icon>
       </ion-avatar>
-      <ion-label>
+      <ion-label button (click)="showFeedbackGivenModal(feedbackGiven)">
         <h2>{{ feedbackGiven.recipient }}</h2>
         <h3>{{ feedbackGiven.date }}</h3>
         <p>{{ feedbackGiven.context }}</p>

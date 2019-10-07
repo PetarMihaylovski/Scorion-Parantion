@@ -1,0 +1,44 @@
+ion-content {
+    padding: 2rem;
+}
+
+ion-button {
+    --margin: 0.5em;
+    --padding: 1em;
+    --border-radius: 5px;
+    font-size: 1em;
+    --color: #f2f2f2;
+}
+
+ion-button.valid_btn {
+    --background: #e36307;
+    --background-hover: #e36307;
+    --background-focused: #e36307;
+    --background-activated: #e36307;
+}
+
+ion-button.invalid_btn {
+    --background: #3d3d3d;
+}
+
+ion-icon {
+    font-size: 2rem;
+}
+
+ion-item {
+    --highlight-color-focused: #e36307;
+    --highlight-color-invalid: #3d3d3d;
+    --highlight-color-valid: #e36307;
+}
+
+ion-label {
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.item-has-focus.label-floating.sc-ion-label-md-h, .item-has-focus .label-floating.sc-ion-label-md-h, .item-has-focus.label-stacked.sc-ion-label-md-h, .item-has-focus .label-stacked.sc-ion-label-md-h {
+    --color: #e36307 !important;
+    color: #e36307 !important; 
+    font-weight: bold;
+    font-size: 1em;
+}

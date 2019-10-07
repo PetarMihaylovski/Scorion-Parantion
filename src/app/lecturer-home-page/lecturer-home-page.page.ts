@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { HomeFeedbackOptionsPopoverComponent } from '../home-feedback-options-popover/home-feedback-options-popover.component';
 import { SettingsPopoverComponent } from '../settings-popover/settings-popover.component';
+import { ModalController } from '@ionic/angular';
+import { FeedbackModalComponent } from '../feedback-modal/feedback-modal.component';
 
 @Component({
   selector: 'app-lecturer-home-page',
@@ -13,7 +15,7 @@ export class LecturerHomePagePage implements OnInit {
   feedbacksGiven: any;
   areRequestsToggled = true;
   
-  constructor(public popoverController: PopoverController) { 
+  constructor(public popoverController: PopoverController, private modalCtrl: ModalController) { 
     this.feedbackRequests = [
       {
         sender: "John",
@@ -134,6 +136,32 @@ export class LecturerHomePagePage implements OnInit {
       event: event
     });
     return await popover.present();
+  }
+
+  async showFeedbackRequestModal(feedbackRequest) {
+    const modal = await this.modalCtrl.create({
+      component: FeedbackModalComponent,
+      componentProps: {
+        isRequest: true,
+        data: feedbackRequest
+      }
+    });
+    await modal.present();
+    modal.onDidDismiss()
+    .then( res => alert(JSON.stringify(res)))
+  }
+
+  async showFeedbackGivenModal(feedbackGiven) {
+    const modal = await this.modalCtrl.create({
+      component: FeedbackModalComponent,
+      componentProps: {
+        isRequest: false,
+        data: feedbackGiven
+      }
+    });
+    await modal.present();
+    modal.onDidDismiss()
+    .then( res => alert(JSON.stringify(res)))
   }
 
   ngOnInit() {
