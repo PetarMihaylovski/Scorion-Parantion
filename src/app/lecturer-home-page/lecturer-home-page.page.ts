@@ -121,10 +121,6 @@ export class LecturerHomePagePage implements OnInit {
     this.areRequestsToggled = !this.areRequestsToggled;
   }
 
-  goToStudentCoursesPage() {
-    alert("go to Student/Courses page");
-  }
-
   async feedbackOptionsPopover(event) {
     const popover = await this.popoverController.create({
       component: HomeFeedbackOptionsPopoverComponent,
@@ -140,6 +136,7 @@ export class LecturerHomePagePage implements OnInit {
     });
     return await popover.present();
   }
+
   sendFeedback() {
     // this.router.navigateByUrl('/student-home');
     this.navCtrl.navigateForward('/give-feedback/tabs/students');

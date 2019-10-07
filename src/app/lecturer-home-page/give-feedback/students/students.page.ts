@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { FeedbackModalComponent } from 'src/app/feedback-modal/feedback-modal.component';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-students',
@@ -7,15 +9,63 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./students.page.scss'],
 })
 export class StudentsPage implements OnInit {
-  constructor(private navCtrl: NavController) { }
-
-  ngOnInit() {
+  students: any;
+  
+  constructor(private modalCtrl: ModalController, private navCtrl: NavController) { 
+    this.students = [
+      {
+        id: 1,
+        name: "Bobby",
+        class: "DHI2V.Sp",
+        number: 578475
+      },
+      {
+        id: 2,
+        name: "Clara",
+        class: "DHI2V.So",
+        number: 578476
+      },
+      {
+        id: 3,
+        name: "Lara",
+        class: "DHI2V.Sq",
+        number: 578477
+      },
+      {
+        id: 4,
+        name: "Mark",
+        class: "DHI2V.So",
+        number: 57848
+      },
+      {
+        id: 5,
+        name: "Nas",
+        class: "DHI2V.Sq",
+        number: 578479
+      },
+      {
+        id: 6,
+        name: "Pepster",
+        class: "DHI2V.Sp",
+        number: 578480
+      }
+    ]
   }
 
-  getFeedbackForm() {
-
-      this.navCtrl.navigateForward('/feedback-request-submit');
-
+  // TODO: update the modal class to handle all conditions: giving, requesting, editting, responding
+  async showFeedbackModal(student) {
+    const modal = await this.modalCtrl.create({
+      component: FeedbackModalComponent,
+      componentProps: {
+        isRequest: false,
+        data: student
+      }
+    });
+    await modal.present();
+    modal.onDidDismiss()
+    .then( res => alert(JSON.stringify(res)))
   }
+
+  ngOnInit() {}
 }
 

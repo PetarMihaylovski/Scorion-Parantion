@@ -7,12 +7,11 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./give-feedback.page.scss'],
 })
 export class GiveFeedbackPage implements OnInit {
+  areWeOnStudentsPage = true;
 
   constructor(private navCtrl: NavController) { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
   /*
   onClick() {
     this.navCtrl.navigateBack('/lecturer-home');
@@ -20,4 +19,11 @@ export class GiveFeedbackPage implements OnInit {
   }
   */
 
+  goToStudents() {
+    this.navCtrl.navigateForward('/give-feedback/tabs/students');
+  }
+
+  goToClasses() {
+    this.navCtrl.navigateForward('/give-feedback/tabs/student-classes');
+  }
 }

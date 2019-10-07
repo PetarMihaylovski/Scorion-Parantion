@@ -1,11 +1,13 @@
 <ion-content>
-    <ion-list>
-        <ion-list-header>Classes</ion-list-header>
-        <ion-item>
-          <ion-label>
-            <h2>CLass: DHI2V.Sp</h2>
-            <p>Click me!</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
+  <ion-list>
+    <ion-item *ngFor="let class of classes">
+      <ion-avatar slot="start" button (click)="goToClass(class)">
+        <ion-icon color="medium" name="md-people"></ion-icon>
+      </ion-avatar>
+      <ion-label button (click)="goToClass(class)">
+        <h2>{{ class.name }}</h2>
+        <h3>{{ class.totalOnlineStudents }}/{{ class.totalStudents }}</h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

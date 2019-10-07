@@ -1,13 +1,14 @@
-
 <ion-content>
-    <ion-list>
-        <ion-list-header>Students</ion-list-header>
-        <ion-item (click)="getFeedbackForm()">
-          <ion-label>
-            <h2>Student name</h2>
-            <h3>Class: DHI2V.Sp</h3>
-            <p>Click me!</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
+  <ion-list>
+    <ion-item *ngFor="let student of students">
+      <ion-avatar slot="start" button (click)="showFeedbackModal(student)">
+        <ion-icon color="medium" name="md-contact"></ion-icon>
+      </ion-avatar>
+      <ion-label button (click)="showFeedbackModal(student)">
+        <h2>{{ student.name }}</h2>
+        <h3>{{ student.class }}</h3>
+        <p>{{ student.number }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
