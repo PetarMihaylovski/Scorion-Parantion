@@ -146,7 +146,8 @@ export class LecturerHomePagePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: FeedbackModalComponent,
       componentProps: {
-        isLecturerWritingFeedback: true,
+        isLecturerWritingFeedback: false,
+        isLecturerRespondingToFeedbackRequest: true,
         data: feedbackRequest
       }
     });
@@ -155,11 +156,12 @@ export class LecturerHomePagePage implements OnInit {
     .then( res => alert(JSON.stringify(res)))
   }
 
-  async showFeedbackGivenModal(feedbackGiven) {
+  async showGivenFeedbackModal(feedbackGiven) {
     const modal = await this.modalCtrl.create({
       component: FeedbackModalComponent,
       componentProps: {
-        isLecturerReadingFeedback: true,
+        isLecturerReadingGivenFeedback: true,
+        isLecturerEditingGivenFeedback: false,
         data: feedbackGiven
       }
     });

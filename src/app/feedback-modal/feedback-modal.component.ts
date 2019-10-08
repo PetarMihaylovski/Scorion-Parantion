@@ -27,9 +27,12 @@ export class FeedbackModalComponent implements OnInit {
   isRequestedDescriptionValid: any;
 
   isStudentReadingFeedback: any;
-  isLecturerReadingFeedback: any;
+
   isLecturerWritingFeedback: any;
   isLecturerRespondingToFeedbackRequest: any;
+
+  isLecturerReadingGivenFeedback: any;
+  isLecturerEditingGivenFeedback: any;
 
   constructor(private modalCtrl: ModalController) { }
 
@@ -44,7 +47,7 @@ export class FeedbackModalComponent implements OnInit {
 
   checkRequest() {
     this.isWritingFeedback = false;
-    this.isLecturerWritingFeedback = false;
+    this.isLecturerWritingFeedback = true;
   }
 
   checkDescription() {
@@ -72,11 +75,11 @@ export class FeedbackModalComponent implements OnInit {
   }
 
   checkFeedback() {
-    this.isEditingFeedback = false;
+    this.isLecturerEditingGivenFeedback = false;
   }
 
   editFeedback() {
-    this.isEditingFeedback = true;
+    this.isLecturerEditingGivenFeedback = true;
   }
 
   async editForm() {

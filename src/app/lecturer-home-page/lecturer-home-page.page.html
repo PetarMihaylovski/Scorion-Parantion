@@ -38,10 +38,10 @@
   </ion-list>
   <ion-list *ngIf="!areRequestsToggled">
     <ion-item *ngFor="let feedbackGiven of feedbacksGiven">
-      <ion-avatar slot="start" button (click)="showFeedbackGivenModal(feedbackGiven)">
+      <ion-avatar slot="start" button (click)="showGivenFeedbackModal(feedbackGiven)">
         <ion-icon color="medium" name="today"></ion-icon>
       </ion-avatar>
-      <ion-label button (click)="showFeedbackGivenModal(feedbackGiven)">
+      <ion-label button (click)="showGivenFeedbackModal(feedbackGiven)">
         <h2>{{ feedbackGiven.recipient }}</h2>
         <h3>{{ feedbackGiven.date }}</h3>
         <p>{{ feedbackGiven.context }}</p>
