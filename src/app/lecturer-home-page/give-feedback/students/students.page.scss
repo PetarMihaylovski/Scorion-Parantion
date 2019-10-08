@@ -3,33 +3,7 @@ ion-icon {
     color: #f2f2f2;
 }
 
-ion-icon.valid_icon {
-    font-size: 2rem;
-    color: #3d3d3d;
-}
-
-ion-icon.invalid_icon {
-    font-size: 2rem;
-    color: #f2f2f2;
-}
-
 ion-title {
-    font-size: 2rem;
-}
-
-.latest-feedback {
-    font-size: 1rem;
-    color: #7b7b7b;
-    font-weight: bold;
-    text-align: left;
-}
-
-.list-option {
-    --background: #f2f2f2;
-    color: #3d3d3d;
-}
-
-.list-label {
     font-size: 2rem;
 }
 
@@ -45,11 +19,4 @@ ion-list {
 .sc-ion-card-md-h {
     margin-top: 0em;
     box-shadow: none;
-}
-
-ion-fab-button {
-    --background: #ff9340; // contrast color to the main orange we use
-    --background-hover: #ff7b16;
-    --background-focused: #ff7b16;
-    --background-activated: #ff7b16;
 }

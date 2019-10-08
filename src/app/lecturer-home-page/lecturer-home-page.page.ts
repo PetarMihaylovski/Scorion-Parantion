@@ -168,6 +168,5 @@ export class LecturerHomePagePage implements OnInit {
     .then( res => alert(JSON.stringify(res)))
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

@@ -18,6 +18,10 @@ export class GiveFeedbackPage implements OnInit {
     return;
   }
   */
+  
+  goToLecturerHomePage() {
+    this.navCtrl.navigateBack('/lecturer-home');
+  }
 
   goToStudents() {
     this.navCtrl.navigateForward('/give-feedback/tabs/students');

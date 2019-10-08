@@ -7,8 +7,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { LecturerHomePagePage } from './lecturer-home-page.page';
 import { HomeFeedbackOptionsPopoverComponent } from '../home-feedback-options-popover/home-feedback-options-popover.component';
-import { SettingsPopoverComponent } from '../settings-popover/settings-popover.component';
-import { FeedbackModalComponent } from '../feedback-modal/feedback-modal.component';
 
 const routes: Routes = [
   {
@@ -24,7 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  entryComponents: [HomeFeedbackOptionsPopoverComponent, SettingsPopoverComponent, FeedbackModalComponent],
-  declarations: [LecturerHomePagePage, HomeFeedbackOptionsPopoverComponent, SettingsPopoverComponent, FeedbackModalComponent]
+  entryComponents: [HomeFeedbackOptionsPopoverComponent],
+  declarations: [LecturerHomePagePage, HomeFeedbackOptionsPopoverComponent]
 })
 export class LecturerHomePagePageModule {}
