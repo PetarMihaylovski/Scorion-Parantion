@@ -35,7 +35,5 @@ export class CoursesPage implements OnInit {
     this.navCtrl.navigateForward('/request-feedback/tabs/lecturers');
   }
   
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

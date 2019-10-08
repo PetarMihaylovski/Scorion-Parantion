@@ -12,11 +12,15 @@ export class FeedbackModalComponent implements OnInit {
   writtenDescription = '';
   editedContext = '';
   editedDescription = '';
-  isWritingFeedback = false;
-  isEditingFeedback = false;
+  isWritingFeedback: any;
+  isEditingFeedback: any;
   isRequest: any;
-  isDescriptionValid = false;
-  isEditedDescriptionValid = false;
+  isDescriptionValid: any;
+  isEditedDescriptionValid: any;
+
+  isStudentRequestingFeedback: any;
+  isStudentReadingFeedback: any;
+  isLecturerReadingFeedback: any;
 
   constructor(private modalCtrl: ModalController) { }
 

@@ -9,30 +9,30 @@
         <ion-icon slot="icon-only" name="settings"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Home Students</ion-title>
+    <ion-title>Home</ion-title>
   </ion-toolbar>
   
   <ion-toolbar class="secondary-toolbar">
     <ion-segment>
-      <ion-segment-button value="all" checked ion-button (click)="toggleRequestsGivenScreen()">
+      <ion-segment-button value="all" checked ion-button (click)="toggleFeedbackScreen()">
         Received
       </ion-segment-button>
-      <ion-segment-button value="favorites" ion-button (click)="toggleRequestsGivenScreen()">
+      <ion-segment-button value="favorites" ion-button (click)="toggleFeedbackScreen()">
         Portfolio
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
   
   <ion-content>
-    <ion-list *ngIf="areRequestsToggled">
-      <ion-item *ngFor="let feedbackRequest of feedbackRequests">
-        <ion-avatar slot="start" button (click)="showFeedbackRequestModal(feedbackRequest)">
+    <ion-list *ngIf="areFeedbacksToggled">
+      <ion-item *ngFor="let feedback of feedbacks">
+        <ion-avatar slot="start" button (click)="showFeedbackModal(feedback)">
           <ion-icon color="medium" name="today"></ion-icon>
         </ion-avatar>
-        <ion-label button (click)="showFeedbackRequestModal(feedbackRequest)">
-          <h2>{{ feedbackRequest.sender }}</h2>
-          <h3>{{ feedbackRequest.context }}</h3>
-          <p>{{ feedbackRequest.date }}</p>
+        <ion-label button (click)="showFeedbackModal(feedback)">
+          <h2>{{ feedback.sender }}</h2>
+          <h3>{{ feedback.context }}</h3>
+          <p>{{ feedback.date }}</p>
         </ion-label>
       </ion-item>
     </ion-list>

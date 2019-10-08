@@ -12,13 +12,12 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./student-home-page.page.scss'],
 })
 export class StudentHomePagePage implements OnInit {
-  feedbackRequests: any;
-  feedbacksGiven: any;
-  areRequestsToggled = true;
+  feedbacks: any;
+  areFeedbacksToggled = true;
   
   constructor(public popoverController: PopoverController, 
     private modalCtrl: ModalController, private router: Router, private navCtrl: NavController) { 
-    this.feedbackRequests = [
+    this.feedbacks = [
       {
         sender: "John",
         context: "WebTech problems",
@@ -62,62 +61,10 @@ export class StudentHomePagePage implements OnInit {
         description: ""
       }
     ];
-    
-    this.feedbacksGiven = [
-      {
-        recipient: "Johny",
-        context: "WebTech issue",
-        date: "12-02-2011 12:04:12",
-        description: "Please!!!",
-        hasBeenOpened: false
-      },
-      {
-        recipient: "Danny",
-        context: "Leadership problem",
-        date: "05-03-2011 14:25:02",
-        description: "What should I do?",
-        hasBeenOpened: true
-      },
-      {
-        recipient: "Bobby",
-        context: "Santa?",
-        date: "02-12-2012 16:07:12",
-        description: "I think I saw Santa!",
-        hasBeenOpened: false
-      },
-      {
-        recipient: "Sandy",
-        context: "Tech",
-        date: "11-03-2211 12:04:12",
-        description: "I need help!!!",
-        hasBeenOpened: false
-      },
-      {
-        recipient: "Michelle",
-        context: "Bomb",
-        date: "05-03-2021 14:25:22",
-        description: "There is a bomb!",
-        hasBeenOpened: true
-      },
-      {
-        recipient: "Santa",
-        context: "Is Sander real?",
-        date: "02-12-2013 16:07:12",
-        description: "I really need to know!",
-        hasBeenOpened: false
-      },
-      {
-        recipient: "",
-        context: "",
-        date: "-- ::",
-        description: "",
-        hasBeenOpened: false
-      }
-    ];
   }
   
-  toggleRequestsGivenScreen() {
-    this.areRequestsToggled = !this.areRequestsToggled;
+  toggleFeedbackScreen() {
+    this.areFeedbacksToggled = !this.areFeedbacksToggled;
   }
 
   async settingsPopover(event) {
@@ -128,12 +75,12 @@ export class StudentHomePagePage implements OnInit {
     return await popover.present();
   }
   
-  async showFeedbackRequestModal(feedbackRequest) {
+  async showFeedbackModal(feedback) {
     const modal = await this.modalCtrl.create({
       component: FeedbackModalComponent,
       componentProps: {
-        isRequest: true,
-        data: feedbackRequest
+        isStudentReadingFeedback: true,
+        data: feedback
       }
     });
     await modal.present();
@@ -141,18 +88,6 @@ export class StudentHomePagePage implements OnInit {
     .then( res => alert(JSON.stringify(res)))
   }
 
-  async showFeedbackGivenModal(feedbackGiven) {
-    const modal = await this.modalCtrl.create({
-      component: FeedbackModalComponent,
-      componentProps: {
-        isRequest: false,
-        data: feedbackGiven
-      }
-    });
-    await modal.present();
-    modal.onDidDismiss()
-    .then( res => alert(JSON.stringify(res)))
-  }
   ngOnInit() {
   }
 

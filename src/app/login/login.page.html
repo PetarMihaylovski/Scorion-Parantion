@@ -12,21 +12,21 @@
         Username <ion-icon [name]="isUsernameValid ? 'checkmark' : 'close'"></ion-icon>
       </ion-label>
       <ion-input  type="text" placeholder="Username" name="username" id="username"
-      [(ngModel)]="user.username" minLength="8" maxLength="8" #username="ngModel"></ion-input>
+      [(ngModel)]="user.username" minLength="7" maxLength="8" #username="ngModel"></ion-input>
     </ion-item>
     <ion-item [ngClass]="isPasswordValid ? 'valid_input' : 'invalid_input'">
       <ion-label>
         Password <ion-icon [name]="isPasswordValid ? 'checkmark' : 'close'"></ion-icon>
       </ion-label>
       <ion-input type="password" placeholder="Password" name="password" id="password"
-      [(ngModel)]="user.password" minLength="8" maxLength="12" #password="ngModel"></ion-input>
+      [(ngModel)]="user.password" minLength="7" maxLength="12" #password="ngModel"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Do you want to be remembered?</ion-label>
       <ion-checkbox [(ngModel)]="user.remembered" name="remembered" id="remembered"></ion-checkbox>
     </ion-item>
     <div class="ion-text-center">
-      <button type="submit" [ngClass]="isFormValid ? 'valid_form' : 'invalid_form'" [disabled]="!isFormValid">Log in</button>
+      <button type="submit" [ngClass]="isFormValid ? 'valid_form' : 'invalid_form'" [disabled]="!isFormValid" (click)="navigateToHomeScreen()">Log in</button>
     </div>
   </form>
 </ion-content>

@@ -1,3 +1,70 @@
+<!--
+  4 types:
+    isStudentRequestingFeedback
+    - student request feedback (create)
+    isStudentReadingFeedback
+    isLecturerReadingFeedback
+    - student read received feedback / lecturer read given feedback (read)
+    isLecturerWritingFeedback
+    isLecturerRespondingToFeedbackRequest
+    - lecturer write feedback / lecturer respond to requested feedback (create)
+    isLecturerEditingFeedback
+    - lecturer edit given feedback (update)
+
+    would not be done in the modal
+    - lecturer delete given feedback (delete)
+-->
+
+<!--REQUEST FEEDBACK-->
+<ion-toolbar *ngIf="isStudentRequestingFeedback">
+  <ion-buttons slot="end">
+    <ion-button (click)="close()">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content *ngIf="isStudentRequestingFeedback" class="ion-padding">
+  <h1>Feedback request</h1>
+  <form (ngSubmit)="editForm()" (keyup)="checkEditedDescription()">
+    <ion-item>
+    <ion-label>Context:</ion-label>
+      <ion-select interface="popover" name="edited-context" [(ngModel)]="editedContext">
+        <ion-select-option value="context1">context1</ion-select-option>
+        <ion-select-option value="context2">context2</ion-select-option>
+        <ion-select-option value="context3">context3</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Description:</ion-label>
+      <ion-textarea type="text" rows="8" [(ngModel)]="editedDescription" name="edited-desciption"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="attach"></ion-icon>
+      <ion-text>name of the attachment</ion-text>
+      <ion-icon name="close"></ion-icon>
+      </ion-item>
+    <p *ngIf="!isEditedDescriptionValid"><ion-button type="submit" disabled="true" class="invalid_btn">Confirm</ion-button></p>  
+    <p *ngIf="isEditedDescriptionValid"><ion-button type="submit" class="valid_btn">Confirm</ion-button></p>  
+  </form>
+</ion-content>
+    
+<!--READING FEEDBACK-->
+<ion-toolbar *ngIf="isStudentReadingFeedback || isLecturerReadingFeedback">
+  <ion-buttons slot="end">
+    <ion-button (click)="close()">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content class="ion-padding">
+  <h1>Reading Given Feedback</h1>
+  <p>Context: {{ data.context }}</p>
+  <p>Description: {{ data.description }}</p>
+</ion-content>
+
+<!--SEPARATOR-->
 <!--Request/Request response layout-->
 <ion-toolbar *ngIf="isRequest">
   <ion-buttons *ngIf="isWritingFeedback" slot="start">
@@ -45,6 +112,8 @@
 </ion-content>
 
 <!--View/Edit feedback layout-->
+
+<!--
 <ion-toolbar *ngIf="!isRequest">
   <ion-buttons *ngIf="isEditingFeedback" slot="start">
     <ion-button (click)="checkFeedback()">
@@ -65,7 +134,7 @@
   <p><ion-button (click)="editFeedback()" class="valid_btn">Edit</ion-button></p>
   <p><ion-button disabled="true" class="invalid_btn">Delete</ion-button></p>
 </ion-content>
-
+-->
 <ion-content *ngIf="isEditingFeedback && !isRequest" class="ion-padding">
   <h1>Feedback editing</h1>
   <form (ngSubmit)="editForm()" (keyup)="checkEditedDescription()">
@@ -94,3 +163,5 @@
     <p *ngIf="isEditedDescriptionValid"><ion-button type="submit" class="valid_btn">Confirm</ion-button></p>  
   </form>
 </ion-content>
+
+
