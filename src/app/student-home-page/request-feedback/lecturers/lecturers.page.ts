@@ -46,12 +46,11 @@ export class LecturersPage implements OnInit {
     ]
   }
 
-  // TODO: update the modal class to handle all conditions: giving, requesting, editting, responding
-  async showRequestFeedbackModal(lecturer) {
+  async requestFeedbackModal(lecturer) {
     const modal = await this.modalCtrl.create({
       component: FeedbackModalComponent,
       componentProps: {
-        isRequest: false,
+        isStudentRequestingFeedback: true,
         data: lecturer
       }
     });
@@ -59,6 +58,7 @@ export class LecturersPage implements OnInit {
     modal.onDidDismiss()
     .then( res => alert(JSON.stringify(res)))
   }
+
   ngOnInit() {
   }
 
