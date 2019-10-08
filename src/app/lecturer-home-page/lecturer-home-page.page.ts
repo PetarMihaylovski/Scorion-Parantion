@@ -146,7 +146,7 @@ export class LecturerHomePagePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: FeedbackModalComponent,
       componentProps: {
-        isLecturerWritingFeedback: false,
+        isLecturerWritingResponseFeedback: false,
         isLecturerRespondingToFeedbackRequest: true,
         data: feedbackRequest
       }

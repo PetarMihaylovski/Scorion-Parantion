@@ -52,12 +52,11 @@ export class StudentsPage implements OnInit {
     ]
   }
 
-  // TODO: update the modal class to handle all conditions: giving, requesting, editting, responding
-  async showFeedbackModal(student) {
+  async showWriteFeedbackModal(student) {
     const modal = await this.modalCtrl.create({
       component: FeedbackModalComponent,
       componentProps: {
-        isRequest: false,
+        isLecturerWritingFeedback: true,
         data: student
       }
     });

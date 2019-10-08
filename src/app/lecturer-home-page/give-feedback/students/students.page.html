@@ -1,10 +1,10 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let student of students">
-      <ion-avatar slot="start" button (click)="showFeedbackModal(student)">
+      <ion-avatar slot="start" button (click)="showWriteFeedbackModal(student)">
         <ion-icon color="medium" name="md-contact"></ion-icon>
       </ion-avatar>
-      <ion-label button (click)="showFeedbackModal(student)">
+      <ion-label button (click)="showWriteFeedbackModal(student)">
         <h2>{{ student.name }}</h2>
         <h3>{{ student.class }}</h3>
         <p>{{ student.number }}</p>

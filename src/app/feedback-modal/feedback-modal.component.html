@@ -69,7 +69,7 @@
 
 <!--RESPONDING TO REQUEST LECTURER-->
 <ion-toolbar *ngIf="isLecturerRespondingToFeedbackRequest">
-  <ion-buttons *ngIf="isLecturerWritingFeedback" slot="start">
+  <ion-buttons *ngIf="isLecturerWritingResponseFeedback" slot="start">
     <ion-button (click)="checkRequest()">
       <ion-icon slot="icon-only" name="md-return-left"></ion-icon>
     </ion-button>
@@ -81,14 +81,14 @@
   </ion-buttons>
 </ion-toolbar>
 
-<ion-content *ngIf="!isLecturerWritingFeedback && isLecturerRespondingToFeedbackRequest" class="ion-padding">
+<ion-content *ngIf="!isLecturerWritingResponseFeedback && isLecturerRespondingToFeedbackRequest" class="ion-padding">
   <h1>Feedback request</h1>
   <p>Context: {{ data.context }}</p>
   <p>Description: {{ data.description }}</p>
   <p><ion-button (click)="writeFeedback()" class="valid_btn">Write</ion-button></p>
 </ion-content>
 
-<ion-content *ngIf="isLecturerWritingFeedback && isLecturerRespondingToFeedbackRequest" class="ion-padding">
+<ion-content *ngIf="isLecturerWritingResponseFeedback && isLecturerRespondingToFeedbackRequest" class="ion-padding">
   <h1>Feedback request response</h1>
   <form (ngSubmit)="sendForm()" (keyup)="checkDescription()">
     <ion-item>
@@ -154,5 +154,35 @@
       </ion-item>
     <p *ngIf="!isEditedDescriptionValid"><ion-button type="submit" disabled="true" class="invalid_btn">Confirm</ion-button></p>  
     <p *ngIf="isEditedDescriptionValid"><ion-button type="submit" class="valid_btn">Confirm</ion-button></p>  
+  </form>
+</ion-content>
+
+<!--WRITING FEEDBACK LECTURER-->
+<ion-toolbar *ngIf="isLecturerWritingFeedback">
+  <ion-buttons slot="end">
+    <ion-button (click)="close()">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content *ngIf="isLecturerWritingFeedback" class="ion-padding">
+  <h1>Feedback request response</h1>
+  <form (ngSubmit)="sendForm()" (keyup)="checkDescription()">
+    <ion-item>
+      <ion-label position="floating">Context:</ion-label>
+        <ion-select interface="popover" name="context" [(ngModel)]="writtenContext">
+        <ion-select-option value="context1">context1</ion-select-option>
+        <ion-select-option value="context2">context2</ion-select-option>
+        <ion-select-option value="context3">context3</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Description:</ion-label>
+      <ion-textarea type="text" rows="8" [(ngModel)]="writtenDescription" name="desciption"></ion-textarea>
+    </ion-item>
+    <p *ngIf="!isDescriptionValid"><ion-button type="submit" disabled="true" class="invalid_btn">Send</ion-button></p> 
+    <p *ngIf="isDescriptionValid"><ion-button type="submit" class="valid_btn">Send</ion-button></p>  
   </form>
 </ion-content>
