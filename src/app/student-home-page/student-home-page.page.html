@@ -53,7 +53,7 @@
       </ion-item>
     </ion-list>
     -->
-    <ion-list>
+    <ion-list *ngIf="!areFeedbacksToggled">
       <ion-item>
         <ion-range min="0" max="2000" step="100" ticks="false" snaps="true" value="500">
             <ion-icon size="medium" slot="start" class="range-icon" name="md-happy"></ion-icon>
