@@ -84,8 +84,8 @@ export class StudentHomePagePage implements OnInit {
       }
     });
     await modal.present();
-    modal.onDidDismiss()
-    .then( res => alert(JSON.stringify(res)))
+    /*modal.onDidDismiss()
+    .then( res => alert(JSON.stringify(res)))*/
   }
 
   ngOnInit() {

@@ -152,8 +152,8 @@ export class LecturerHomePagePage implements OnInit {
       }
     });
     await modal.present();
-    modal.onDidDismiss()
-    .then( res => alert(JSON.stringify(res)))
+    /*modal.onDidDismiss()
+    .then( res => alert(JSON.stringify(res)))*/
   }
 
   async showGivenFeedbackModal(feedbackGiven) {
@@ -166,8 +166,8 @@ export class LecturerHomePagePage implements OnInit {
       }
     });
     await modal.present();
-    modal.onDidDismiss()
-    .then( res => alert(JSON.stringify(res)))
+    /*modal.onDidDismiss()
+    .then( res => alert(JSON.stringify(res)))*/
   }
 
   ngOnInit() {}
