@@ -36,6 +36,25 @@ ion-label {
     font-size: 1em;
 }
 
+ion-item.feedback-actions ion-buttons {
+    --background: #f2f2f2;
+    margin: auto;
+}
+
+.feedback-actions {
+    
+}
+
+.primary-action-icon ion-icon {
+    font-size: 3rem;
+    color: #e36307;
+}
+
+.secondary-action-icon ion-icon {
+    font-size: 2rem;
+    color: #3d3d3d; 
+}
+
 .item-has-focus.label-floating.sc-ion-label-md-h, .item-has-focus .label-floating.sc-ion-label-md-h, .item-has-focus.label-stacked.sc-ion-label-md-h, .item-has-focus .label-stacked.sc-ion-label-md-h {
     --color: #e36307 !important;
     color: #e36307 !important; 

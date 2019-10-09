@@ -1,7 +1,7 @@
 <ion-content>
     <ion-list>
       <ion-item *ngFor="let lecturer of lecturers">
-        <ion-avatar slot="start" button (click)="showRequestFeedbackModal(lecturer)">
+        <ion-avatar slot="start" button (click)="requestFeedbackModal(lecturer)">
           <ion-icon color="medium" name="md-contact"></ion-icon>
         </ion-avatar>
         <ion-label button (click)="requestFeedbackModal(lecturer)">
