@@ -129,10 +129,14 @@ export class LecturerHomePagePage implements OnInit {
     return await popover.present();
   }
 
-  async settingsPopover(event) {
+  async settingsPopover(event, feedbackClicked) {
     const popover = await this.popoverController.create({
       component: SettingsPopoverComponent,
-      event: event
+      event: event,
+      // load the feedback that was clicked
+      componentProps: {
+        data: null
+      }
     });
     return await popover.present();
   }

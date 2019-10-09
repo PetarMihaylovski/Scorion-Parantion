@@ -127,8 +127,8 @@
   <h1>Feedback review</h1>
   <p>Context: {{ data.context }}</p>
   <p>Description: {{ data.description }}</p>
-  <p><ion-button (click)="editFeedback()" class="valid_btn">Edit</ion-button></p>
-  <p><ion-button disabled="true" class="invalid_btn">Delete</ion-button></p>
+  <p><ion-button (click)="editFeedback()" [disabled]="!data.hasBeenOpened" [class]="data.hasBeenOpened ? 'valid_btn' : 'invalid_btn'">Edit</ion-button></p>
+  <p><ion-button [disabled]="!data.hasBeenOpened" [class]="data.hasBeenOpened ? 'valid_btn' : 'invalid_btn'">Delete</ion-button></p>
 </ion-content>
 
 <ion-content *ngIf="isLecturerReadingGivenFeedback && isLecturerEditingGivenFeedback" class="ion-padding">
