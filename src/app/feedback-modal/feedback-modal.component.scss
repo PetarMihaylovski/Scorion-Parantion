@@ -37,12 +37,19 @@ ion-label {
 }
 
 ion-item.feedback-actions ion-buttons {
-    --background: #f2f2f2;
     margin: auto;
+    height: 5rem;
+    background-color: #7b7b7b;
+    border-radius: 10px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 
-.feedback-actions {
-    
+ion-button.primary-action-icon, ion-button.secondary-action-icon {
+    --border-width: 1px;
+    --border-radius: 10px; 
+    height: 3rem;
+    --background: #f2f2f2;
 }
 
 .primary-action-icon ion-icon {
