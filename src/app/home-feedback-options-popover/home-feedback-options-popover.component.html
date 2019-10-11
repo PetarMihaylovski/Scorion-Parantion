@@ -1,0 +1,40 @@
+<ion-list *ngIf="!isDeleteButtonClicked">
+  <ion-item (click)="edit()">
+    <ion-label>
+      Edit
+    </ion-label>
+    <ion-icon name="md-open"></ion-icon>
+  </ion-item>
+  <ion-item (click)="delete()">
+    <ion-label>
+      Delete
+    </ion-label>
+    <ion-icon name="trash"></ion-icon>
+  </ion-item>
+  <ion-item (click)="close()">
+    <ion-label>
+      Close
+    </ion-label>
+    <ion-icon name="md-backspace"></ion-icon>
+  </ion-item>  
+</ion-list>
+
+<ion-list *ngIf="isDeleteButtonClicked">
+    <ion-item>
+      <ion-label>
+        Delete feedback?
+      </ion-label>
+    </ion-item>
+    <ion-item (click)="confirmDeletion()">
+      <ion-label>
+        Yes
+      </ion-label>
+      <ion-icon name="md-checkmark"></ion-icon>
+    </ion-item>
+    <ion-item (click)="denyDeletion()">
+      <ion-label>
+        No
+      </ion-label>
+      <ion-icon name="md-close"></ion-icon>
+    </ion-item>  
+  </ion-list>

@@ -6,17 +6,53 @@ import { NavController } from '@ionic/angular';
   templateUrl: 'login.page.html',
   styleUrls: ['login.page.scss']
 })
-export class LoginPage implements OnInit {
- isLecturer = true;
-  constructor(private navCtrl: NavController) {}
 
-  ngOnInit() {
+export class LoginPage {
+  user = {
+    username: '',
+    password: '',
+    remembered: null
+  };
+  isFormValid = false;
+  isUsernameValid = false;
+  isPasswordValid = false;
+
+  constructor() {
   }
-  navigateToHomeScreen() {
-    if (this.isLecturer) {
-      this.navCtrl.navigateForward('/lecturer-home');
+
+  checkCurrentForm() {
+    let userObj = this.user;
+    this.isUsernameValid = this.usernameValidation(userObj.username);
+    this.isPasswordValid = this.passwordValidation(userObj.password);
+    if (this.isUsernameValid && this.isPasswordValid) {
+      this.isFormValid = true;
     } else {
-      this.navCtrl.navigateForward('/student-home');
+      this.isFormValid = false;
+    }
+  }
+
+  usernameValidation(username) {
+    if (username.length == 8) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  passwordValidation(password) {
+    if (password.length >= 8 && password.length <= 12) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  submitInputs() {
+    this.checkCurrentForm();
+    if (this.isFormValid) {
+      alert("form is valid");
+    } else {
+      alert("form is invalid")
     }
   }
 }
