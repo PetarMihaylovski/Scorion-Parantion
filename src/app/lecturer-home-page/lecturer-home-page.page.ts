@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-lecturer-home-page',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LecturerHomePagePage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private navCtrl: NavController) { }
 
   ngOnInit() {
   }
 
+  sendFeedback() {
+    // this.router.navigateByUrl('/student-home');
+    this.navCtrl.navigateForward('/give-feedback/tabs/students');
+  }
 }

@@ -15,7 +15,11 @@ const routes: Routes = [
   { path: 'lecturer-feedback-given',
   loadChildren: './lecturer-feedback-given/lecturer-feedback-given.module#LecturerFeedbackGivenPageModule'},
   { path: 'request-feedback', loadChildren: './student-home-page/request-feedback/request-feedback.module#RequestFeedbackPageModule' },
-  { path: 'give-feedback', loadChildren: './lecturer-home-page/give-feedback/give-feedback.module#GiveFeedbackPageModule' }
+  { path: 'give-feedback', loadChildren: './lecturer-home-page/give-feedback/give-feedback.module#GiveFeedbackPageModule' },
+  { path: 'students', loadChildren: './lecturer-home-page/give-feedback/students/students.module#StudentsPageModule' },
+  { path: 'student-classes', loadChildren: './lecturer-home-page/give-feedback/student-classes/student-classes.module#StudentClassesPageModule' },
+  { path: 'lecturers', loadChildren: './student-home-page/request-feedback/lecturers/lecturers.module#LecturersPageModule' },
+  { path: 'courses', loadChildren: './student-home-page/request-feedback/courses/courses.module#CoursesPageModule' }
 
 
 ];

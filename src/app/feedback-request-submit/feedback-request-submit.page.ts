@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./feedback-request-submit.page.scss'],
 })
 export class FeedbackRequestSubmitPage implements OnInit {
-
+  isLecturer = true;
   constructor() { }
 
   ngOnInit() {
@@ -14,5 +14,13 @@ export class FeedbackRequestSubmitPage implements OnInit {
 
   alert() {
     window.alert(`i work`);
+  }
+
+  getPreviousForm() {
+    if (this.isLecturer) {
+      return '/give-feedback';
+    } else {
+      return '/request-feedback';
+    }
   }
 }
