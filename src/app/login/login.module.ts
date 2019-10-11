@@ -10,7 +10,7 @@ import { LoginPage } from './login.page';
     IonicModule,
     CommonModule,
     FormsModule,
-    RouterModule.forChild([{ path: '', component: LoginPage }])
+    RouterModule.forChild([{ path: '', component: LoginPage }]),
   ],
   declarations: [LoginPage]
 })

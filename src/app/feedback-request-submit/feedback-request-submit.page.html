@@ -5,7 +5,12 @@
       Proffesor name
       <!-- to be made dynamic -->
     </ion-text>
-    <ion-icon slot="end" name="arrow-back"></ion-icon>
+    <!--
+      <ion-icon slot="end" name="arrow-back"></ion-icon>
+    -->
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="getPreviousForm()"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
