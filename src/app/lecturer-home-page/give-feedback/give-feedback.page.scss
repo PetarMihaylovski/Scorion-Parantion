@@ -1,0 +1,104 @@
+.main-toolbar {
+    --background: #e36307;
+    color: #f2f2f2;
+}
+
+.secondary-toolbar ion-segment-button {
+    --background-hover: #f2f2f2;
+    --color-checked: #e36307;
+    --color-unchecked: #f2f2f2;
+}
+
+.secondary-toolbar ion-segment-button {
+    --background-hover: #f2f2f2;
+    --color-checked: #e36307;
+    --color-unchecked: #f2f2f2;
+}
+
+ion-icon {
+    font-size: 3rem;
+    color: #f2f2f2;
+}
+
+ion-icon.valid_icon {
+    font-size: 2rem;
+    color: #3d3d3d;
+}
+
+ion-icon.invalid_icon {
+    font-size: 2rem;
+    color: #f2f2f2;
+}
+
+ion-title {
+    font-size: 2rem;
+}
+
+.latest-feedback {
+    font-size: 1rem;
+    color: #7b7b7b;
+    font-weight: bold;
+    text-align: left;
+}
+
+.list-option {
+    --background: #f2f2f2;
+    color: #3d3d3d;
+}
+
+.list-label {
+    font-size: 2rem;
+}
+
+ion-label {
+    font-size: 1rem;
+}
+
+ion-list {
+    padding-top: 0em;
+    padding-bottom: 0em;
+}
+
+.sc-ion-card-md-h {
+    margin-top: 0em;
+    box-shadow: none;
+}
+
+ion-fab-button {
+    --background: #ff9340; // contrast color to the main orange we use
+    --background-hover: #ff7b16;
+    --background-focused: #ff7b16;
+    --background-activated: #ff7b16;
+}
+
+ion-fab-button.simple-button {
+    --background: none; 
+    --background-activated: #ff9340;
+    --background-hover: #ff9340;
+    --background-focused: #ff9340;
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    --box-shadow: inset 1px -1px 11px -5px rgba(0,0,0,0.48);
+}
+
+.request-list {
+    width: 80%;
+    margin: auto;
+}
+
+.card-wrapper {
+    height: 100%;
+    padding: 20px 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.custom-card.card {
+    height: 100%;
+    margin: 0;
+}
+
+.scroll-view {
+    height: 100%;
+}

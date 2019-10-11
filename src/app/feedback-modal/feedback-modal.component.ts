@@ -12,11 +12,29 @@ export class FeedbackModalComponent implements OnInit {
   writtenDescription = '';
   editedContext = '';
   editedDescription = '';
-  isWritingFeedback = false;
-  isEditingFeedback = false;
+  isWritingFeedback: any;
+  isEditingFeedback: any;
   isRequest: any;
-  isDescriptionValid = false;
-  isEditedDescriptionValid = false;
+  isDescriptionValid: any;
+  isEditedDescriptionValid: any;
+  //---
+  isStudentRequestingFeedback: any;
+  lecturerName: any;
+  lecturerCourse: any;
+  requestedContext = '';
+  requestedDescription = '';
+  isRequestedContextValid: any;
+  isRequestedDescriptionValid: any;
+
+  isStudentReadingFeedback: any;
+
+  isLecturerWritingResponseFeedback: any;
+  isLecturerRespondingToFeedbackRequest: any;
+
+  isLecturerReadingGivenFeedback: any;
+  isLecturerEditingGivenFeedback: any;
+
+  isLecturerWritingFeedback: any;
 
   constructor(private modalCtrl: ModalController) { }
 
@@ -25,11 +43,11 @@ export class FeedbackModalComponent implements OnInit {
   }
 
   writeFeedback() {
-    this.isWritingFeedback = true;
+    this.isLecturerWritingResponseFeedback = true;
   }
 
   checkRequest() {
-    this.isWritingFeedback = false;
+    this.isLecturerWritingResponseFeedback = false;
   }
 
   checkDescription() {
@@ -57,15 +75,42 @@ export class FeedbackModalComponent implements OnInit {
   }
 
   checkFeedback() {
-    this.isEditingFeedback = false;
+    this.isLecturerEditingGivenFeedback = false;
   }
 
   editFeedback() {
-    this.isEditingFeedback = true;
+    this.isLecturerEditingGivenFeedback = true;
   }
 
   async editForm() {
     await this.modalCtrl.dismiss({changed_context: this.editedContext, changed_description: this.editedDescription});
+  }
+
+  async requestFeedback() {
+    await this.modalCtrl.dismiss({requested_context: this.requestedContext, requested_description: this.requestedDescription});
+  }
+
+  checkRequestValidity() {
+    return this.checkRequestedContext() && this.checkRequestedDescription();
+  }
+  checkRequestedDescription() {
+    if (this.requestedDescription.length > 0) {
+      this.isRequestedDescriptionValid = true;
+      return true;
+    } else {
+      this.isRequestedDescriptionValid = false;
+      return false;
+    }
+  }
+
+  checkRequestedContext() {
+    if (this.requestedContext.length > 0) {  
+      this.isRequestedContextValid = true;
+      return true;
+    } else {
+      this.isRequestedContextValid = false;
+      return false;
+    }
   }
 
   ngOnInit() {}

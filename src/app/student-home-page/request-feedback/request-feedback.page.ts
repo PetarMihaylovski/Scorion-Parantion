@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-request-feedback',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RequestFeedbackPage implements OnInit {
 
-  constructor() { }
+  constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
   }
 
+  goToStudentHomePage() {
+    this.navCtrl.navigateBack('/student-home');
+  }
+
+  goToLecturers() {
+    this.navCtrl.navigateForward('/request-feedback/tabs/lecturers');
+  }
+
+  goToCourses() {
+    this.navCtrl.navigateForward('/request-feedback/tabs/courses');
+  }
 }

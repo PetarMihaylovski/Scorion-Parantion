@@ -7,7 +7,7 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['login.page.scss']
 })
 
-export class LoginPage {
+export class LoginPage implements OnInit {
   user = {
     username: '',
     password: '',
@@ -17,7 +17,7 @@ export class LoginPage {
   isUsernameValid = false;
   isPasswordValid = false;
 
-  constructor() {
+  constructor(private navCtrl: NavController) {
   }
 
   checkCurrentForm() {
@@ -32,7 +32,7 @@ export class LoginPage {
   }
 
   usernameValidation(username) {
-    if (username.length == 8) {
+    if (username.length >= 7 && username.length <= 8) {
       return true;
     } else {
       return false;
@@ -40,7 +40,7 @@ export class LoginPage {
   }
 
   passwordValidation(password) {
-    if (password.length >= 8 && password.length <= 12) {
+    if (password.length >= 7 && password.length <= 12) {
       return true;
     } else {
       return false;
@@ -50,9 +50,21 @@ export class LoginPage {
   submitInputs() {
     this.checkCurrentForm();
     if (this.isFormValid) {
-      alert("form is valid");
+      //alert("form is valid");
     } else {
-      alert("form is invalid")
+      //alert("form is invalid")
     }
   }
+
+  navigateToHomeScreen() {
+    if (this.user.username == "lecturer" && this.user.password == "lecturer") {
+      this.navCtrl.navigateForward('/lecturer-home');
+    } else if (this.user.username == "student" && this.user.password == "student") {
+      this.navCtrl.navigateForward('/student-home');
+    } else {
+      alert("invalid login");
+    }
+  }
+
+  ngOnInit() {}
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-settings-popover',
@@ -9,7 +10,7 @@ import { PopoverController } from '@ionic/angular';
 export class SettingsPopoverComponent implements OnInit {
   areNotificationsDisabled = false;
   areSoundsDisabled = false;
-  constructor(public popoverController: PopoverController) { }
+  constructor(public popoverController: PopoverController, private navCtrl: NavController) { }
 
   ngOnInit() {}
   
@@ -23,5 +24,10 @@ export class SettingsPopoverComponent implements OnInit {
 
   toggleSounds() {
     this.areSoundsDisabled = !this.areSoundsDisabled;
+  }
+
+  signOut() {
+    this.navCtrl.navigateForward('');
+    this.popoverController.dismiss();
   }
 }

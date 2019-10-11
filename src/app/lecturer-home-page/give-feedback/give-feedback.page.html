@@ -1,26 +1,25 @@
-
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="main-toolbar">
       <ion-buttons slot="start">
-          <ion-back-button [defaultHref]="'/lecturer-home'"></ion-back-button>
-        </ion-buttons>
+        <ion-icon name="md-arrow-back" (click)="goToLecturerHomePage()"></ion-icon>
+      </ion-buttons>
     <ion-title>Give Feedback</ion-title>
   </ion-toolbar>
+
+  <ion-toolbar class="secondary-toolbar">
+    <ion-segment>
+      <ion-segment-button value="students" checked (click)="goToStudents()">
+        Students
+      </ion-segment-button>
+      <ion-segment-button value="classes" (click)="goToClasses()">
+        Classes
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
+
 <ion-content>
-    <ion-tabs>
-        <ion-tab-bar slot="top">
-          <ion-tab-button tab="students">
-            <ion-label> Students </ion-label>
-            <ion-icon name="person"></ion-icon>
-          </ion-tab-button>
-          <ion-tab-button tab="student-classes">
-              <ion-label> Classes </ion-label>
-            <ion-icon name="people"></ion-icon>
-            </ion-tab-button>
-        </ion-tab-bar>
-      </ion-tabs>
+  <!-- if this gets deleted the content is removed -->
+  <ion-tabs>
+  </ion-tabs>
 </ion-content>
-
-
-

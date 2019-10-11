@@ -1,29 +1,92 @@
-<ion-header>
-  <ion-toolbar class="home">
-    <ion-icon name="person" slot="start"></ion-icon>
-    <ion-title>Student</ion-title>
-    <ion-buttons slot="end">
-      <ion-button><ion-icon name="menu"></ion-icon></ion-button>
+<ion-toolbar class="main-toolbar">
+    <ion-buttons slot="secondary">
+      <ion-button>
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
     </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button button (click)="settingsPopover($event)">
+        <ion-icon slot="icon-only" name="settings"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
   </ion-toolbar>
-</ion-header>
-<ion-content>
-  <ion-list>
-    <ion-list-header class="latest-feedback">Latest Feedback</ion-list-header>
-    <ion-item>
-        <ion-avatar slot="start">
-            <ion-icon color="medium" name="person"></ion-icon>
-          </ion-avatar>
-      <ion-label>
-        <h2>Sender name</h2>
-        <h3>Feedback title</h3>
-        <p>This is a placeholder!</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="requestFeedback()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-</ion-content>
+  
+  <ion-toolbar class="secondary-toolbar">
+    <ion-segment>
+      <ion-segment-button value="all" checked ion-button (click)="toggleFeedbackScreen()">
+        Received
+      </ion-segment-button>
+      <ion-segment-button value="favorites" ion-button (click)="toggleFeedbackScreen()">
+        Portfolio
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  
+  <ion-content>
+    <ion-list *ngIf="areFeedbacksToggled">
+      <ion-item *ngFor="let feedback of feedbacks">
+        <ion-avatar slot="start" button (click)="showFeedbackModal(feedback)">
+          <ion-icon color="medium" name="today"></ion-icon>
+        </ion-avatar>
+        <ion-label button (click)="showFeedbackModal(feedback)">
+          <h2>{{ feedback.sender }}</h2>
+          <h3>{{ feedback.context }}</h3>
+          <p>{{ feedback.date }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <!--
+    <ion-list *ngIf="!areRequestsToggled">
+      <ion-item *ngFor="let feedbackGiven of feedbacksGiven">
+        <ion-avatar slot="start" button (click)="showFeedbackGivenModal(feedbackGiven)">
+          <ion-icon color="medium" name="alert"></ion-icon>
+        </ion-avatar>
+        <ion-label button (click)="showFeedbackGivenModal(feedbackGiven)">
+          <h2>{{ feedbackGiven.recipient }}</h2>
+          <h3>{{ feedbackGiven.date }}</h3>
+          <p>{{ feedbackGiven.context }}</p>
+        </ion-label> 
+        <ion-fab-button class="simple-button" [disabled]="!feedbackGiven.hasBeenOpened" button (click)="feedbackOptionsPopover($event)">
+          <ion-icon [ngClass]="feedbackGiven.hasBeenOpened ? 'valid_icon' : 'invalid_icon'" name="more"></ion-icon>
+        </ion-fab-button>
+      </ion-item>
+    </ion-list>
+    -->
+    <ion-list *ngIf="!areFeedbacksToggled">
+      <ion-item>
+        <ion-range min="0" max="2000" step="100" ticks="false" snaps="true" value="500">
+            <ion-icon size="medium" slot="start" class="range-icon" name="md-happy"></ion-icon>
+        </ion-range>
+      </ion-item>
+      
+      <ion-item>
+        <ion-range min="0" max="2000" step="100" ticks="false" snaps="true" value="500">
+            <ion-icon size="medium" slot="start" class="range-icon" name="md-beer"></ion-icon>
+        </ion-range>
+      </ion-item>
+        
+      <ion-item>
+        <ion-range min="0" max="2000" step="100" ticks="false" snaps="true" value="1200">
+            <ion-icon size="medium" slot="start" class="range-icon" name="md-bulb"></ion-icon>
+        </ion-range>
+      </ion-item>
+
+      <ion-item>
+        <ion-range color="" min="0" max="2000" step="100" ticks="false" snaps="true" value="900">
+            <ion-icon size="medium" slot="start" class="range-icon" name="md-build"></ion-icon>
+        </ion-range>
+      </ion-item>
+      
+      <ion-item>
+        <ion-range min="0" max="2000" step="100" ticks="false" snaps="true" value="300">
+            <ion-icon size="medium" slot="start" class="range-icon" name="md-calendar"></ion-icon>
+        </ion-range>
+      </ion-item>
+    </ion-list>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button button (click)="requestFeedback()">
+        <ion-icon name="md-add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab> 
+  </ion-content>

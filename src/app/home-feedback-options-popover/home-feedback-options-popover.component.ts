@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ModalController } from '@ionic/angular';
+import { FeedbackModalComponent } from '../feedback-modal/feedback-modal.component';
 
 @Component({
   selector: 'app-home-feedback-options-popover',
@@ -8,7 +9,9 @@ import { PopoverController } from '@ionic/angular';
 })
 export class HomeFeedbackOptionsPopoverComponent implements OnInit {
   isDeleteButtonClicked = false;
-  constructor(public popoverController: PopoverController) { }
+  data: any;
+  
+  constructor(public popoverController: PopoverController, private modalCtrl: ModalController) {}
 
   ngOnInit() {}
 
@@ -16,8 +19,17 @@ export class HomeFeedbackOptionsPopoverComponent implements OnInit {
     this.popoverController.dismiss();
   }
 
-  edit() {
-    alert("will open the feedback writing page with the information of that feedback")
+  async showEditGivenFeedbackModal() {
+    const modal = await this.modalCtrl.create({
+      component: FeedbackModalComponent,
+      componentProps: {
+        isLecturerReadingGivenFeedback: true,
+        isLecturerEditingGivenFeedback: true,
+        // TODO: find a way to load the other feedback info as well
+        data: { hasBeenOpened: true }
+      }
+    });
+    await modal.present();
     this.popoverController.dismiss();
   }
 

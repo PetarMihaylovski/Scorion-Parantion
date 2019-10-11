@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
 import { HomeFeedbackOptionsPopoverComponent } from '../home-feedback-options-popover/home-feedback-options-popover.component';
 import { SettingsPopoverComponent } from '../settings-popover/settings-popover.component';
@@ -15,7 +17,8 @@ export class LecturerHomePagePage implements OnInit {
   feedbacksGiven: any;
   areRequestsToggled = true;
   
-  constructor(public popoverController: PopoverController, private modalCtrl: ModalController) { 
+  constructor(public popoverController: PopoverController, 
+    private modalCtrl: ModalController, private router: Router, private navCtrl: NavController) { 
     this.feedbackRequests = [
       {
         sender: "John",
@@ -60,7 +63,7 @@ export class LecturerHomePagePage implements OnInit {
         description: ""
       }
     ];
-
+    
     this.feedbacksGiven = [
       {
         recipient: "Johny",
@@ -118,10 +121,6 @@ export class LecturerHomePagePage implements OnInit {
     this.areRequestsToggled = !this.areRequestsToggled;
   }
 
-  goToStudentCoursesPage() {
-    alert("go to Student/Courses page");
-  }
-
   async feedbackOptionsPopover(event) {
     const popover = await this.popoverController.create({
       component: HomeFeedbackOptionsPopoverComponent,
@@ -130,40 +129,50 @@ export class LecturerHomePagePage implements OnInit {
     return await popover.present();
   }
 
-  async settingsPopover(event) {
+  async settingsPopover(event, feedbackClicked) {
     const popover = await this.popoverController.create({
       component: SettingsPopoverComponent,
-      event: event
+      event: event,
+      // load the feedback that was clicked
+      componentProps: {
+        data: null
+      }
     });
     return await popover.present();
   }
 
+  sendFeedback() {
+    // this.router.navigateByUrl('/student-home');
+    this.navCtrl.navigateForward('/give-feedback/tabs/students');
+  }
+  
   async showFeedbackRequestModal(feedbackRequest) {
     const modal = await this.modalCtrl.create({
       component: FeedbackModalComponent,
       componentProps: {
-        isRequest: true,
+        isLecturerWritingResponseFeedback: false,
+        isLecturerRespondingToFeedbackRequest: true,
         data: feedbackRequest
       }
     });
     await modal.present();
-    modal.onDidDismiss()
-    .then( res => alert(JSON.stringify(res)))
+    /*modal.onDidDismiss()
+    .then( res => alert(JSON.stringify(res)))*/
   }
 
-  async showFeedbackGivenModal(feedbackGiven) {
+  async showGivenFeedbackModal(feedbackGiven) {
     const modal = await this.modalCtrl.create({
       component: FeedbackModalComponent,
       componentProps: {
-        isRequest: false,
+        isLecturerReadingGivenFeedback: true,
+        isLecturerEditingGivenFeedback: false,
         data: feedbackGiven
       }
     });
     await modal.present();
-    modal.onDidDismiss()
-    .then( res => alert(JSON.stringify(res)))
+    /*modal.onDidDismiss()
+    .then( res => alert(JSON.stringify(res)))*/
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }
