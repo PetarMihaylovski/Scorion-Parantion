@@ -92,6 +92,6 @@ export class StudentHomePagePage implements OnInit {
   }
 
   requestFeedback() {
-    this.navCtrl.navigateForward('/request-feedback/tabs/lecturers');
+    this.navCtrl.navigateForward('/request-feedback');
   }
 }

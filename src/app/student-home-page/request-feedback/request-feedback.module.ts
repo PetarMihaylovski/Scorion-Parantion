@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { RequestFeedbackPage } from './request-feedback.page';
-import { RequestFeedbackRoutingModule } from './request-feedback-routing.module';
 
 const routes: Routes = [
   {
@@ -20,8 +19,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RequestFeedbackRoutingModule
-   // RouterModule.forChild(routes)
+    RouterModule.forChild(routes)
   ],
   declarations: [RequestFeedbackPage]
 })
