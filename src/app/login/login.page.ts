@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { LecturerHttpService } from '../services/lecturer-http.service';
+import { Lecturer } from '../modal-classes/lecturer.model';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +11,7 @@ import { NavController } from '@ionic/angular';
 })
 
 export class LoginPage implements OnInit {
-  user = {
+  userCredentials = {
     username: '',
     password: '',
     remembered: null
@@ -17,11 +20,16 @@ export class LoginPage implements OnInit {
   isUsernameValid = false;
   isPasswordValid = false;
 
-  constructor(private navCtrl: NavController) {
+  lecturers:Lecturer[] = [];
+
+  constructor(
+    private navCtrl: NavController,
+    private http: HttpClient,
+    private lecturerService: LecturerHttpService) {
   }
 
   checkCurrentForm() {
-    let userObj = this.user;
+    let userObj = this.userCredentials;
     this.isUsernameValid = this.usernameValidation(userObj.username);
     this.isPasswordValid = this.passwordValidation(userObj.password);
     if (this.isUsernameValid && this.isPasswordValid) {
@@ -32,39 +40,32 @@ export class LoginPage implements OnInit {
   }
 
   usernameValidation(username) {
-    if (username.length >= 7 && username.length <= 8) {
+    if (username.length >= 0 && username.length <= 100) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   passwordValidation(password) {
-    if (password.length >= 7 && password.length <= 12) {
+    if (password.length >= 0 && password.length <= 100) {
       return true;
-    } else {
-      return false;
+    }
+    return false;
+  }
+
+  login() {
+    let user = this.lecturers.map(lecturer =>{
+      return lecturer.name === this.userCredentials.username && lecturer.password === this.userCredentials.password;
+    });
+
+    if(user){
+      this.navCtrl.navigateForward('lecturer-home');
     }
   }
 
-  submitInputs() {
-    this.checkCurrentForm();
-    if (this.isFormValid) {
-      //alert("form is valid");
-    } else {
-      //alert("form is invalid")
-    }
+  ngOnInit() {
+    this.lecturerService.getLecturers().subscribe(lecturers =>{
+      this.lecturers = lecturers;
+    });
   }
-
-  navigateToHomeScreen() {
-    if (this.user.username == "lecturer" && this.user.password == "lecturer") {
-      this.navCtrl.navigateForward('/lecturer-home');
-    } else if (this.user.username == "student" && this.user.password == "student") {
-      this.navCtrl.navigateForward('/student-home');
-    } else {
-      alert("invalid login");
-    }
-  }
-
-  ngOnInit() {}
 }
