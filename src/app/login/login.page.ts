@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
 import { LecturerHttpService } from '../services/lecturer-http.service';
 import { Lecturer } from '../modal-classes/lecturer.model';
+import { Student } from '../modal-classes/student.model';
+import { StudentHttpService } from '../services/student-http.service';
+import { Person } from '../modal-classes/person.model';
 
 @Component({
   selector: 'app-login',
@@ -16,16 +18,18 @@ export class LoginPage implements OnInit {
     password: '',
     remembered: null
   };
-  isFormValid = false;
-  isUsernameValid = false;
-  isPasswordValid = false;
+  isFormValid: boolean = false;
+  isUsernameValid: boolean = false;
+  isPasswordValid: boolean = false;
 
-  lecturers:Lecturer[] = [];
+  lecturers: Lecturer[] = [];
+  students: Student[] = [];
+  wrongCredentials: boolean = false;
 
   constructor(
     private navCtrl: NavController,
-    private http: HttpClient,
-    private lecturerService: LecturerHttpService) {
+    private lecturerService: LecturerHttpService,
+    private studentService: StudentHttpService) {
   }
 
   checkCurrentForm() {
@@ -40,32 +44,54 @@ export class LoginPage implements OnInit {
   }
 
   usernameValidation(username) {
-    if (username.length >= 0 && username.length <= 100) {
+    if (username.length >= 3 && username.length <= 100) {
       return true;
     }
     return false;
   }
 
   passwordValidation(password) {
-    if (password.length >= 0 && password.length <= 100) {
+    if (password.length >= 3 && password.length <= 100) {
       return true;
     }
     return false;
   }
 
   login() {
-    let user = this.lecturers.map(lecturer =>{
-      return lecturer.name === this.userCredentials.username && lecturer.password === this.userCredentials.password;
+    let lecturer: Person;
+    let student: Person;
+    this.lecturers.forEach(element => {
+      if (element.username === this.userCredentials.username && element.password === this.userCredentials.password) {
+        lecturer = element;
+      }
     });
 
-    if(user){
+    this.students.forEach(element => {
+      if (element.username === this.userCredentials.username && element.password === this.userCredentials.password) {
+       student = element;
+      }
+    });
+
+    console.log(lecturer);
+    console.log(student);
+
+    if (lecturer) {
       this.navCtrl.navigateForward('lecturer-home');
+    }
+    else if (student) {
+      this.navCtrl.navigateForward('student-home');
+    }
+    else {
+      this.wrongCredentials = true;
     }
   }
 
   ngOnInit() {
-    this.lecturerService.getLecturers().subscribe(lecturers =>{
+    this.lecturerService.getLecturers().subscribe(lecturers => {
       this.lecturers = lecturers;
     });
+    this.studentService.getStudents().subscribe(students => {
+      this.students = students;
+    })
   }
 }
