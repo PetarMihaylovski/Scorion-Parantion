@@ -83,6 +83,9 @@ export class LoginPage implements OnInit {
     }
     else {
       this.wrongCredentials = true;
+      setTimeout(()=> {
+        this.wrongCredentials = false;
+      }, 3000);
     }
   }
 

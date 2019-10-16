@@ -25,6 +25,9 @@
       <ion-label>Remember me</ion-label>
       <ion-checkbox [(ngModel)]="userCredentials.remembered" name="remembered" id="remembered"></ion-checkbox>
     </ion-item>
+    <ion-item *ngIf="wrongCredentials">
+        <h1>Error</h1>
+    </ion-item>
     <div class="ion-text-center">
       <button type="submit" [ngClass]="isFormValid ? 'valid_form' : 'invalid_form'" [disabled]="!isFormValid">Log in</button>
     </div>
