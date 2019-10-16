@@ -1,48 +1,49 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RequestFeedbackPage } from './request-feedback.page';
+import { LecturerHomePagePage } from './lecturer-home-page.page';
+
 
 const routes: Routes = [
     {
         path: 'tabs',
-        component: RequestFeedbackPage,
+        component: LecturerHomePagePage,
         children: [
             {
-                path: 'lecturers',
+                path: 'requests',
                 children: [
                     {
                         path: '',
-                        loadChildren: './lecturers/lecturers.module#LecturersPageModule'
+                        loadChildren: './requests/requests.module#RequestsPageModule'
                     }
                 ]
             },
             {
-                path: 'courses',
+                path: 'given',
                 children: [
                     {
                         path: '',
-                        loadChildren: './../request-feedback/courses/courses.module#CoursesPageModule'
+                        loadChildren: './given/given.module#GivenPageModule'
                     }
                 ]
             },
             {
                 path: '',
-                redirectTo: '/request-feedback/tabs/lecturers',
+                redirectTo: '/lecturer-home-page/tabs/requests',
                 pathMatch: 'full'
             }
         ]
     },
-      {
+    {
         path: '',
-        redirectTo: '/request-feedback/tabs/lecturers',
+        redirectTo: '/lecturer-home-page/tabs/requests',
         pathMatch: 'full'
-      }
+    },
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class RequestFeedbackRoutingModule {
+export class LecturerHomePageRoutingModule {
 
 }

@@ -16,12 +16,4 @@ export class RequestFeedbackPage implements OnInit {
   goToStudentHomePage() {
     this.navCtrl.navigateBack('/student-home');
   }
-
-  goToLecturers() {
-    this.navCtrl.navigateForward('/request-feedback/tabs/lecturers');
-  }
-
-  goToCourses() {
-    this.navCtrl.navigateForward('/request-feedback/tabs/courses');
-  }
 }

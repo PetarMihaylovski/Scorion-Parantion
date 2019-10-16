@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { GiveFeedbackPage } from './give-feedback.page';
-import { GiveFeedbackRoutingModule } from './give-feedback-routing.module';
 
 const routes: Routes = [
   {
@@ -20,8 +19,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    GiveFeedbackRoutingModule
-   // RouterModule.forChild(routes)
+    RouterModule.forChild(routes)
   ],
   declarations: [GiveFeedbackPage]
 })

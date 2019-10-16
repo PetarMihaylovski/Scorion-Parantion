@@ -12,22 +12,8 @@ export class GiveFeedbackPage implements OnInit {
   constructor(private navCtrl: NavController) { }
 
   ngOnInit() {}
-  /*
-  onClick() {
-    this.navCtrl.navigateBack('/lecturer-home');
-    return;
-  }
-  */
   
   goToLecturerHomePage() {
     this.navCtrl.navigateBack('/lecturer-home');
-  }
-
-  goToStudents() {
-    this.navCtrl.navigateForward('/give-feedback/tabs/students');
-  }
-
-  goToClasses() {
-    this.navCtrl.navigateForward('/give-feedback/tabs/student-classes');
   }
 }

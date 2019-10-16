@@ -143,7 +143,7 @@ export class LecturerHomePagePage implements OnInit {
 
   sendFeedback() {
     // this.router.navigateByUrl('/student-home');
-    this.navCtrl.navigateForward('/give-feedback/tabs/students');
+    this.navCtrl.navigateForward('/give-feedback');
   }
   
   async showFeedbackRequestModal(feedbackRequest) {
