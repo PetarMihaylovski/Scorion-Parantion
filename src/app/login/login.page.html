@@ -25,8 +25,11 @@
       <ion-label>Remember me</ion-label>
       <ion-checkbox [(ngModel)]="userCredentials.remembered" name="remembered" id="remembered"></ion-checkbox>
     </ion-item>
-    <ion-item *ngIf="wrongCredentials">
-        <h1>Error</h1>
+    <ion-item>
+      <div [ngClass]="wrongCredentials ? 'animate-flicker' : ''">
+        <h1>Error: </h1>
+        <h3>Invalid login credentials</h3>
+      </div>
     </ion-item>
     <div class="ion-text-center">
       <button type="submit" [ngClass]="isFormValid ? 'valid_form' : 'invalid_form'" [disabled]="!isFormValid">Log in</button>
