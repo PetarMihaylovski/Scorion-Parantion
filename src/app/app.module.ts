@@ -11,11 +11,11 @@ import { AppComponent } from './app.component';
 import { FeedbackModalComponent } from './feedback-modal/feedback-modal.component';
 import { FormsModule } from '@angular/forms';
 import { SettingsPopoverComponent } from './settings-popover/settings-popover.component';
-
+import {HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [AppComponent, FeedbackModalComponent, SettingsPopoverComponent],
   entryComponents: [FeedbackModalComponent, SettingsPopoverComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,
