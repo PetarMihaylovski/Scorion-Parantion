@@ -9,14 +9,14 @@
     </ion-text>
     <ion-item [ngClass]="isUsernameValid ? 'valid_input' : 'invalid_input'">
       <ion-label position="floating">
-        Username <ion-icon [name]="isUsernameValid ? 'checkmark' : 'close'"></ion-icon>
+        Username <ion-icon [ngClass]="wrongCredentials ? 'unknown-login' : 'invalid-login'" name='close'></ion-icon>
       </ion-label>
       <ion-input  type="text" placeholder="Username" name="username" id="username"
       [(ngModel)]="userCredentials.username" minLength="3" maxLength="100" #username="ngModel"></ion-input>
     </ion-item>
     <ion-item [ngClass]="isPasswordValid ? 'valid_input' : 'invalid_input'">
       <ion-label position="floating">
-        Password <ion-icon [name]="isPasswordValid ? 'checkmark' : 'close'"></ion-icon>
+        Password <ion-icon [ngClass]="wrongCredentials ? 'unknown-login' : 'invalid-login'" name='close'></ion-icon>
       </ion-label>
       <ion-input type="password" placeholder="Password" name="password" id="password"
       [(ngModel)]="userCredentials.password" minLength="3" maxLength="100" #password="ngModel"></ion-input>
@@ -24,12 +24,6 @@
     <ion-item>
       <ion-label>Remember me</ion-label>
       <ion-checkbox [(ngModel)]="userCredentials.remembered" name="remembered" id="remembered"></ion-checkbox>
-    </ion-item>
-    <ion-item>
-      <div [ngClass]="wrongCredentials ? 'animate-flicker' : ''">
-        <h1>Error: </h1>
-        <h3>Invalid login credentials</h3>
-      </div>
     </ion-item>
     <div class="ion-text-center">
       <button type="submit" [ngClass]="isFormValid ? 'valid_form' : 'invalid_form'" [disabled]="!isFormValid">Log in</button>
