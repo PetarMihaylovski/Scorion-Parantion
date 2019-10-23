@@ -1,11 +1,52 @@
 <ion-header>
   <ion-toolbar class="main-toolbar">
       <ion-buttons slot="start">
-        <ion-icon name="md-arrow-back" (click)="goToLecturerHomePage()"></ion-icon>
+        <ion-icon name="md-arrow-back" class="back-btn" (click)="goToLecturerHomePage()"></ion-icon>
       </ion-buttons>
     <ion-title>Give Feedback</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form id="form" (keyup)="checkCurrentForm()" (ngSubmit)="submitFeedback()">
+    <ion-item [ngClass]="isStudentValid ? 'valid_input' : 'invalid_input'" name="inputField0">
+      <ion-label position="floating">
+        Student <ion-icon [name]="isStudentValid ? 'checkmark' : 'close'"></ion-icon>
+      </ion-label>
+      <ion-input  type="text" placeholder="Student" name="student" id="student"
+      [(ngModel)]="feedback.student" minLength="7" maxLength="8" #student="ngModel"></ion-input>
+    </ion-item>
+
+    <ion-item [ngClass]="isContextValid ? 'valid_input' : 'invalid_input'" name="inputField1">
+      <ion-label position="floating">
+        Context <ion-icon [name]="isContextValid ? 'checkmark' : 'close'"></ion-icon>
+      </ion-label>
+      <ion-input type="text" placeholder="Context" name="context" id="context"
+      [(ngModel)]="feedback.context" minLength="7" maxLength="12" #context="ngModel"></ion-input>
+    </ion-item>
+    
+    <ion-item [ngClass]="isDescriptionValid ? 'valid_input' : 'invalid_input'" name="inputField2">
+      <ion-label position="floating">
+        Description <ion-icon [name]="isDescriptionValid ? 'checkmark' : 'close'"></ion-icon>
+      </ion-label>
+      <ion-textarea type="text" rows="8" placeholder="Description" name="description" id="description"
+      [(ngModel)]="feedback.description" minLength="7" maxLength="12" #description="ngModel"></ion-textarea>
+    </ion-item>
+
+    <ion-item class="feedback-actions">
+      <ion-buttons>
+        <ion-button class="secondary-action-icon">
+          <ion-icon name="attach"></ion-icon>
+        </ion-button>
+        
+        <ion-button class="primary-action-icon" (click)="toggleRecording()"> 
+          <ion-icon [name]="isRecording ? 'pause' : 'radio-button-on'"></ion-icon>
+        </ion-button>
+        
+        <ion-button class="secondary-action-icon" [disabled]="!isFormValid" (click)="navigateToHomeScreen()">
+          <ion-icon [ngClass]="isFormValid ? '' : ''" name="send"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>    
+  </form>
 </ion-content>

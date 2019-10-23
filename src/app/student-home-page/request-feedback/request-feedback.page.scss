@@ -15,18 +15,8 @@
     --color-unchecked: #f2f2f2;
 }
 
-ion-icon {
+ion-icon.back-btn {
     font-size: 3rem;
-    color: #f2f2f2;
-}
-
-ion-icon.valid_icon {
-    font-size: 2rem;
-    color: #3d3d3d;
-}
-
-ion-icon.invalid_icon {
-    font-size: 2rem;
     color: #f2f2f2;
 }
 
@@ -34,71 +24,59 @@ ion-title {
     font-size: 2rem;
 }
 
-.latest-feedback {
-    font-size: 1rem;
-    color: #7b7b7b;
-    font-weight: bold;
-    text-align: left;
-}
-
-.list-option {
-    --background: #f2f2f2;
+body {
     color: #3d3d3d;
 }
 
-.list-label {
-    font-size: 2rem;
-}
-
-ion-label {
-    font-size: 1rem;
-}
-
-ion-list {
-    padding-top: 0em;
-    padding-bottom: 0em;
-}
-
-.sc-ion-card-md-h {
-    margin-top: 0em;
-    box-shadow: none;
-}
-
-ion-fab-button {
-    --background: #ff9340; // contrast color to the main orange we use
-    --background-hover: #ff7b16;
-    --background-focused: #ff7b16;
-    --background-activated: #ff7b16;
-}
-
-ion-fab-button.simple-button {
-    --background: none; 
-    --background-activated: #ff9340;
-    --background-hover: #ff9340;
-    --background-focused: #ff9340;
-    padding-left: 0.1rem;
-    padding-right: 0.1rem;
-    --box-shadow: inset 1px -1px 11px -5px rgba(0,0,0,0.48);
-}
-
-.request-list {
-    width: 80%;
+form {
+    width: 60%;
     margin: auto;
 }
 
-.card-wrapper {
-    height: 100%;
-    padding: 20px 10px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+.valid_form {
+    color: #f2f2f2;
 }
 
-.custom-card.card {
-    height: 100%;
-    margin: 0;
+.invalid_form {
+    color: #f2f2f2;
 }
 
-.scroll-view {
-    height: 100%;
+ion-item.valid_input {
+    --highlight-color-focused: #e36307;
+    --highlight-color-invalid: #e36307;
+    --highlight-color-valid: #e36307;
+}
+
+ion-item.invalid_input {
+    --highlight-color-focused: #3d3d3d;
+    --highlight-color-invalid: #3d3d3d;
+    --highlight-color-valid: #3d3d3d;
+}
+
+.item-has-focus.label-floating.sc-ion-label-md-h, .item-has-focus .label-floating.sc-ion-label-md-h, .item-has-focus.label-stacked.sc-ion-label-md-h, .item-has-focus .label-stacked.sc-ion-label-md-h {
+    --color: #e36307 !important;
+    color: #e36307 !important; 
+    font-weight: bold;
+    font-size: 1em;
+}
+ion-item.feedback-actions {
+    display: inline-block;
+    margin: auto;
+}
+
+ion-button.primary-action-icon, ion-button.secondary-action-icon {
+    --border-width: 1px;
+    --border-radius: 10px; 
+    height: 3rem;
+    --background: #f2f2f2;
+}
+
+.primary-action-icon ion-icon {
+    font-size: 3rem;
+    color: #e36307;
+}
+
+.secondary-action-icon ion-icon {
+    font-size: 2rem;
+    color: #3d3d3d; 
 }
