@@ -9,7 +9,7 @@
 
 <ion-content>
   <form id="form" (keyup)="checkCurrentForm()" (ngSubmit)="submitFeedback()">
-    <ion-item [ngClass]="isStudentValid ? 'valid_input' : 'invalid_input'">
+    <ion-item [ngClass]="isStudentValid ? 'valid_input' : 'invalid_input'" name="inputField0">
       <ion-label position="floating">
         Student <ion-icon [name]="isStudentValid ? 'checkmark' : 'close'"></ion-icon>
       </ion-label>
@@ -17,7 +17,7 @@
       [(ngModel)]="feedback.student" minLength="7" maxLength="8" #student="ngModel"></ion-input>
     </ion-item>
 
-    <ion-item [ngClass]="isContextValid ? 'valid_input' : 'invalid_input'">
+    <ion-item [ngClass]="isContextValid ? 'valid_input' : 'invalid_input'" name="inputField1">
       <ion-label position="floating">
         Context <ion-icon [name]="isContextValid ? 'checkmark' : 'close'"></ion-icon>
       </ion-label>
@@ -25,12 +25,12 @@
       [(ngModel)]="feedback.context" minLength="7" maxLength="12" #context="ngModel"></ion-input>
     </ion-item>
     
-    <ion-item [ngClass]="isDescriptionValid ? 'valid_input' : 'invalid_input'">
-        <ion-label position="floating">
-          Description <ion-icon [name]="isDescriptionValid ? 'checkmark' : 'close'"></ion-icon>
-        </ion-label>
-        <ion-textarea type="text" rows="8" placeholder="Description" name="description" id="description"
-        [(ngModel)]="feedback.description" minLength="7" maxLength="12" #description="ngModel"></ion-textarea>
+    <ion-item [ngClass]="isDescriptionValid ? 'valid_input' : 'invalid_input'" name="inputField2">
+      <ion-label position="floating">
+        Description <ion-icon [name]="isDescriptionValid ? 'checkmark' : 'close'"></ion-icon>
+      </ion-label>
+      <ion-textarea type="text" rows="8" placeholder="Description" name="description" id="description"
+      [(ngModel)]="feedback.description" minLength="7" maxLength="12" #description="ngModel"></ion-textarea>
     </ion-item>
 
     <ion-item class="feedback-actions">

@@ -8,7 +8,6 @@ import { NavController } from '@ionic/angular';
 })
 export class GiveFeedbackPage implements OnInit {
   constructor(private navCtrl: NavController) { }
-
   isFormValid = false;
 
   feedback = {
