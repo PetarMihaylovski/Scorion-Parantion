@@ -46,7 +46,23 @@
         <ion-button class="secondary-action-icon" [disabled]="!isFormValid" (click)="navigateToHomeScreen()">
           <ion-icon [ngClass]="isFormValid ? '' : ''" name="send"></ion-icon>
         </ion-button>
+        <ion-button (click)="startListening()"> </ion-button>
+
+        <ion-button (click)="stopListening()" *ngIf="isIos()"></ion-button>
+
+        <ion-button (click)="getPermissions()"></ion-button>
       </ion-buttons>
     </ion-item>    
   </form>
+
+  <ion-card>
+    <ion-card-header>This is what i understood</ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let match of matches">
+          {{match}}
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

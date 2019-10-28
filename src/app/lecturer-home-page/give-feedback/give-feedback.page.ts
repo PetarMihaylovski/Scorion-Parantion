@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-give-feedback',
   templateUrl: './give-feedback.page.html',
   styleUrls: ['./give-feedback.page.scss'],
 })
+
 export class GiveFeedbackPage implements OnInit {
-  constructor(private navCtrl: NavController) { }
+  constructor(private navCtrl: NavController,
+    private speechRecognition: SpeechRecognition, private plt: Platform, private cd: ChangeDetectorRef) { }
   isFormValid = false;
 
   feedback = {
@@ -19,6 +23,7 @@ export class GiveFeedbackPage implements OnInit {
   isContextValid = false;
   isDescriptionValid = false;
   isRecording = false;
+   matches: string[];
 
   checkCurrentForm() {
     let feedbackObj = this.feedback;
@@ -67,9 +72,41 @@ export class GiveFeedbackPage implements OnInit {
     this.isRecording = !this.isRecording;
   }
 
-  ngOnInit() {}
-  
+  ngOnInit() { }
+
   goToLecturerHomePage() {
     this.navCtrl.navigateBack('/lecturer-home');
+  }
+
+  isIos() {
+    return this.plt.is('ios');
+  }
+
+  getPermission() {
+    this.speechRecognition.hasPermission()
+    .then((hasPermission: boolean) => {
+      if (!hasPermission) {
+        this.speechRecognition.requestPermission();
+      }
+    });
+  }
+
+  startListening() {
+    const options = {
+      language: 'en-US',
+      matches: 10
+    };
+    this.speechRecognition.startListening(options).subscribe(matches => {
+      this.matches = matches;
+      this.cd.detectChanges();
+
+    });
+    this.isRecording = true;
+  }
+
+  stopListening() {
+    this.speechRecognition.stopListening().then(() => {
+      this.isRecording = false;
+    });
   }
 }
