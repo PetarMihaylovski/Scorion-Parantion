@@ -38,11 +38,11 @@
     </ion-item>
     -->
     <ion-item *ngFor="let feedback of feedbackRequests">
-      <ion-avatar slot="start" button (click)="showFeedbackRequestModal(feedbackRequest)">
+      <ion-avatar slot="start" button (click)="showFeedbackRequestModal(feedback)">
         <ion-icon color="medium" name="alert"></ion-icon>
       </ion-avatar>
       <ion-label button (click)="showFeedbackRequestModal(feedback)">
-        <h2>{{ getStudentNameById(feedback.senderId) }}</h2>
+        <h2>{{ getStudentIdNameDictionaryValue(feedback.senderId) }}</h2>
         <h3>{{ feedback.context }}</h3>
         <p>{{ feedback.description }}</p>
       </ion-label>
@@ -54,7 +54,7 @@
         <ion-icon color="medium" name="today"></ion-icon>
       </ion-avatar>
       <ion-label button (click)="showGivenFeedbackModal(feedback)">
-        <h2>{{ getStudentNameById(feedback.recipientId) }}</h2>
+        <h2>{{ feedback.recipientId }}</h2>
         <h3>{{ feedback.context }}</h3>
         <p>{{ feedback.description }}</p>
       </ion-label> 

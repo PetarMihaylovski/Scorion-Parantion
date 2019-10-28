@@ -27,6 +27,7 @@ export class LecturerHomePagePage implements OnInit {
   feedbacks: Feedback[] = [];
   students: Student[] = [];
   lecturers: Lecturer[] = [];
+  studentIdNameDictionary = new Map<string, string>();
   
   constructor(public popoverController: PopoverController, 
     private modalCtrl: ModalController, private router: Router, private navCtrl: NavController,
@@ -93,10 +94,15 @@ export class LecturerHomePagePage implements OnInit {
   }
 
   getStudentNameById(id) {
-    return this.studentService.getStudentNameById(id);
+    this.studentService.getStudentNameById(id).subscribe();
   }
 
   ngOnInit() {
+    
+    this.studentService.setupStudentIdNameDictionary().subscribe(studentIdNameDictionary => {
+      this.studentIdNameDictionary = studentIdNameDictionary;
+    });
+
     this.feedbackService.getFeedbacks().subscribe(feedbacks => {
       this.feedbacks = feedbacks;
       
@@ -110,5 +116,13 @@ export class LecturerHomePagePage implements OnInit {
         }
       });
     });
+  }
+
+  // works but doesn't do it in time so it is displayed as undefined
+  getStudentIdNameDictionaryValue(id) {
+    alert("key: " + id);
+    let name = this.studentIdNameDictionary.get(id);
+    console.log("value: "+ name);
+    return name;
   }
 }

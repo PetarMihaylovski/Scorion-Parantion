@@ -25,7 +25,31 @@ export class StudentHttpService {
       }));
   }
 
+  setupStudentIdNameDictionary() {
+    return this.http.get<{ [key: string]: Student }>(
+      `https://projectpersistent-660c4.firebaseio.com/students.json`
+    )
+      .pipe(map(rsp => {
+        const studentIdNameDictionary = new Map<string, string>();
+        for (const key in rsp) {
+          if (rsp.hasOwnProperty(key)) {
+            studentIdNameDictionary.set(
+              { ...rsp[key], id: key }.id, { ...rsp[key], id: key }.username
+            );
+          }
+        }
+        
+        console.log(studentIdNameDictionary.get("2"))
+        return studentIdNameDictionary;
+      }));
+  }
+
   getStudentNameById(id) {
-    return "Student " + id;
+    return this.http.get<{ [key: string]: Student }>(
+      `https://projectpersistent-660c4.firebaseio.com/students.json`
+    )
+      .pipe(map(rsp => { 
+        return { ...rsp[id], id: id }.username;
+      }));
   }
 }
