@@ -60,6 +60,9 @@ export class LoginPage implements OnInit {
   login() {
     let lecturer: Person;
     let student: Person;
+
+
+
     this.lecturers.forEach(element => {
       if (element.username === this.userCredentials.username && element.password === this.userCredentials.password) {
         lecturer = element;
@@ -72,13 +75,12 @@ export class LoginPage implements OnInit {
       }
     });
 
-    console.log(lecturer);
-    console.log(student);
-
     if (lecturer) {
+      localStorage.setItem('user', JSON.stringify(lecturer));
       this.navCtrl.navigateForward('lecturer-home');
     }
     else if (student) {
+      localStorage.setItem('user', JSON.stringify(student));
       this.navCtrl.navigateForward('student-home');
     }
     else {
