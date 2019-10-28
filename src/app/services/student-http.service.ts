@@ -24,4 +24,8 @@ export class StudentHttpService {
         return students;
       }));
   }
+
+  getStudentNameById(id) {
+    return "Student " + id;
+  }
 }

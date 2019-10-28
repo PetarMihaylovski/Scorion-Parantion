@@ -9,6 +9,12 @@ import { FeedbackModalComponent } from '../feedback-modal/feedback-modal.compone
 import { FeedbackHttpService } from '../services/feedback-http.service';
 import { Feedback } from '../modal-classes/feedback.model';
 
+import { LecturerHttpService } from '../services/lecturer-http.service';
+import { Lecturer } from '../modal-classes/lecturer.model';
+
+import { StudentHttpService } from '../services/student-http.service';
+import { Student } from '../modal-classes/student.model';
+
 @Component({
   selector: 'app-lecturer-home-page',
   templateUrl: './lecturer-home-page.page.html',
@@ -19,9 +25,14 @@ export class LecturerHomePagePage implements OnInit {
   feedbacksGiven: Feedback[] = [];
   areRequestsToggled = true;
   feedbacks: Feedback[] = [];
+  students: Student[] = [];
+  lecturers: Lecturer[] = [];
   
   constructor(public popoverController: PopoverController, 
-    private modalCtrl: ModalController, private router: Router, private navCtrl: NavController, private feedbackService: FeedbackHttpService) { 
+    private modalCtrl: ModalController, private router: Router, private navCtrl: NavController,
+    private feedbackService: FeedbackHttpService,
+    private lecturerService: LecturerHttpService,
+    private studentService: StudentHttpService) { 
   }
   
   toggleRequestsGivenScreen() {
@@ -81,15 +92,21 @@ export class LecturerHomePagePage implements OnInit {
     .then( res => alert(JSON.stringify(res)))*/
   }
 
+  getStudentNameById(id) {
+    return this.studentService.getStudentNameById(id);
+  }
+
   ngOnInit() {
     this.feedbackService.getFeedbacks().subscribe(feedbacks => {
       this.feedbacks = feedbacks;
       
       this.feedbacks.forEach(element => {
-        if (element.isRequest) {
-          this.feedbackRequests.push(element);
-        } else {
-          this.feedbacksGiven.push(element);
+        if (element.senderId != undefined) {  
+          if (element.isRequest) {
+            this.feedbackRequests.push(element);
+          } else {
+            this.feedbacksGiven.push(element);
+          }
         }
       });
     });

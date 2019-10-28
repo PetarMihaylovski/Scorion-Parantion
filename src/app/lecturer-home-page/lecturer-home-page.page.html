@@ -42,7 +42,7 @@
         <ion-icon color="medium" name="alert"></ion-icon>
       </ion-avatar>
       <ion-label button (click)="showFeedbackRequestModal(feedback)">
-        <h2>{{ feedback.senderId }}</h2>
+        <h2>{{ getStudentNameById(feedback.senderId) }}</h2>
         <h3>{{ feedback.context }}</h3>
         <p>{{ feedback.description }}</p>
       </ion-label>
@@ -54,7 +54,7 @@
         <ion-icon color="medium" name="today"></ion-icon>
       </ion-avatar>
       <ion-label button (click)="showGivenFeedbackModal(feedback)">
-        <h2>{{ feedback.senderId }}</h2>
+        <h2>{{ getStudentNameById(feedback.recipientId) }}</h2>
         <h3>{{ feedback.context }}</h3>
         <p>{{ feedback.description }}</p>
       </ion-label> 

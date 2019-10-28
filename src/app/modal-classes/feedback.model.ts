@@ -1,5 +1,5 @@
 export interface Feedback {
-    id? : number,
+    id? : string,
     recipientId: number,
     senderId: number,
     context: string,
