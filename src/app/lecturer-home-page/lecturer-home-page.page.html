@@ -25,6 +25,7 @@
 
 <ion-content>
   <ion-list *ngIf="areRequestsToggled">
+    <!--
     <ion-item *ngFor="let feedbackRequest of feedbackRequests">
       <ion-avatar slot="start" button (click)="showFeedbackRequestModal(feedbackRequest)">
         <ion-icon color="medium" name="alert"></ion-icon>
@@ -35,19 +36,30 @@
         <p>{{ feedbackRequest.date }}</p>
       </ion-label>
     </ion-item>
+    -->
+    <ion-item *ngFor="let feedback of feedbackRequests">
+      <ion-avatar slot="start" button (click)="showFeedbackRequestModal(feedbackRequest)">
+        <ion-icon color="medium" name="alert"></ion-icon>
+      </ion-avatar>
+      <ion-label button (click)="showFeedbackRequestModal(feedback)">
+        <h2>{{ feedback.senderId }}</h2>
+        <h3>{{ feedback.context }}</h3>
+        <p>{{ feedback.description }}</p>
+      </ion-label>
+    </ion-item>
   </ion-list>
   <ion-list *ngIf="!areRequestsToggled">
-    <ion-item *ngFor="let feedbackGiven of feedbacksGiven">
-      <ion-avatar slot="start" button (click)="showGivenFeedbackModal(feedbackGiven)">
+    <ion-item *ngFor="let feedback of feedbacksGiven">
+      <ion-avatar slot="start" button (click)="showGivenFeedbackModal(feedback)">
         <ion-icon color="medium" name="today"></ion-icon>
       </ion-avatar>
-      <ion-label button (click)="showGivenFeedbackModal(feedbackGiven)">
-        <h2>{{ feedbackGiven.recipient }}</h2>
-        <h3>{{ feedbackGiven.date }}</h3>
-        <p>{{ feedbackGiven.context }}</p>
+      <ion-label button (click)="showGivenFeedbackModal(feedback)">
+        <h2>{{ feedback.senderId }}</h2>
+        <h3>{{ feedback.context }}</h3>
+        <p>{{ feedback.description }}</p>
       </ion-label> 
-      <ion-fab-button class="simple-button" [disabled]="!feedbackGiven.hasBeenOpened" button (click)="feedbackOptionsPopover($event, feedbackGiven)">
-        <ion-icon [ngClass]="feedbackGiven.hasBeenOpened ? 'valid_icon' : 'invalid_icon'" name="more"></ion-icon>
+      <ion-fab-button class="simple-button" [disabled]="feedback.isRead" button (click)="feedbackOptionsPopover($event, feedback)">
+        <ion-icon [ngClass]="!feedback.isRead ? 'valid_icon' : 'invalid_icon'" name="more"></ion-icon>
       </ion-fab-button>
     </ion-item>
   </ion-list>
