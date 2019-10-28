@@ -12,8 +12,8 @@ export class SettingsPopoverComponent implements OnInit {
   areSoundsDisabled = false;
   constructor(public popoverController: PopoverController, private navCtrl: NavController) { }
 
-  ngOnInit() {}
-  
+  ngOnInit() { }
+
   close() {
     this.popoverController.dismiss();
   }
@@ -27,6 +27,7 @@ export class SettingsPopoverComponent implements OnInit {
   }
 
   signOut() {
+    localStorage.removeItem("user");
     this.navCtrl.navigateForward('');
     this.popoverController.dismiss();
   }
