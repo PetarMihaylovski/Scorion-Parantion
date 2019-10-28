@@ -60,6 +60,9 @@ export class LoginPage implements OnInit {
   login() {
     let lecturer: Person;
     let student: Person;
+
+
+
     this.lecturers.forEach(element => {
       if (element.username === this.userCredentials.username && element.password === this.userCredentials.password) {
         lecturer = element;
