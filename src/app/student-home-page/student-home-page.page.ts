@@ -5,6 +5,14 @@ import { SettingsPopoverComponent } from '../settings-popover/settings-popover.c
 import { FeedbackModalComponent } from '../feedback-modal/feedback-modal.component';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { FeedbackHttpService } from '../services/feedback-http.service';
+import { Feedback } from '../modal-classes/feedback.model';
+
+import { LecturerHttpService } from '../services/lecturer-http.service';
+import { Lecturer } from '../modal-classes/lecturer.model';
+
+import { StudentHttpService } from '../services/student-http.service';
+import { Student } from '../modal-classes/student.model';
 
 @Component({
   selector: 'app-student-home-page',
@@ -12,55 +20,17 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./student-home-page.page.scss'],
 })
 export class StudentHomePagePage implements OnInit {
-  feedbacks: any;
   areFeedbacksToggled = true;
+  feedbacks: Feedback[] = [];
+  students: Student[] = [];
+  lecturers: Lecturer[] = [];
+  lecturerIdNameDictionary = new Map<string, string>();
   
   constructor(public popoverController: PopoverController, 
-    private modalCtrl: ModalController, private router: Router, private navCtrl: NavController) { 
-    this.feedbacks = [
-      {
-        sender: "John",
-        context: "WebTech problems",
-        date: "12-02-2001 12:04:12",
-        description: "I need help with WebTech, please!!!"
-      },
-      {
-        sender: "Bob",
-        context: "Leadership issues",
-        date: "05-03-2001 14:25:02",
-        description: "I am not doing good. What should I do?"
-      },
-      {
-        sender: "Sander",
-        context: "Is Santa real?",
-        date: "02-12-2002 16:07:12",
-        description: "I really need to know!"
-      },
-      {
-        sender: "Job",
-        context: "Tech problem",
-        date: "11-03-2201 12:04:12",
-        description: "I need help with Tech, please!!!"
-      },
-      {
-        sender: "Bab",
-        context: "Leadership",
-        date: "05-03-2011 14:25:22",
-        description: "I am not doing very good."
-      },
-      {
-        sender: "Santa",
-        context: "Is Sander real?",
-        date: "02-12-2003 16:07:12",
-        description: "I really need to know!"
-      },
-      {
-        sender: "",
-        context: "",
-        date: "-- ::",
-        description: ""
-      }
-    ];
+    private modalCtrl: ModalController, private router: Router, private navCtrl: NavController,
+    private feedbackService: FeedbackHttpService,
+    private lecturerService: LecturerHttpService,
+    private studentService: StudentHttpService) { 
   }
   
   toggleFeedbackScreen() {
@@ -89,6 +59,25 @@ export class StudentHomePagePage implements OnInit {
   }
 
   ngOnInit() {
+    this.lecturerService.setupLecturerIdNameDictionary().subscribe(lecturerIdNameDictionary => {
+      lecturerIdNameDictionary.forEach((value: string, key: string) => {
+        if (key != undefined && value != undefined) {
+          this.lecturerIdNameDictionary.set(key, value);
+        }
+      });
+      console.log("lecturer map taken from the DB");
+    });
+
+    this.feedbackService.getFeedbacks().subscribe(receivedFeedbacks => {
+      receivedFeedbacks.forEach(element => {
+        if (element.senderId != undefined) {  
+          if (!element.isRequest) {
+            this.feedbacks.push(element);
+          }
+        }
+      });
+      console.log("feedbacks taken from the DB");
+    });
   }
 
   requestFeedback() {

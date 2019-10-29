@@ -24,4 +24,24 @@ export class StudentHttpService {
         return students;
       }));
   }
+
+  setupStudentIdNameDictionary() {
+    return this.http.get<{ [key: string]: Student }>(
+      `https://projectpersistent-660c4.firebaseio.com/students.json`
+    )
+      .pipe(map(rsp => {
+        const studentIdNameDictionary = new Map<string, string>();
+        for (const key in rsp) {
+          if (rsp.hasOwnProperty(key)) {
+            studentIdNameDictionary.set(
+              { ...rsp[key], id: key }.id, { ...rsp[key], id: key }.username
+            );
+            console.log("created map entry for id: " + { ...rsp[key], id: key }.id);
+            console.log("username: " + { ...rsp[key], id: key }.username);
+            console.log(studentIdNameDictionary.get({ ...rsp[key], id: key }.id))
+          }
+        }
+        return studentIdNameDictionary;
+      }));
+  }
 }
