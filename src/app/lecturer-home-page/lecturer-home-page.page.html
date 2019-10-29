@@ -42,7 +42,7 @@
         <ion-icon color="medium" name="alert"></ion-icon>
       </ion-avatar>
       <ion-label button (click)="showFeedbackRequestModal(feedback)">
-        <h2>{{ getStudentIdNameDictionaryValue(feedback.senderId) }}</h2>
+        <h2>{{ studentIdNameDictionary.get(feedback.senderId.toString()) }}</h2>
         <h3>{{ feedback.context }}</h3>
         <p>{{ feedback.description }}</p>
       </ion-label>
@@ -54,8 +54,8 @@
         <ion-icon color="medium" name="today"></ion-icon>
       </ion-avatar>
       <ion-label button (click)="showGivenFeedbackModal(feedback)">
-        <h2>{{ feedback.recipientId }}</h2>
-        <h3>{{ feedback.context }}</h3>
+        <h2>{{ studentIdNameDictionary.get(feedback.recipientId.toString()) }}</h2>
+        <h3>{{ feedback.date }}</h3>
         <p>{{ feedback.description }}</p>
       </ion-label> 
       <ion-fab-button class="simple-button" [disabled]="feedback.isRead" button (click)="feedbackOptionsPopover($event, feedback)">

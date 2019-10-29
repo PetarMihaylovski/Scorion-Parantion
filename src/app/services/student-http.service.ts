@@ -36,20 +36,12 @@ export class StudentHttpService {
             studentIdNameDictionary.set(
               { ...rsp[key], id: key }.id, { ...rsp[key], id: key }.username
             );
+            console.log("created map entry for id: " + { ...rsp[key], id: key }.id);
+            console.log("username: " + { ...rsp[key], id: key }.username);
+            console.log(studentIdNameDictionary.get({ ...rsp[key], id: key }.id))
           }
         }
-        
-        console.log(studentIdNameDictionary.get("2"))
         return studentIdNameDictionary;
-      }));
-  }
-
-  getStudentNameById(id) {
-    return this.http.get<{ [key: string]: Student }>(
-      `https://projectpersistent-660c4.firebaseio.com/students.json`
-    )
-      .pipe(map(rsp => { 
-        return { ...rsp[id], id: id }.username;
       }));
   }
 }

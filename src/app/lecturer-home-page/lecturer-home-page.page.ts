@@ -93,19 +93,18 @@ export class LecturerHomePagePage implements OnInit {
     .then( res => alert(JSON.stringify(res)))*/
   }
 
-  getStudentNameById(id) {
-    this.studentService.getStudentNameById(id).subscribe();
-  }
-
   ngOnInit() {
-    
     this.studentService.setupStudentIdNameDictionary().subscribe(studentIdNameDictionary => {
-      this.studentIdNameDictionary = studentIdNameDictionary;
+      studentIdNameDictionary.forEach((value: string, key: string) => {
+        if (key != undefined && value != undefined) {
+          this.studentIdNameDictionary.set(key, value);
+        }
+      });
+      console.log("student map taken from the DB");
     });
 
     this.feedbackService.getFeedbacks().subscribe(feedbacks => {
       this.feedbacks = feedbacks;
-      
       this.feedbacks.forEach(element => {
         if (element.senderId != undefined) {  
           if (element.isRequest) {
@@ -115,14 +114,7 @@ export class LecturerHomePagePage implements OnInit {
           }
         }
       });
+      console.log("feedbacks taken from the DB");
     });
-  }
-
-  // works but doesn't do it in time so it is displayed as undefined
-  getStudentIdNameDictionaryValue(id) {
-    alert("key: " + id);
-    let name = this.studentIdNameDictionary.get(id);
-    console.log("value: "+ name);
-    return name;
   }
 }
