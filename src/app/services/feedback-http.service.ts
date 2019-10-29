@@ -24,4 +24,10 @@ export class FeedbackHttpService {
         return feedbacks;
       }));
   }
+
+  getLastFeedbackId() {
+    return this.http.get<{ [key: string]: Feedback }>(
+      `https://projectpersistent-660c4.firebaseio.com/lastFeedbackId.json`
+      )
+  }
 }

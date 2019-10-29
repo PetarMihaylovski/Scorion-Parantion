@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { FeedbackHttpService } from '../../services/feedback-http.service';
+import { Feedback } from '../../modal-classes/feedback.model';
 
 @Component({
   selector: 'app-give-feedback',
@@ -7,14 +10,22 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./give-feedback.page.scss'],
 })
 export class GiveFeedbackPage implements OnInit {
-  constructor(private navCtrl: NavController) { }
+  constructor(private navCtrl: NavController, private http: HttpClient,
+    private feedbackService: FeedbackHttpService) {  
+  }
   isFormValid = false;
 
   feedback = {
-    student: '',
     context: '',
-    description: ''
+    description: '',
+    id: '',
+    senderId: '',
+    recipientId: '',
+    isRead: false,
+    isResponse: false,
+    respondsTo: false
   };
+  lastFeedbackId: any;
   isStudentValid = false;
   isContextValid = false;
   isDescriptionValid = false;
@@ -22,10 +33,9 @@ export class GiveFeedbackPage implements OnInit {
 
   checkCurrentForm() {
     let feedbackObj = this.feedback;
-    this.isStudentValid = this.studentValidation(feedbackObj.student);
     this.isContextValid = this.contextValidation(feedbackObj.context);
     this.isDescriptionValid = this.descriptionValidation(feedbackObj.description);
-    if (this.isStudentValid && this.isContextValid && this.isDescriptionValid) {
+    if (this.isContextValid && this.isDescriptionValid) {
       this.isFormValid = true;
     } else {
       this.isFormValid = false;
@@ -64,12 +74,40 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   toggleRecording() {
+    this.feedback.id = this.getLastFeedbackId();
+    this.onCreateFeedback(JSON.stringify(this.feedback));
     this.isRecording = !this.isRecording;
+  }
+
+  // TODO: replace unique name ids with the randomly generated ids and put the auto-incre-
+  // mented ids as a field
+  // TODO: gradually replace the logic for getting all the feedbacks according to this while making sure the database doesn't break for the rest of the team
+  getLastFeedbackId() {
+    this.feedbackService.getLastFeedbackId().subscribe(lastFeedbackId => {
+      this.lastFeedbackId = lastFeedbackId;
+
+      // increase lastFeedbackId
+      console.log("last feedback ID " + lastFeedbackId)
+      console.log("feedbacks taken from the DB");
+    });
+    return this.lastFeedbackId
   }
 
   ngOnInit() {}
   
   goToLecturerHomePage() {
     this.navCtrl.navigateBack('/lecturer-home');
+  }
+
+
+  // put this in the service
+  onCreateFeedback(feedbackData){//: { id: string; context: string; description: string; isRead: boolean; isRequest: boolean, recipientId: string; respondsTo: string; senderId: string; date: string; }) {
+    // send http request
+    this.http.post(
+      'https://projectpersistent-660c4.firebaseio.com/feedbacks.json',
+      feedbackData
+    ).subscribe(responseData => {
+      console.log(responseData);
+    });
   }
 }
