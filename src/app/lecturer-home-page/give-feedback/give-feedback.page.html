@@ -29,8 +29,11 @@
       <ion-label position="floating">
         Description <ion-icon [name]="isDescriptionValid ? 'checkmark' : 'close'"></ion-icon>
       </ion-label>
+      <!--
       <ion-textarea type="text" rows="8" placeholder="Description" name="description" id="description"
-      [(ngModel)]="feedback.description" minLength="7" maxLength="12" #description="ngModel"></ion-textarea>
+      [(ngModel)]="feedback.description" minLength="7" maxLength="12" #description="ngModel" value="This is a test ets"></ion-textarea>
+      -->
+      <ion-textarea type="text"  rows=8 name="description" id="description" *ngFor="let content of speechContents" value="{{content}}"></ion-textarea>
     </ion-item>
 
     <ion-item class="feedback-actions">
@@ -46,6 +49,9 @@
         <ion-button class="secondary-action-icon" [disabled]="!isFormValid" (click)="navigateToHomeScreen()">
           <ion-icon [ngClass]="isFormValid ? '' : ''" name="send"></ion-icon>
         </ion-button>
+
+        <ion-button (click)="stopListening()" *ngIf="isIos()">stop recording</ion-button>
+
       </ion-buttons>
     </ion-item>    
   </form>
