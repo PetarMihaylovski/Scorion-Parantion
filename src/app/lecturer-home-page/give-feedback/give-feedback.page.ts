@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
-import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-give-feedback',
@@ -10,8 +10,10 @@ import { ChangeDetectorRef } from '@angular/core';
 })
 
 export class GiveFeedbackPage implements OnInit {
+  speechContents: string[] = [''];
+
   constructor(private navCtrl: NavController,
-    private speechRecognition: SpeechRecognition, private plt: Platform, private cd: ChangeDetectorRef) { }
+              private speechRecogntion: SpeechRecognition, private plt: Platform) { }
   isFormValid = false;
 
   feedback = {
@@ -23,7 +25,7 @@ export class GiveFeedbackPage implements OnInit {
   isContextValid = false;
   isDescriptionValid = false;
   isRecording = false;
-   matches: string[];
+
 
   checkCurrentForm() {
     let feedbackObj = this.feedback;
@@ -69,10 +71,30 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   toggleRecording() {
-    this.isRecording = !this.isRecording;
+    const options = {
+      language: 'en-US',
+      matches: 1,
+      // showPopup: false // this variable sets the amount of suggested results that are returned default is 5
+    };
+    this.speechRecogntion.startListening(options).subscribe(matches => {
+      for (let i = 0; i < this.speechContents.length; i++) {
+        this.speechContents[i] += matches[i] + '. ';
+      }
+    });
+
+    // this.isRecording = !this.isRecording;
+  // this.isRecording = false;
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // check microphone permission on activation
+    this.speechRecogntion.hasPermission()
+      .then((hasPermission: boolean) => {
+        if (!hasPermission) {
+          this.speechRecogntion.requestPermission();
+        }
+      });
+  }
 
   goToLecturerHomePage() {
     this.navCtrl.navigateBack('/lecturer-home');
@@ -82,30 +104,8 @@ export class GiveFeedbackPage implements OnInit {
     return this.plt.is('ios');
   }
 
-  getPermission() {
-    this.speechRecognition.hasPermission()
-    .then((hasPermission: boolean) => {
-      if (!hasPermission) {
-        this.speechRecognition.requestPermission();
-      }
-    });
-  }
-
-  startListening() {
-    const options = {
-      language: 'en-US',
-      matches: 10
-    };
-    this.speechRecognition.startListening(options).subscribe(matches => {
-      this.matches = matches;
-      this.cd.detectChanges();
-
-    });
-    this.isRecording = true;
-  }
-
   stopListening() {
-    this.speechRecognition.stopListening().then(() => {
+    this.speechRecogntion.stopListening().then(() => {
       this.isRecording = false;
     });
   }
