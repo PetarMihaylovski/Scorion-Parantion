@@ -93,7 +93,8 @@
   <form (ngSubmit)="sendForm()" (keyup)="checkDescription()">
     <ion-item>
       <ion-label position="floating">Context:</ion-label>
-        <ion-select interface="popover" name="context" [(ngModel)]="writtenContext">
+        <!--<ion-select interface="popover" name="context" [(ngModel)]="writtenContext">-->
+        <ion-select interface="popover" name="context" [(ngModel)]="feedbackResponse.context" #context="ngModel">
         <ion-select-option value="context1">context1</ion-select-option>
         <ion-select-option value="context2">context2</ion-select-option>
         <ion-select-option value="context3">context3</ion-select-option>
@@ -102,6 +103,7 @@
 
     <ion-item>
       <ion-label position="floating">Description:</ion-label>
+      <!--<ion-textarea type="text" rows="8" [(ngModel)]="writtenDescription" name="desciption"></ion-textarea>-->
       <ion-textarea type="text" rows="8" [(ngModel)]="writtenDescription" name="desciption"></ion-textarea>
     </ion-item>
     <p *ngIf="!isDescriptionValid"><ion-button type="submit" disabled="true" class="invalid_btn">Send</ion-button></p> 

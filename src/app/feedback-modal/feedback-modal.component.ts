@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { FeedbackHttpService } from '../services/feedback-http.service';
+import { Feedback } from '../modal-classes/feedback.model';
 
 @Component({
   selector: 'app-feedback-modal',
@@ -36,7 +39,7 @@ export class FeedbackModalComponent implements OnInit {
 
   isLecturerWritingFeedback: any;
 
-  feedbackFesponse = {
+  feedbackResponse = {
     context: '',
     description: '',
     senderId: '',
@@ -47,7 +50,8 @@ export class FeedbackModalComponent implements OnInit {
     date: '25-10-2019'
   };
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController, private http: HttpClient,
+    private feedbackService: FeedbackHttpService) { }
 
   async close() {
     await this.modalCtrl.dismiss();
@@ -62,6 +66,7 @@ export class FeedbackModalComponent implements OnInit {
   }
 
   checkDescription() {
+    this.feedbackResponse.description = this.writtenDescription
     if (this.writtenDescription.length > 0) {
       this.isDescriptionValid = true;
       return true;
@@ -82,6 +87,7 @@ export class FeedbackModalComponent implements OnInit {
   }
 
   async sendForm() {
+    this.onCreateFeedback(JSON.stringify(this.feedbackResponse));
     await this.modalCtrl.dismiss({context: this.writtenContext, description: this.writtenDescription});
   }
 
@@ -123,6 +129,17 @@ export class FeedbackModalComponent implements OnInit {
       this.isRequestedContextValid = false;
       return false;
     }
+  }
+
+  // put this in the service
+  onCreateFeedback(feedbackData){//: { id: string; context: string; description: string; isRead: boolean; isRequest: boolean, recipientId: string; respondsTo: string; senderId: string; date: string; }) {
+    // send http request
+    this.http.post(
+      'https://projectpersistent-660c4.firebaseio.com/feedbacks.json',
+      feedbackData
+    ).subscribe(responseData => {
+      console.log(responseData);
+    });
   }
 
   ngOnInit() {}
