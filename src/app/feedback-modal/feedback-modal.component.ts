@@ -38,6 +38,7 @@ export class FeedbackModalComponent implements OnInit {
   isLecturerEditingGivenFeedback: any;
 
   isLecturerWritingFeedback: any;
+  requestingStudentId: any;
 
   feedbackResponse = {
     context: '',
@@ -131,6 +132,7 @@ export class FeedbackModalComponent implements OnInit {
     }
   }
 
+  // DELETE REQUEST AFTER THE RESPONSE IS SENT
   // put this in the service
   onCreateFeedback(feedbackData){//: { id: string; context: string; description: string; isRead: boolean; isRequest: boolean, recipientId: string; respondsTo: string; senderId: string; date: string; }) {
     // send http request
@@ -142,5 +144,10 @@ export class FeedbackModalComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    console.log(user.id);
+    this.feedbackResponse.senderId = user.id;
+    this.feedbackResponse.recipientId = this.requestingStudentId;
+  }
 }
