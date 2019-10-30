@@ -106,8 +106,10 @@
       <!--<ion-textarea type="text" rows="8" [(ngModel)]="writtenDescription" name="desciption"></ion-textarea>-->
       <ion-textarea type="text" rows="8" [(ngModel)]="writtenDescription" name="desciption"></ion-textarea>
     </ion-item>
+    <!--
     <p *ngIf="!isDescriptionValid"><ion-button type="submit" disabled="true" class="invalid_btn">Send</ion-button></p> 
     <p *ngIf="isDescriptionValid"><ion-button type="submit" class="valid_btn">Send</ion-button></p>  
+    -->
   </form>
 </ion-content>
 
@@ -154,8 +156,10 @@
       <ion-text>name of the attachment</ion-text>
       <ion-icon name="close"></ion-icon>
       </ion-item>
+    <!--
     <p *ngIf="!isEditedDescriptionValid"><ion-button type="submit" disabled="true" class="invalid_btn">Confirm</ion-button></p>  
     <p *ngIf="isEditedDescriptionValid"><ion-button type="submit" class="valid_btn">Confirm</ion-button></p>  
+    -->
   </form>
 </ion-content>
 
@@ -192,17 +196,20 @@
 <!-- FEEDBACK WRITING ACTIONS -->
 <ion-item class="feedback-actions" *ngIf="isStudentRequestingFeedback || isLecturerWritingResponseFeedback || isLecturerEditingGivenFeedback || isLecturerWritingFeedback">
   <ion-buttons>
-    <ion-button class="secondary-action-icon">
-      <ion-icon name="image"></ion-icon>
+    <ion-button class="secondary-action-icon" (click)="attachFile()">
+      <ion-icon name="attach"></ion-icon>
+    </ion-button>
+        
+    <ion-button class="primary-action-icon" (click)="toggleRecording()"> 
+      <ion-icon [name]="isRecording ? 'pause' : 'radio-button-on'"></ion-icon>
     </ion-button>
     
-    <ion-button class="primary-action-icon"> 
-        <ion-icon name="mic"></ion-icon>
+    <ion-button *ngIf="isLecturerWritingResponseFeedback" class="secondary-action-icon" [disabled]="!isFormValid" (click)="sendForm()">
+      <ion-icon [ngClass]="isFormValid ? '' : ''" name="send"></ion-icon>
     </ion-button>
-    
-    <ion-button class="secondary-action-icon">
-        <ion-icon name="paper"></ion-icon>
+
+    <ion-button *ngIf="isLecturerEditingGivenFeedback" class="secondary-action-icon" [disabled]="!isFormValid" (click)="editForm()">
+      <ion-icon [ngClass]="isFormValid ? '' : ''" name="send"></ion-icon>
     </ion-button>
   </ion-buttons>
 </ion-item>
- 

@@ -42,7 +42,7 @@ export class RequestFeedbackPage implements OnInit {
   }
 
   lecturerValidation(lecturer) {
-    if (lecturer.length >= 7 && lecturer.length <= 8) {
+    if (lecturer.length >= 1 && lecturer.length <= 8) {
       return true;
     } else {
       return false;
@@ -50,7 +50,7 @@ export class RequestFeedbackPage implements OnInit {
   }
 
   contextValidation(context) {
-    if (context.length >= 7 && context.length <= 12) {
+    if (context.length >= 1 && context.length <= 12) {
       return true;
     } else {
       return false;
@@ -58,7 +58,7 @@ export class RequestFeedbackPage implements OnInit {
   }
 
   descriptionValidation(description) {
-    if (description.length >= 7 && description.length <= 12) {
+    if (description.length >= 1 && description.length <= 300) {
       return true;
     } else {
       return false;
@@ -69,11 +69,11 @@ export class RequestFeedbackPage implements OnInit {
   }
 
   navigateToHomeScreen() {
+    this.onCreateFeedback(JSON.stringify(this.feedback));
     this.navCtrl.navigateForward('/student-home');
   }
 
   toggleRecording() {
-    this.onCreateFeedback(JSON.stringify(this.feedback));
     this.isRecording = !this.isRecording;
   }
 

@@ -14,7 +14,7 @@
         Lecturer <ion-icon [name]="isLecturerValid ? 'checkmark' : 'close'"></ion-icon>
       </ion-label>
       <ion-input  type="text" placeholder="Lecturer" name="lecturer" id="lecturer"
-      [(ngModel)]="feedback.recipientId" minLength="7" maxLength="8" #recipientId="ngModel"></ion-input>
+      [(ngModel)]="feedback.recipientId" minLength="1" maxLength="8" #recipientId="ngModel"></ion-input>
     </ion-item>
 
     <ion-item [ngClass]="isContextValid ? 'valid_input' : 'invalid_input'" name="inputField1">
@@ -22,7 +22,7 @@
         Context <ion-icon [name]="isContextValid ? 'checkmark' : 'close'"></ion-icon>
       </ion-label>
       <ion-input type="text" placeholder="Context" name="context" id="context"
-      [(ngModel)]="feedback.context" minLength="7" maxLength="12" #context="ngModel"></ion-input>
+      [(ngModel)]="feedback.context" minLength="1" maxLength="12" #context="ngModel"></ion-input>
     </ion-item>
     
     <ion-item [ngClass]="isDescriptionValid ? 'valid_input' : 'invalid_input'" name="inputField2">
@@ -30,7 +30,7 @@
         Description <ion-icon [name]="isDescriptionValid ? 'checkmark' : 'close'"></ion-icon>
       </ion-label>
       <ion-textarea type="text" rows="8" placeholder="Description" name="description" id="description"
-      [(ngModel)]="feedback.description" minLength="7" maxLength="12" #description="ngModel"></ion-textarea>
+      [(ngModel)]="feedback.description" minLength="1" maxLength="300" #description="ngModel"></ion-textarea>
     </ion-item>
 
     <ion-item class="feedback-actions">

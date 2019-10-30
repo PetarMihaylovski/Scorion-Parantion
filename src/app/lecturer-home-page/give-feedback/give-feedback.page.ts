@@ -32,6 +32,7 @@ export class GiveFeedbackPage implements OnInit {
 
   checkCurrentForm() {
     let feedbackObj = this.feedback;
+    this.isStudentValid = this.studentValidation(feedbackObj.recipientId);
     this.isContextValid = this.contextValidation(feedbackObj.context);
     this.isDescriptionValid = this.descriptionValidation(feedbackObj.description);
     if (this.isContextValid && this.isDescriptionValid) {
@@ -42,7 +43,7 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   studentValidation(student) {
-    if (student.length >= 7 && student.length <= 8) {
+    if (student.length >= 1 && student.length <= 8) {
       return true;
     } else {
       return false;
@@ -50,7 +51,7 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   contextValidation(context) {
-    if (context.length >= 7 && context.length <= 12) {
+    if (context.length >= 1 && context.length <= 12) {
       return true;
     } else {
       return false;
@@ -58,7 +59,7 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   descriptionValidation(description) {
-    if (description.length >= 7 && description.length <= 12) {
+    if (description.length >= 1 && description.length <= 300) {
       return true;
     } else {
       return false;
@@ -69,11 +70,11 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   navigateToHomeScreen() {
+    this.onCreateFeedback(JSON.stringify(this.feedback));
     this.navCtrl.navigateForward('/lecturer-home');
   }
 
   toggleRecording() {
-    this.onCreateFeedback(JSON.stringify(this.feedback));
     this.isRecording = !this.isRecording;
   }
 

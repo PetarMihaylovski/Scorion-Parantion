@@ -50,6 +50,8 @@ export class FeedbackModalComponent implements OnInit {
     respondsTo: 0,
     date: '25-10-2019'
   };
+  isFormValid = false;
+  isRecording = false;
 
   constructor(private modalCtrl: ModalController, private http: HttpClient,
     private feedbackService: FeedbackHttpService) { }
@@ -70,9 +72,11 @@ export class FeedbackModalComponent implements OnInit {
     this.feedbackResponse.description = this.writtenDescription
     if (this.writtenDescription.length > 0) {
       this.isDescriptionValid = true;
+      this.isFormValid = true;
       return true;
     } else {
       this.isDescriptionValid = false;
+      this.isFormValid = false;
       return false;
     }
   }
@@ -80,9 +84,11 @@ export class FeedbackModalComponent implements OnInit {
   checkEditedDescription() {
     if (this.editedDescription.length > 0) {
       this.isEditedDescriptionValid = true;
+      this.isFormValid = true;
       return true;
     } else {
       this.isEditedDescriptionValid = false;
+      this.isFormValid = false;
       return false;
     }
   }
@@ -143,6 +149,12 @@ export class FeedbackModalComponent implements OnInit {
       console.log(responseData);
     });
   }
+
+  toggleRecording() {
+    this.isRecording = !this.isRecording;
+  }
+
+  attachFile() {}
 
   ngOnInit() {
     let user = JSON.parse(localStorage.getItem('user'));
