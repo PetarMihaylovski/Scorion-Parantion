@@ -23,9 +23,9 @@ export class GiveFeedbackPage implements OnInit {
     recipientId: '',
     isRead: false,
     isResponse: false,
-    respondsTo: false
+    respondsTo: false,
+    date: '25-10-2019'
   };
-  lastFeedbackId: any;
   isStudentValid = false;
   isContextValid = false;
   isDescriptionValid = false;
@@ -74,26 +74,18 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   toggleRecording() {
-    this.feedback.id = this.getLastFeedbackId();
     this.onCreateFeedback(JSON.stringify(this.feedback));
     this.isRecording = !this.isRecording;
   }
 
-  // TODO: replace unique name ids with the randomly generated ids and put the auto-incre-
-  // mented ids as a field
-  // TODO: gradually replace the logic for getting all the feedbacks according to this while making sure the database doesn't break for the rest of the team
-  getLastFeedbackId() {
-    this.feedbackService.getLastFeedbackId().subscribe(lastFeedbackId => {
-      this.lastFeedbackId = lastFeedbackId;
-
-      // increase lastFeedbackId
-      console.log("last feedback ID " + lastFeedbackId)
-      console.log("feedbacks taken from the DB");
-    });
-    return this.lastFeedbackId
+  attachFile() {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    console.log(user.id);
+    this.feedback.senderId = user.id;
+  }
   
   goToLecturerHomePage() {
     this.navCtrl.navigateBack('/lecturer-home');

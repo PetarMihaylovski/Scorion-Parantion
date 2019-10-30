@@ -14,7 +14,7 @@
         Student <ion-icon [name]="isStudentValid ? 'checkmark' : 'close'"></ion-icon>
       </ion-label>
       <ion-input  type="text" placeholder="Student" name="student" id="student"
-      [(ngModel)]="feedback.student" minLength="7" maxLength="8" #student="ngModel"></ion-input>
+      [(ngModel)]="feedback.recipientId" minLength="7" maxLength="8" #recipientId="ngModel"></ion-input>
     </ion-item>
 
     <ion-item [ngClass]="isContextValid ? 'valid_input' : 'invalid_input'" name="inputField1">
@@ -35,7 +35,7 @@
 
     <ion-item class="feedback-actions">
       <ion-buttons>
-        <ion-button class="secondary-action-icon">
+        <ion-button class="secondary-action-icon" (click)="attachFile()">
           <ion-icon name="attach"></ion-icon>
         </ion-button>
         
