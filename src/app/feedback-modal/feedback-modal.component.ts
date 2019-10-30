@@ -36,6 +36,17 @@ export class FeedbackModalComponent implements OnInit {
 
   isLecturerWritingFeedback: any;
 
+  feedbackFesponse = {
+    context: '',
+    description: '',
+    senderId: '',
+    recipientId: '',
+    isRead: false,
+    isRequest: false,
+    respondsTo: 0,
+    date: '25-10-2019'
+  };
+
   constructor(private modalCtrl: ModalController) { }
 
   async close() {
@@ -93,6 +104,7 @@ export class FeedbackModalComponent implements OnInit {
   checkRequestValidity() {
     return this.checkRequestedContext() && this.checkRequestedDescription();
   }
+
   checkRequestedDescription() {
     if (this.requestedDescription.length > 0) {
       this.isRequestedDescriptionValid = true;

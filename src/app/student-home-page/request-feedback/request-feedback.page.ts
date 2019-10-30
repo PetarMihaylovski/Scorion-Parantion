@@ -17,7 +17,6 @@ export class RequestFeedbackPage implements OnInit {
   feedback = {
     context: '',
     description: '',
-    id: '',
     senderId: '',
     recipientId: '',
     isRead: false,

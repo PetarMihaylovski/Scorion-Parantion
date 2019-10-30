@@ -18,12 +18,11 @@ export class GiveFeedbackPage implements OnInit {
   feedback = {
     context: '',
     description: '',
-    id: '',
     senderId: '',
     recipientId: '',
     isRead: false,
     isRequest: false,
-    respondsTo: false,
+    respondsTo: -1,
     date: '25-10-2019'
   };
   isStudentValid = false;
