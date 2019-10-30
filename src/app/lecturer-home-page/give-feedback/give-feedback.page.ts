@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, Platform } from '@ionic/angular';
+import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
+import { NavController, Platform, IonTextarea } from '@ionic/angular';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 
 
@@ -9,13 +9,16 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
   styleUrls: ['./give-feedback.page.scss'],
 })
 
+
+
 export class GiveFeedbackPage implements OnInit {
+  @ViewChild(IonTextarea, {static: false}) textarea: IonTextarea;
   speechContents: string[] = [''];
 
   constructor(private navCtrl: NavController,
-              private speechRecogntion: SpeechRecognition, private plt: Platform) { }
+              private speechRecogntion: SpeechRecognition, private plt: Platform, private zone: NgZone) { }
   isFormValid = false;
-
+  descriptionArr: string[] = [];
   feedback = {
     student: '',
     context: '',
@@ -70,6 +73,10 @@ export class GiveFeedbackPage implements OnInit {
     this.navCtrl.navigateForward('/lecturer-home');
   }
 
+  checkSavedText() {
+    alert(this.descriptionArr.toString);
+  }
+
   toggleRecording() {
     const options = {
       language: 'en-US',
@@ -77,9 +84,11 @@ export class GiveFeedbackPage implements OnInit {
       // showPopup: false // this variable sets the amount of suggested results that are returned default is 5
     };
     this.speechRecogntion.startListening(options).subscribe(matches => {
-      for (let i = 0; i < this.speechContents.length; i++) {
-        this.speechContents[i] += matches[i] + '. ';
-      }
+      this.zone.run(() => {
+        for (let i = 0; i < this.speechContents.length; i++) {
+          this.speechContents[i] += matches[i] + '. ';
+        }
+      });
     });
 
     // this.isRecording = !this.isRecording;
@@ -110,3 +119,5 @@ export class GiveFeedbackPage implements OnInit {
     });
   }
 }
+
+// ionic cordova build android

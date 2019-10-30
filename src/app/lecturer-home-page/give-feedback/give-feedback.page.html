@@ -33,12 +33,15 @@
       <ion-textarea type="text" rows="8" placeholder="Description" name="description" id="description"
       [(ngModel)]="feedback.description" minLength="7" maxLength="12" #description="ngModel" value="This is a test ets"></ion-textarea>
       -->
-      <ion-textarea type="text"  rows=8 name="description" id="description" *ngFor="let content of speechContents" value="{{content}}"></ion-textarea>
+      <!--
+      <ion-textarea type="text"  rows=8 name="description" id="description" [(ngModel)]="descriptionArr" minLength="7" maxLength="12" #descriptionArray="ngModel" *ngFor="let content of speechContents" value="{{content}}"></ion-textarea>
+      -->
+      <ion-textarea type="text"  rows=8 name="description" id="description" minLength="7" maxLength="12" *ngFor="let content of speechContents" value="{{content}}"></ion-textarea>
     </ion-item>
 
     <ion-item class="feedback-actions">
       <ion-buttons>
-        <ion-button class="secondary-action-icon">
+        <ion-button class="secondary-action-icon" (click)="checkSavedText()">
           <ion-icon name="attach"></ion-icon>
         </ion-button>
         
