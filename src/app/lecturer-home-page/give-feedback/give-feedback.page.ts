@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform  } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { FeedbackHttpService } from '../../services/feedback-http.service';
 import { Feedback } from '../../modal-classes/feedback.model';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 
 @Component({
   selector: 'app-give-feedback',
   templateUrl: './give-feedback.page.html',
   styleUrls: ['./give-feedback.page.scss'],
 })
+
 export class GiveFeedbackPage implements OnInit {
   constructor(private navCtrl: NavController, private http: HttpClient,
-    private feedbackService: FeedbackHttpService) {  
+    private feedbackService: FeedbackHttpService, private speechRecogntion: SpeechRecognition, private plt: Platform) {  
   }
+  speechContents: string[] = [''];
   isFormValid = false;
 
   feedback = {
@@ -29,6 +32,7 @@ export class GiveFeedbackPage implements OnInit {
   isContextValid = false;
   isDescriptionValid = false;
   isRecording = false;
+
 
   checkCurrentForm() {
     let feedbackObj = this.feedback;
@@ -75,9 +79,31 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   toggleRecording() {
-    this.isRecording = !this.isRecording;
+    const options = {
+      language: 'en-US',
+      matches: 1,
+      // showPopup: false // this variable sets the amount of suggested results that are returned default is 5
+    };
+    this.speechRecogntion.startListening(options).subscribe(matches => {
+      for (let i = 0; i < this.speechContents.length; i++) {
+        this.speechContents[i] += matches[i] + '. ';
+      }
+    });
+
+    // this.isRecording = !this.isRecording;
+  // this.isRecording = false;
   }
 
+  ngOnInit() {
+    // check microphone permission on activation
+    this.speechRecogntion.hasPermission()
+      .then((hasPermission: boolean) => {
+        if (!hasPermission) {
+          this.speechRecogntion.requestPermission();
+        }
+      });
+  }
+  
   attachFile() {
   }
 
@@ -86,11 +112,10 @@ export class GiveFeedbackPage implements OnInit {
     console.log(user.id);
     this.feedback.senderId = user.id;
   }
-  
+    
   goToLecturerHomePage() {
     this.navCtrl.navigateBack('/lecturer-home');
   }
-
 
   // put this in the service
   onCreateFeedback(feedbackData){//: { id: string; context: string; description: string; isRead: boolean; isRequest: boolean, recipientId: string; respondsTo: string; senderId: string; date: string; }) {
@@ -100,6 +125,13 @@ export class GiveFeedbackPage implements OnInit {
       feedbackData
     ).subscribe(responseData => {
       console.log(responseData);
+  isIos() {
+    return this.plt.is('ios');
+  }
+
+  stopListening() {
+    this.speechRecogntion.stopListening().then(() => {
+      this.isRecording = false;
     });
   }
 }
