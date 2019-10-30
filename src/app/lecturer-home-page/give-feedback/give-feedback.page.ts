@@ -95,6 +95,9 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   ngOnInit() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    console.log(user.id);
+    this.feedback.senderId = user.id;
     // check microphone permission on activation
     this.speechRecogntion.hasPermission()
       .then((hasPermission: boolean) => {
@@ -105,12 +108,6 @@ export class GiveFeedbackPage implements OnInit {
   }
   
   attachFile() {
-  }
-
-  ngOnInit() {
-    let user = JSON.parse(localStorage.getItem('user'));
-    console.log(user.id);
-    this.feedback.senderId = user.id;
   }
     
   goToLecturerHomePage() {
@@ -125,6 +122,9 @@ export class GiveFeedbackPage implements OnInit {
       feedbackData
     ).subscribe(responseData => {
       console.log(responseData);
+    });
+  }
+
   isIos() {
     return this.plt.is('ios');
   }
