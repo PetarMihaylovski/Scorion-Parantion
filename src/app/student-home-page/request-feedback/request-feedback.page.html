@@ -14,7 +14,7 @@
         Lecturer <ion-icon [name]="isLecturerValid ? 'checkmark' : 'close'"></ion-icon>
       </ion-label>
       <ion-input  type="text" placeholder="Lecturer" name="lecturer" id="lecturer"
-      [(ngModel)]="feedback.lecturer" minLength="7" maxLength="8" #lecturer="ngModel"></ion-input>
+      [(ngModel)]="feedback.recipientId" minLength="7" maxLength="8" #recipientId="ngModel"></ion-input>
     </ion-item>
 
     <ion-item [ngClass]="isContextValid ? 'valid_input' : 'invalid_input'" name="inputField1">

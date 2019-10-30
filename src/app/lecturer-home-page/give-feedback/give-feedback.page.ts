@@ -22,7 +22,7 @@ export class GiveFeedbackPage implements OnInit {
     senderId: '',
     recipientId: '',
     isRead: false,
-    isResponse: false,
+    isRequest: false,
     respondsTo: false,
     date: '25-10-2019'
   };
