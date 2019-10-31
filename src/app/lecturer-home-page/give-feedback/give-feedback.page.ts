@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
-import { NavController, Platform  } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { FeedbackHttpService } from '../../services/feedback-http.service';
 import { Feedback } from '../../modal-classes/feedback.model';
@@ -14,14 +14,17 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 
 
 export class GiveFeedbackPage implements OnInit {
-  
+
   constructor(private navCtrl: NavController, private http: HttpClient,
-    private feedbackService: FeedbackHttpService, private speechRecogntion: SpeechRecognition, private plt: Platform, private zone: NgZone) {  
+              private feedbackService: FeedbackHttpService,
+              private speechRecognition: SpeechRecognition, private plt: Platform, private zone: NgZone) {
   }
   speechContents: string[] = [''];
   isFormValid = false;
   descriptionArr: string[] = [];
-  descriptionstr = '';
+  // descriptionstr = '';
+  // studentstr = '';
+  // contextstr = '';
   feedback = {
     context: '',
     description: '',
@@ -39,7 +42,7 @@ export class GiveFeedbackPage implements OnInit {
 
 
   checkCurrentForm() {
-    let feedbackObj = this.feedback;
+    const feedbackObj = this.feedback;
     this.isStudentValid = this.studentValidation(feedbackObj.recipientId);
     this.isContextValid = this.contextValidation(feedbackObj.context);
     this.isDescriptionValid = this.descriptionValidation(feedbackObj.description);
@@ -88,43 +91,49 @@ export class GiveFeedbackPage implements OnInit {
       matches: 1,
       // showPopup: false // this variable sets the amount of suggested results that are returned default is 5
     };
-    this.speechRecogntion.startListening(options).subscribe(matches => {
+    this.speechRecognition.startListening(options).subscribe(matches => {
       this.zone.run(() => {
-        this.descriptionstr += matches;
-       // for (let i = 0; i < this.speechContents.length; i++) {
+        if (this.feedback.recipientId === '') {
+          this.feedback.recipientId += matches;
+        } else if (this.feedback.context === '') {
+          this.feedback.context += matches;
+        } else {
+          this.feedback.description += matches + '. ';
+        }
+        // for (let i = 0; i < this.speechContents.length; i++) {
         // for (let i = 0; i < this.feedback.description.length; i++) {
-          // this.speechContents[i] += matches[i] + '. ';
-         // this.feedback.description[i] += matches[i];
-       // }
+        // this.speechContents[i] += matches[i] + '. ';
+        // this.feedback.description[i] += matches[i];
+        // }
       });
     });
 
     // this.isRecording = !this.isRecording;
-  // this.isRecording = false;
+    // this.isRecording = false;
   }
 
   ngOnInit() {
-    let user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
     console.log(user.id);
     this.feedback.senderId = user.id;
     // check microphone permission on activation
-    this.speechRecogntion.hasPermission()
+    this.speechRecognition.hasPermission()
       .then((hasPermission: boolean) => {
         if (!hasPermission) {
-          this.speechRecogntion.requestPermission();
+          this.speechRecognition.requestPermission();
         }
       });
   }
-  
+
   attachFile() {
   }
-    
+
   goToLecturerHomePage() {
     this.navCtrl.navigateBack('/lecturer-home');
   }
 
   // put this in the service
-  onCreateFeedback(feedbackData){//: { id: string; context: string; description: string; isRead: boolean; isRequest: boolean, recipientId: string; respondsTo: string; senderId: string; date: string; }) {
+  onCreateFeedback(feedbackData) {// : { id: string; context: string; description: string; isRead: boolean; isRequest: boolean, recipientId: string; respondsTo: string; senderId: string; date: string; }) {
     // send http request
     this.http.post(
       'https://projectpersistent-660c4.firebaseio.com/feedbacks.json',
@@ -139,7 +148,7 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   stopListening() {
-    this.speechRecogntion.stopListening().then(() => {
+    this.speechRecognition.stopListening().then(() => {
       this.isRecording = false;
     });
   }
