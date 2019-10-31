@@ -9,7 +9,6 @@ import { NavController } from '@ionic/angular';
 })
 export class SettingsPopoverComponent implements OnInit {
   areNotificationsDisabled = false;
-  areSoundsDisabled = false;
   constructor(public popoverController: PopoverController, private navCtrl: NavController) { }
 
   ngOnInit() { }
@@ -20,10 +19,6 @@ export class SettingsPopoverComponent implements OnInit {
 
   toggleNotifications() {
     this.areNotificationsDisabled = !this.areNotificationsDisabled;
-  }
-
-  toggleSounds() {
-    this.areSoundsDisabled = !this.areSoundsDisabled;
   }
 
   signOut() {
