@@ -71,7 +71,8 @@ export class LecturerHomePagePage implements OnInit {
       componentProps: {
         isLecturerWritingResponseFeedback: false,
         isLecturerRespondingToFeedbackRequest: true,
-        data: feedbackRequest
+        data: feedbackRequest,
+        requestingStudentId: feedbackRequest.senderId
       }
     });
     await modal.present();

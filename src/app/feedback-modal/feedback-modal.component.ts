@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { FeedbackHttpService } from '../services/feedback-http.service';
+import { Feedback } from '../modal-classes/feedback.model';
 
 @Component({
   selector: 'app-feedback-modal',
@@ -35,8 +38,23 @@ export class FeedbackModalComponent implements OnInit {
   isLecturerEditingGivenFeedback: any;
 
   isLecturerWritingFeedback: any;
+  requestingStudentId: any;
 
-  constructor(private modalCtrl: ModalController) { }
+  feedbackResponse = {
+    context: '',
+    description: '',
+    senderId: '',
+    recipientId: '',
+    isRead: false,
+    isRequest: false,
+    respondsTo: 0,
+    date: '25-10-2019'
+  };
+  isFormValid = false;
+  isRecording = false;
+
+  constructor(private modalCtrl: ModalController, private http: HttpClient,
+    private feedbackService: FeedbackHttpService) { }
 
   async close() {
     await this.modalCtrl.dismiss();
@@ -51,11 +69,14 @@ export class FeedbackModalComponent implements OnInit {
   }
 
   checkDescription() {
+    this.feedbackResponse.description = this.writtenDescription
     if (this.writtenDescription.length > 0) {
       this.isDescriptionValid = true;
+      this.isFormValid = true;
       return true;
     } else {
       this.isDescriptionValid = false;
+      this.isFormValid = false;
       return false;
     }
   }
@@ -63,14 +84,17 @@ export class FeedbackModalComponent implements OnInit {
   checkEditedDescription() {
     if (this.editedDescription.length > 0) {
       this.isEditedDescriptionValid = true;
+      this.isFormValid = true;
       return true;
     } else {
       this.isEditedDescriptionValid = false;
+      this.isFormValid = false;
       return false;
     }
   }
 
   async sendForm() {
+    this.onCreateFeedback(JSON.stringify(this.feedbackResponse));
     await this.modalCtrl.dismiss({context: this.writtenContext, description: this.writtenDescription});
   }
 
@@ -93,6 +117,7 @@ export class FeedbackModalComponent implements OnInit {
   checkRequestValidity() {
     return this.checkRequestedContext() && this.checkRequestedDescription();
   }
+
   checkRequestedDescription() {
     if (this.requestedDescription.length > 0) {
       this.isRequestedDescriptionValid = true;
@@ -113,5 +138,28 @@ export class FeedbackModalComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  // DELETE REQUEST AFTER THE RESPONSE IS SENT
+  // put this in the service
+  onCreateFeedback(feedbackData){//: { id: string; context: string; description: string; isRead: boolean; isRequest: boolean, recipientId: string; respondsTo: string; senderId: string; date: string; }) {
+    // send http request
+    this.http.post(
+      'https://projectpersistent-660c4.firebaseio.com/feedbacks.json',
+      feedbackData
+    ).subscribe(responseData => {
+      console.log(responseData);
+    });
+  }
+
+  toggleRecording() {
+    this.isRecording = !this.isRecording;
+  }
+
+  attachFile() {}
+
+  ngOnInit() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    console.log(user.id);
+    this.feedbackResponse.senderId = user.id;
+    this.feedbackResponse.recipientId = this.requestingStudentId;
+  }
 }
