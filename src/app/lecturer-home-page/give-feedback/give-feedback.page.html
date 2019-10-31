@@ -34,7 +34,12 @@
       [(ngModel)]="feedback.description" minLength="1" maxLength="300" #description="ngModel"></ion-textarea>
       [(ngModel)]="feedback.description" minLength="7" maxLength="12" #description="ngModel" value="This is a test ets"></ion-textarea>
       -->
-      <ion-textarea type="text" [(ngModel)]="feedback.description" minLength="1" maxLength="300" #description="ngModel" rows=8 name="description" id="description" *ngFor="let content of speechContents" value="{{content}}"></ion-textarea>
+      <!--
+      <ion-textarea type="text"  rows=8 name="description" id="description" [(ngModel)]="descriptionArr" minLength="7" maxLength="12" #descriptionArray="ngModel" *ngFor="let content of speechContents" value="{{content}}"></ion-textarea>
+      
+      <ion-textarea type="text"  rows=8 name="description" id="description" minLength="7" maxLength="12" *ngFor="let content of speechContents" value="{{content}}"></ion-textarea>
+      -->
+      <ion-textarea type="text"  [(ngModel)]="feedback.description" minLength="1" maxLength="300" #description="ngModel" rows=8 name="description" id="description" value="{{descriptionstr}}"></ion-textarea>
     </ion-item>
 
     <ion-item class="feedback-actions">

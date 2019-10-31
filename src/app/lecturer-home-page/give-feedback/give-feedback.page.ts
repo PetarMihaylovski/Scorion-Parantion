@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
 import { NavController, Platform  } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { FeedbackHttpService } from '../../services/feedback-http.service';
@@ -11,13 +11,18 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
   styleUrls: ['./give-feedback.page.scss'],
 })
 
+
+
 export class GiveFeedbackPage implements OnInit {
+  @ViewChild(IonTextarea, {static: false}) textarea: IonTextarea;
+  
   constructor(private navCtrl: NavController, private http: HttpClient,
     private feedbackService: FeedbackHttpService, private speechRecogntion: SpeechRecognition, private plt: Platform) {  
   }
   speechContents: string[] = [''];
   isFormValid = false;
-
+  descriptionArr: string[] = [];
+  descriptionstr = '';
   feedback = {
     context: '',
     description: '',
@@ -85,9 +90,14 @@ export class GiveFeedbackPage implements OnInit {
       // showPopup: false // this variable sets the amount of suggested results that are returned default is 5
     };
     this.speechRecogntion.startListening(options).subscribe(matches => {
-      for (let i = 0; i < this.speechContents.length; i++) {
-        this.speechContents[i] += matches[i] + '. ';
-      }
+      this.zone.run(() => {
+        this.descriptionstr += matches;
+       // for (let i = 0; i < this.speechContents.length; i++) {
+        // for (let i = 0; i < this.feedback.description.length; i++) {
+          // this.speechContents[i] += matches[i] + '. ';
+         // this.feedback.description[i] += matches[i];
+       // }
+      });
     });
 
     // this.isRecording = !this.isRecording;
@@ -135,3 +145,5 @@ export class GiveFeedbackPage implements OnInit {
     });
   }
 }
+
+// ionic cordova build android
