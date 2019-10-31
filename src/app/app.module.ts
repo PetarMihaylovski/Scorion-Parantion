@@ -17,6 +17,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { File } from '@ionic-native/file/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import * as firebase from 'firebase';
+import { FilePath } from '@ionic-native/file-path/ngx';
 
 var firebaseConfig = {
   apiKey: "AIzaSyCFA5zzq590lEGQC3QskVMoHHHnYmjlkRA",
@@ -40,6 +41,7 @@ firebase.initializeApp(firebaseConfig);
     SplashScreen,
     FileChooser,
     File,
+    FilePath,
     SpeechRecognition,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
