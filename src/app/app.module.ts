@@ -16,7 +16,7 @@ import {HttpClientModule} from '@angular/common/http';
 
 import { File } from '@ionic-native/file/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 var firebaseConfig = {
   apiKey: "AIzaSyCFA5zzq590lEGQC3QskVMoHHHnYmjlkRA",

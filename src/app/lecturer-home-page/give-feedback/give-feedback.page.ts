@@ -6,7 +6,8 @@ import { Feedback } from '../../modal-classes/feedback.model';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
+import { FilePath } from '@ionic-native/file-path/ngx';
 
 @Component({
   selector: 'app-give-feedback',
@@ -20,7 +21,8 @@ export class GiveFeedbackPage implements OnInit {
   
   constructor(private navCtrl: NavController, private http: HttpClient,
     private feedbackService: FeedbackHttpService, private speechRecogntion: SpeechRecognition, private plt: Platform, private zone: NgZone,
-    private file: File, private fileChooser: FileChooser) {  
+    private file: File, private fileChooser: FileChooser,
+    private filePath: FilePath) {  
   }
   speechContents: string[] = [''];
   isFormValid = false;
@@ -123,23 +125,24 @@ export class GiveFeedbackPage implements OnInit {
   attachFile() {
     this.fileChooser.open().then((uri) => {
       alert(uri);
-
-      this.file.resolveLocalFilesystemUrl(uri).then((newUrl) => {
-        alert(JSON.stringify(newUrl));
-
-        let dirPath = newUrl.nativeURL;
-        let dirPathSegments = dirPath.split('/');
+      
+      this.filePath.resolveNativePath(uri).then(filePath => {
+        alert(filePath);
+        let dirPathSegments = filePath.split('/');
+        let fileName = dirPathSegments[dirPathSegments.length-1];
         dirPathSegments.pop();
-        dirPath = dirPathSegments.join('/');
-
-        this.file.readAsArrayBuffer(dirPath, newUrl.name).then(async (buffer) => {
-          await this.upload(buffer, newUrl.name);
+        let dirPath = dirPathSegments.join('/');
+        this.file.readAsArrayBuffer(dirPath, fileName).then(async (buffer) => {
+          await this.upload(buffer, fileName);
+        }).catch((err) => {
+          alert(err.toString());
         });
       });
     });
   }
 
   async upload(buffer, name) {
+    alert("uploading")
     let blob = new Blob([buffer], {type: "image/jpeg"})
     
     let storage = firebase.storage();
