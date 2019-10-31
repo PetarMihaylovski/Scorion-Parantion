@@ -14,7 +14,7 @@
         Student <ion-icon [name]="isStudentValid ? 'checkmark' : 'close'"></ion-icon>
       </ion-label>
       <ion-input  type="text" placeholder="Student" name="student" id="student"
-      [(ngModel)]="feedback.student" minLength="7" maxLength="8" #student="ngModel"></ion-input>
+      [(ngModel)]="feedback.recipientId" minLength="1" maxLength="8" #recipientId="ngModel"></ion-input>
     </ion-item>
 
     <ion-item [ngClass]="isContextValid ? 'valid_input' : 'invalid_input'" name="inputField1">
@@ -22,7 +22,7 @@
         Context <ion-icon [name]="isContextValid ? 'checkmark' : 'close'"></ion-icon>
       </ion-label>
       <ion-input type="text" placeholder="Context" name="context" id="context"
-      [(ngModel)]="feedback.context" minLength="7" maxLength="12" #context="ngModel"></ion-input>
+      [(ngModel)]="feedback.context" minLength="1" maxLength="12" #context="ngModel"></ion-input>
     </ion-item>
     
     <ion-item [ngClass]="isDescriptionValid ? 'valid_input' : 'invalid_input'" name="inputField2">
@@ -31,6 +31,7 @@
       </ion-label>
       <!--
       <ion-textarea type="text" rows="8" placeholder="Description" name="description" id="description"
+      [(ngModel)]="feedback.description" minLength="1" maxLength="300" #description="ngModel"></ion-textarea>
       [(ngModel)]="feedback.description" minLength="7" maxLength="12" #description="ngModel" value="This is a test ets"></ion-textarea>
       -->
       <!--
@@ -38,12 +39,12 @@
       
       <ion-textarea type="text"  rows=8 name="description" id="description" minLength="7" maxLength="12" *ngFor="let content of speechContents" value="{{content}}"></ion-textarea>
       -->
-      <ion-textarea type="text"  rows=8 name="description" id="description" minLength="7" maxLength="12"  value="{{descriptionstr}}"></ion-textarea>
+      <ion-textarea type="text"  [(ngModel)]="feedback.description" minLength="1" maxLength="300" #description="ngModel" rows=8 name="description" id="description" value="{{descriptionstr}}"></ion-textarea>
     </ion-item>
 
     <ion-item class="feedback-actions">
       <ion-buttons>
-        <ion-button class="secondary-action-icon" (click)="checkSavedText()">
+        <ion-button class="secondary-action-icon" (click)="attachFile()">
           <ion-icon name="attach"></ion-icon>
         </ion-button>
         

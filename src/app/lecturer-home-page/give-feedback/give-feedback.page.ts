@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
-import { NavController, Platform, IonTextarea } from '@ionic/angular';
+import { NavController, Platform  } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { FeedbackHttpService } from '../../services/feedback-http.service';
+import { Feedback } from '../../modal-classes/feedback.model';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
-
 
 @Component({
   selector: 'app-give-feedback',
@@ -13,17 +15,23 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 
 export class GiveFeedbackPage implements OnInit {
   @ViewChild(IonTextarea, {static: false}) textarea: IonTextarea;
+  
+  constructor(private navCtrl: NavController, private http: HttpClient,
+    private feedbackService: FeedbackHttpService, private speechRecogntion: SpeechRecognition, private plt: Platform) {  
+  }
   speechContents: string[] = [''];
-
-  constructor(private navCtrl: NavController,
-              private speechRecogntion: SpeechRecognition, private plt: Platform, private zone: NgZone) { }
   isFormValid = false;
   descriptionArr: string[] = [];
   descriptionstr = '';
   feedback = {
-    student: [],
-    context: [],
-    description: ['']
+    context: '',
+    description: '',
+    senderId: '',
+    recipientId: '',
+    isRead: false,
+    isRequest: false,
+    respondsTo: -1,
+    date: '25-10-2019'
   };
   isStudentValid = false;
   isContextValid = false;
@@ -33,10 +41,10 @@ export class GiveFeedbackPage implements OnInit {
 
   checkCurrentForm() {
     let feedbackObj = this.feedback;
-    this.isStudentValid = this.studentValidation(feedbackObj.student);
+    this.isStudentValid = this.studentValidation(feedbackObj.recipientId);
     this.isContextValid = this.contextValidation(feedbackObj.context);
     this.isDescriptionValid = this.descriptionValidation(feedbackObj.description);
-    if (this.isStudentValid && this.isContextValid && this.isDescriptionValid) {
+    if (this.isContextValid && this.isDescriptionValid) {
       this.isFormValid = true;
     } else {
       this.isFormValid = false;
@@ -44,7 +52,7 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   studentValidation(student) {
-    if (student.length >= 7 && student.length <= 8) {
+    if (student.length >= 1 && student.length <= 8) {
       return true;
     } else {
       return false;
@@ -52,7 +60,7 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   contextValidation(context) {
-    if (context.length >= 7 && context.length <= 12) {
+    if (context.length >= 1 && context.length <= 12) {
       return true;
     } else {
       return false;
@@ -60,7 +68,7 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   descriptionValidation(description) {
-    if (description.length >= 7 && description.length <= 12) {
+    if (description.length >= 1 && description.length <= 300) {
       return true;
     } else {
       return false;
@@ -71,11 +79,8 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   navigateToHomeScreen() {
+    this.onCreateFeedback(JSON.stringify(this.feedback));
     this.navCtrl.navigateForward('/lecturer-home');
-  }
-
-  checkSavedText() {
-    alert(this.descriptionArr.toString);
   }
 
   toggleRecording() {
@@ -100,6 +105,9 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   ngOnInit() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    console.log(user.id);
+    this.feedback.senderId = user.id;
     // check microphone permission on activation
     this.speechRecogntion.hasPermission()
       .then((hasPermission: boolean) => {
@@ -108,9 +116,23 @@ export class GiveFeedbackPage implements OnInit {
         }
       });
   }
-
+  
+  attachFile() {
+  }
+    
   goToLecturerHomePage() {
     this.navCtrl.navigateBack('/lecturer-home');
+  }
+
+  // put this in the service
+  onCreateFeedback(feedbackData){//: { id: string; context: string; description: string; isRead: boolean; isRequest: boolean, recipientId: string; respondsTo: string; senderId: string; date: string; }) {
+    // send http request
+    this.http.post(
+      'https://projectpersistent-660c4.firebaseio.com/feedbacks.json',
+      feedbackData
+    ).subscribe(responseData => {
+      console.log(responseData);
+    });
   }
 
   isIos() {

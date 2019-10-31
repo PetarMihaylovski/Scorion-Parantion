@@ -71,7 +71,7 @@ export class StudentHomePagePage implements OnInit {
     this.feedbackService.getFeedbacks().subscribe(receivedFeedbacks => {
       receivedFeedbacks.forEach(element => {
         if (element.senderId != undefined) {  
-          if (!element.isRequest) {
+          if (!element.isRequest && element.recipientId == JSON.parse(localStorage.getItem('user')).id) {
             this.feedbacks.push(element);
           }
         }
