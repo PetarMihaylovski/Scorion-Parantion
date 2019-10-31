@@ -22,9 +22,9 @@ export class GiveFeedbackPage implements OnInit {
   speechContents: string[] = [''];
   isFormValid = false;
   descriptionArr: string[] = [];
-  descriptionstr = '';
-  studentstr = '';
-  contextstr = '';
+  // descriptionstr = '';
+  // studentstr = '';
+  // contextstr = '';
   feedback = {
     context: '',
     description: '',
@@ -93,12 +93,12 @@ export class GiveFeedbackPage implements OnInit {
     };
     this.speechRecogntion.startListening(options).subscribe(matches => {
       this.zone.run(() => {
-        if (this.studentstr === '') {
-          this.studentstr += matches;
-        } else if (this.contextstr === '') {
-          this.contextstr += matches;
+        if (this.feedback.recipientId === '') {
+          this.feedback.recipientId += matches;
+        } else if (this.feedback.context === '') {
+          this.feedback.context += matches;
         } else {
-          this.descriptionstr += matches + '. ';
+          this.feedback.description += matches + '. ';
         }
         // for (let i = 0; i < this.speechContents.length; i++) {
         // for (let i = 0; i < this.feedback.description.length; i++) {
