@@ -19,10 +19,11 @@ export class GiveFeedbackPage implements OnInit {
               private speechRecogntion: SpeechRecognition, private plt: Platform, private zone: NgZone) { }
   isFormValid = false;
   descriptionArr: string[] = [];
+  descriptionstr = '';
   feedback = {
-    student: '',
-    context: '',
-    description: ''
+    student: [],
+    context: [],
+    description: ['']
   };
   isStudentValid = false;
   isContextValid = false;
@@ -85,9 +86,12 @@ export class GiveFeedbackPage implements OnInit {
     };
     this.speechRecogntion.startListening(options).subscribe(matches => {
       this.zone.run(() => {
-        for (let i = 0; i < this.speechContents.length; i++) {
-          this.speechContents[i] += matches[i] + '. ';
-        }
+        this.descriptionstr += matches;
+       // for (let i = 0; i < this.speechContents.length; i++) {
+        // for (let i = 0; i < this.feedback.description.length; i++) {
+          // this.speechContents[i] += matches[i] + '. ';
+         // this.feedback.description[i] += matches[i];
+       // }
       });
     });
 

@@ -35,8 +35,10 @@
       -->
       <!--
       <ion-textarea type="text"  rows=8 name="description" id="description" [(ngModel)]="descriptionArr" minLength="7" maxLength="12" #descriptionArray="ngModel" *ngFor="let content of speechContents" value="{{content}}"></ion-textarea>
-      -->
+      
       <ion-textarea type="text"  rows=8 name="description" id="description" minLength="7" maxLength="12" *ngFor="let content of speechContents" value="{{content}}"></ion-textarea>
+      -->
+      <ion-textarea type="text"  rows=8 name="description" id="description" minLength="7" maxLength="12"  value="{{descriptionstr}}"></ion-textarea>
     </ion-item>
 
     <ion-item class="feedback-actions">
