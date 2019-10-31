@@ -32,7 +32,7 @@ export class RequestFeedbackPage implements OnInit {
   isRecording = false;
 
   checkCurrentForm() {
-    let feedbackObj = this.feedback;
+    const feedbackObj = this.feedback;
     this.isLecturerValid = this.lecturerValidation(feedbackObj.recipientId);
     this.isContextValid = this.contextValidation(feedbackObj.context);
     this.isDescriptionValid = this.descriptionValidation(feedbackObj.description);
@@ -96,17 +96,17 @@ export class RequestFeedbackPage implements OnInit {
 
 
   ngOnInit() {
-    let user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
     console.log(user.id);
     this.feedback.senderId = user.id;
   }
-  
+
   goToStudentHomePage() {
     this.navCtrl.navigateBack('/student-home');
   }
 
   // put this in the service
-  onCreateFeedback(feedbackData) {//: { id: string; context: string; description: string; isRead: boolean; isRequest: boolean, recipientId: string; respondsTo: string; senderId: string; date: string; }) {
+  onCreateFeedback(feedbackData) {// : { id: string; context: string; description: string; isRead: boolean; isRequest: boolean, recipientId: string; respondsTo: string; senderId: string; date: string; }) {
     // send http request
     this.http.post(
       'https://projectpersistent-660c4.firebaseio.com/feedbacks.json',

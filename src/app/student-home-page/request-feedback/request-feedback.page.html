@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <form id="form" (keyup)="checkCurrentForm()" (ngSubmit)="submitFeedback()">
+  <form id="form" (click)="checkCurrentForm()" (keyup)="checkCurrentForm()" (ngSubmit)="submitFeedback()">
     <ion-item [ngClass]="isLecturerValid ? 'valid_input' : 'invalid_input'" name="inputField0">
       <ion-label position="floating">
         Lecturer <ion-icon [name]="isLecturerValid ? 'checkmark' : 'close'"></ion-icon>
