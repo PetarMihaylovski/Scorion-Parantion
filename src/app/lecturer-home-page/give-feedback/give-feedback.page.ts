@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { FeedbackHttpService } from '../../services/feedback-http.service';
+import { Feedback } from '../../modal-classes/feedback.model';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
-
 
 @Component({
   selector: 'app-give-feedback',
@@ -9,17 +11,29 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
   styleUrls: ['./give-feedback.page.scss'],
 })
 
+
+
 export class GiveFeedbackPage implements OnInit {
+
+  constructor(private navCtrl: NavController, private http: HttpClient,
+              private feedbackService: FeedbackHttpService,
+              private speechRecogntion: SpeechRecognition, private plt: Platform, private zone: NgZone) {
+  }
   speechContents: string[] = [''];
-
-  constructor(private navCtrl: NavController,
-              private speechRecogntion: SpeechRecognition, private plt: Platform) { }
   isFormValid = false;
-
+  descriptionArr: string[] = [];
+  descriptionstr = '';
+  studentstr = '';
+  contextstr = '';
   feedback = {
-    student: '',
     context: '',
-    description: ''
+    description: '',
+    senderId: '',
+    recipientId: '',
+    isRead: false,
+    isRequest: false,
+    respondsTo: -1,
+    date: '25-10-2019'
   };
   isStudentValid = false;
   isContextValid = false;
@@ -28,11 +42,11 @@ export class GiveFeedbackPage implements OnInit {
 
 
   checkCurrentForm() {
-    let feedbackObj = this.feedback;
-    this.isStudentValid = this.studentValidation(feedbackObj.student);
+    const feedbackObj = this.feedback;
+    this.isStudentValid = this.studentValidation(feedbackObj.recipientId);
     this.isContextValid = this.contextValidation(feedbackObj.context);
     this.isDescriptionValid = this.descriptionValidation(feedbackObj.description);
-    if (this.isStudentValid && this.isContextValid && this.isDescriptionValid) {
+    if (this.isContextValid && this.isDescriptionValid) {
       this.isFormValid = true;
     } else {
       this.isFormValid = false;
@@ -40,7 +54,7 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   studentValidation(student) {
-    if (student.length >= 7 && student.length <= 8) {
+    if (student.length >= 1 && student.length <= 8) {
       return true;
     } else {
       return false;
@@ -48,7 +62,7 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   contextValidation(context) {
-    if (context.length >= 7 && context.length <= 12) {
+    if (context.length >= 1 && context.length <= 12) {
       return true;
     } else {
       return false;
@@ -56,7 +70,7 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   descriptionValidation(description) {
-    if (description.length >= 7 && description.length <= 12) {
+    if (description.length >= 1 && description.length <= 300) {
       return true;
     } else {
       return false;
@@ -67,6 +81,7 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   navigateToHomeScreen() {
+    this.onCreateFeedback(JSON.stringify(this.feedback));
     this.navCtrl.navigateForward('/lecturer-home');
   }
 
@@ -77,16 +92,30 @@ export class GiveFeedbackPage implements OnInit {
       // showPopup: false // this variable sets the amount of suggested results that are returned default is 5
     };
     this.speechRecogntion.startListening(options).subscribe(matches => {
-      for (let i = 0; i < this.speechContents.length; i++) {
-        this.speechContents[i] += matches[i] + '. ';
-      }
+      this.zone.run(() => {
+        if (this.studentstr === '') {
+          this.studentstr += matches;
+        } else if (this.contextstr === '') {
+          this.contextstr += matches;
+        } else {
+          this.descriptionstr += matches + '. ';
+        }
+        // for (let i = 0; i < this.speechContents.length; i++) {
+        // for (let i = 0; i < this.feedback.description.length; i++) {
+        // this.speechContents[i] += matches[i] + '. ';
+        // this.feedback.description[i] += matches[i];
+        // }
+      });
     });
 
     // this.isRecording = !this.isRecording;
-  // this.isRecording = false;
+    // this.isRecording = false;
   }
 
   ngOnInit() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user.id);
+    this.feedback.senderId = user.id;
     // check microphone permission on activation
     this.speechRecogntion.hasPermission()
       .then((hasPermission: boolean) => {
@@ -96,8 +125,22 @@ export class GiveFeedbackPage implements OnInit {
       });
   }
 
+  attachFile() {
+  }
+
   goToLecturerHomePage() {
     this.navCtrl.navigateBack('/lecturer-home');
+  }
+
+  // put this in the service
+  onCreateFeedback(feedbackData) {// : { id: string; context: string; description: string; isRead: boolean; isRequest: boolean, recipientId: string; respondsTo: string; senderId: string; date: string; }) {
+    // send http request
+    this.http.post(
+      'https://projectpersistent-660c4.firebaseio.com/feedbacks.json',
+      feedbackData
+    ).subscribe(responseData => {
+      console.log(responseData);
+    });
   }
 
   isIos() {
@@ -110,3 +153,5 @@ export class GiveFeedbackPage implements OnInit {
     });
   }
 }
+
+// ionic cordova build android
