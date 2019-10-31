@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { FeedbackHttpService } from '../../services/feedback-http.service';
 import { Feedback } from '../../modal-classes/feedback.model';
 import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import firebase from 'firebase';
 
 @Component({
   selector: 'app-give-feedback',
@@ -16,7 +19,8 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 export class GiveFeedbackPage implements OnInit {
   
   constructor(private navCtrl: NavController, private http: HttpClient,
-    private feedbackService: FeedbackHttpService, private speechRecogntion: SpeechRecognition, private plt: Platform, private zone: NgZone) {  
+    private feedbackService: FeedbackHttpService, private speechRecogntion: SpeechRecognition, private plt: Platform, private zone: NgZone,
+    private file: File, private fileChooser: FileChooser) {  
   }
   speechContents: string[] = [''];
   isFormValid = false;
@@ -117,6 +121,34 @@ export class GiveFeedbackPage implements OnInit {
   }
   
   attachFile() {
+    this.fileChooser.open().then((uri) => {
+      alert(uri);
+
+      this.file.resolveLocalFilesystemUrl(uri).then((newUrl) => {
+        alert(JSON.stringify(newUrl));
+
+        let dirPath = newUrl.nativeURL;
+        let dirPathSegments = dirPath.split('/');
+        dirPathSegments.pop();
+        dirPath = dirPathSegments.join('/');
+
+        this.file.readAsArrayBuffer(dirPath, newUrl.name).then(async (buffer) => {
+          await this.upload(buffer, newUrl.name);
+        });
+      });
+    });
+  }
+
+  async upload(buffer, name) {
+    let blob = new Blob([buffer], {type: "image/jpeg"})
+    
+    let storage = firebase.storage();
+
+    storage.ref('images/' + name).put(blob).then((d) => {
+      alert("Done");
+    }).catch((error)=>{
+      alert(JSON.stringify(error))
+    })
   }
     
   goToLecturerHomePage() {
