@@ -20,7 +20,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 export class GiveFeedbackPage implements OnInit {
 
   constructor(private navCtrl: NavController, private http: HttpClient,
-    private feedbackService: FeedbackHttpService, private speechRecogntion: SpeechRecognition, private plt: Platform, private zone: NgZone,
+    private feedbackService: FeedbackHttpService, private speechRecognition: SpeechRecognition, private plt: Platform, private zone: NgZone,
     private file: File, private fileChooser: FileChooser,
     private filePath: FilePath) {  
   }
