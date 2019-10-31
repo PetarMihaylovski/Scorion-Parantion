@@ -14,10 +14,9 @@ import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 
 
 export class GiveFeedbackPage implements OnInit {
-  @ViewChild(IonTextarea, {static: false}) textarea: IonTextarea;
   
   constructor(private navCtrl: NavController, private http: HttpClient,
-    private feedbackService: FeedbackHttpService, private speechRecogntion: SpeechRecognition, private plt: Platform) {  
+    private feedbackService: FeedbackHttpService, private speechRecogntion: SpeechRecognition, private plt: Platform, private zone: NgZone) {  
   }
   speechContents: string[] = [''];
   isFormValid = false;
