@@ -2,6 +2,16 @@ ion-title {
     font-size: 2rem;
 }
 
+.context-title, .description-title {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #3d3d3d;
+}
+
+.context-description, .context-title {
+    color: #3d3d3d;
+}
+
 ion-toolbar {
     --background: #e36307;
     color: #f2f2f2;
