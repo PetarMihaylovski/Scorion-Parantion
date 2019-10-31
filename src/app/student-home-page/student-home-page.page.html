@@ -1,8 +1,9 @@
 <ion-toolbar class="main-toolbar">
     <ion-buttons slot="secondary">
-      <ion-button>
-        <ion-icon slot="icon-only" name="search"></ion-icon>
-      </ion-button>
+        <ion-searchbar *ngIf="isSearchBarToggled" placeholder="Search" (ionInput)="filterData($event)"></ion-searchbar>
+        <ion-button (click)="toggleSearchBar()">
+          <ion-icon slot="icon-only" [name]="isSearchBarToggled ? 'md-close' : 'search'"></ion-icon>
+        </ion-button>
     </ion-buttons>
     <ion-buttons slot="primary">
       <ion-button button (click)="settingsPopover($event)">
@@ -25,7 +26,7 @@
   
   <ion-content>
     <ion-list *ngIf="areFeedbacksToggled">
-      <ion-item *ngFor="let feedback of feedbacks">
+      <ion-item *ngFor="let feedback of filteredFeedbacks">
         <ion-avatar slot="start" button (click)="showFeedbackModal(feedback)">
           <ion-icon color="medium" name="today"></ion-icon>
         </ion-avatar>
@@ -37,7 +38,7 @@
       </ion-item>
     </ion-list>
     <ion-list *ngIf="!areFeedbacksToggled">
-      <ion-item *ngFor="let feedback of feedbackResponses">
+      <ion-item *ngFor="let feedback of filteredFeedbackResponses">
         <ion-avatar slot="start" button (click)="showFeedbackModal(feedback)">
           <ion-icon color="medium" name="md-checkmark-circle"></ion-icon>
         </ion-avatar>

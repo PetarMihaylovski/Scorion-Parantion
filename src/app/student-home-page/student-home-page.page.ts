@@ -27,6 +27,10 @@ export class StudentHomePagePage implements OnInit {
   lecturers: Lecturer[] = [];
   lecturerIdNameDictionary = new Map<string, string>();
   
+  filteredFeedbackResponses: Feedback[] = [];
+  filteredFeedbacks: Feedback[] = [];
+  isSearchBarToggled = false;
+  
   constructor(public popoverController: PopoverController, 
     private modalCtrl: ModalController, private router: Router, private navCtrl: NavController,
     private feedbackService: FeedbackHttpService,
@@ -85,9 +89,35 @@ export class StudentHomePagePage implements OnInit {
       });
       console.log("feedbacks taken from the DB");
     });
+    this.filteredFeedbackResponses = this.feedbackResponses;
+    this.filteredFeedbacks = this.feedbacks;
   }
 
   requestFeedback() {
     this.navCtrl.navigateForward('/request-feedback');
+  }
+
+  filterData(ev: any) {
+    const val = ev.target.value; 
+   
+    this.filteredFeedbackResponses = this.feedbackResponses; 
+    this.filteredFeedbacks = this.feedbacks;
+    
+    if (val && val.trim() != '') {
+      this.filteredFeedbackResponses = this.filteredFeedbackResponses.filter((item) => {
+        return (item.description.toLowerCase().indexOf(val.toLowerCase())>-1);
+      })
+      this.filteredFeedbacks = this.filteredFeedbacks.filter((item) => {
+        return (item.description.toLowerCase().indexOf(val.toLowerCase())>-1);
+      })
+    }
+  }
+
+  toggleSearchBar() {
+    if (this.isSearchBarToggled) {
+      this.filteredFeedbackResponses = this.feedbackResponses;
+      this.filteredFeedbacks = this.feedbacks;
+    }
+    this.isSearchBarToggled = !this.isSearchBarToggled;
   }
 }
