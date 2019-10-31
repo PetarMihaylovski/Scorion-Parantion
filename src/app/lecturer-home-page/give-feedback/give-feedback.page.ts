@@ -17,7 +17,7 @@ export class GiveFeedbackPage implements OnInit {
 
   constructor(private navCtrl: NavController, private http: HttpClient,
               private feedbackService: FeedbackHttpService,
-              private speechRecogntion: SpeechRecognition, private plt: Platform, private zone: NgZone) {
+              private speechRecognition: SpeechRecognition, private plt: Platform, private zone: NgZone) {
   }
   speechContents: string[] = [''];
   isFormValid = false;
@@ -91,7 +91,7 @@ export class GiveFeedbackPage implements OnInit {
       matches: 1,
       // showPopup: false // this variable sets the amount of suggested results that are returned default is 5
     };
-    this.speechRecogntion.startListening(options).subscribe(matches => {
+    this.speechRecognition.startListening(options).subscribe(matches => {
       this.zone.run(() => {
         if (this.feedback.recipientId === '') {
           this.feedback.recipientId += matches;
@@ -117,10 +117,10 @@ export class GiveFeedbackPage implements OnInit {
     console.log(user.id);
     this.feedback.senderId = user.id;
     // check microphone permission on activation
-    this.speechRecogntion.hasPermission()
+    this.speechRecognition.hasPermission()
       .then((hasPermission: boolean) => {
         if (!hasPermission) {
-          this.speechRecogntion.requestPermission();
+          this.speechRecognition.requestPermission();
         }
       });
   }
@@ -148,7 +148,7 @@ export class GiveFeedbackPage implements OnInit {
   }
 
   stopListening() {
-    this.speechRecogntion.stopListening().then(() => {
+    this.speechRecognition.stopListening().then(() => {
       this.isRecording = false;
     });
   }

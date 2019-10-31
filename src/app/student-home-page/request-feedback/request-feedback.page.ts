@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { HttpClient } from '@angular/common/http';
+import { FeedbackHttpService } from '../../services/feedback-http.service';
+import { Feedback } from '../../modal-classes/feedback.model';
 
 @Component({
   selector: 'app-request-feedback',
@@ -7,13 +11,20 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./request-feedback.page.scss'],
 })
 export class RequestFeedbackPage implements OnInit {
-  constructor(private navCtrl: NavController) { }
+  constructor(private navCtrl: NavController, private speechRecognition: SpeechRecognition,
+              private zone: NgZone, private http: HttpClient,
+              private feedbackService: FeedbackHttpService) { }
   isFormValid = false;
 
   feedback = {
-    lecturer: '',
     context: '',
-    description: ''
+    description: '',
+    senderId: '',
+    recipientId: '',
+    isRead: false,
+    isRequest: true,
+    respondsTo: -1,
+    date: '25-10-2019'
   };
   isLecturerValid = false;
   isContextValid = false;
@@ -22,7 +33,7 @@ export class RequestFeedbackPage implements OnInit {
 
   checkCurrentForm() {
     let feedbackObj = this.feedback;
-    this.isLecturerValid = this.lecturerValidation(feedbackObj.lecturer);
+    this.isLecturerValid = this.lecturerValidation(feedbackObj.recipientId);
     this.isContextValid = this.contextValidation(feedbackObj.context);
     this.isDescriptionValid = this.descriptionValidation(feedbackObj.description);
     if (this.isLecturerValid && this.isContextValid && this.isDescriptionValid) {
@@ -60,16 +71,48 @@ export class RequestFeedbackPage implements OnInit {
   }
 
   navigateToHomeScreen() {
+    this.onCreateFeedback(JSON.stringify(this.feedback));
     this.navCtrl.navigateForward('/student-home');
   }
 
   toggleRecording() {
-    this.isRecording = !this.isRecording;
+    const options = {
+      language: 'en-US',
+      matches: 1,
+    };
+    this.speechRecognition.startListening(options).subscribe(matches => {
+      this.zone.run(() => {
+        if (this.feedback.recipientId === '') {
+          this.feedback.recipientId += matches;
+        } else if (this.feedback.context === '') {
+          this.feedback.context += matches;
+        } else {
+          this.feedback.description += matches + '. ';
+        }
+
+      });
+    });
   }
 
-  ngOnInit() {}
+
+  ngOnInit() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    console.log(user.id);
+    this.feedback.senderId = user.id;
+  }
   
   goToStudentHomePage() {
     this.navCtrl.navigateBack('/student-home');
+  }
+
+  // put this in the service
+  onCreateFeedback(feedbackData) {//: { id: string; context: string; description: string; isRead: boolean; isRequest: boolean, recipientId: string; respondsTo: string; senderId: string; date: string; }) {
+    // send http request
+    this.http.post(
+      'https://projectpersistent-660c4.firebaseio.com/feedbacks.json',
+      feedbackData
+    ).subscribe(responseData => {
+      console.log(responseData);
+    });
   }
 }
