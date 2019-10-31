@@ -23,12 +23,18 @@ import { Student } from '../modal-classes/student.model';
 export class LecturerHomePagePage implements OnInit {
   feedbackRequests: Feedback[] = [];
   feedbacksGiven: Feedback[] = [];
+  
   areRequestsToggled = true;
   feedbacks: Feedback[] = [];
   students: Student[] = [];
   lecturers: Lecturer[] = [];
   studentIdNameDictionary = new Map<string, string>();
+  queryText = "";
   
+  filteredFeedbackRequests: Feedback[] = [];
+  filteredGivenFeedbacks: Feedback[] = [];
+  isSearchBarToggled = false;
+
   constructor(public popoverController: PopoverController, 
     private modalCtrl: ModalController, private router: Router, private navCtrl: NavController,
     private feedbackService: FeedbackHttpService,
@@ -65,7 +71,6 @@ export class LecturerHomePagePage implements OnInit {
   }
 
   sendFeedback() {
-    // this.router.navigateByUrl('/student-home');
     this.navCtrl.navigateForward('/give-feedback');
   }
   
@@ -80,8 +85,6 @@ export class LecturerHomePagePage implements OnInit {
       }
     });
     await modal.present();
-    /*modal.onDidDismiss()
-    .then( res => alert(JSON.stringify(res)))*/
   }
 
   async showGivenFeedbackModal(feedbackGiven) {
@@ -94,8 +97,6 @@ export class LecturerHomePagePage implements OnInit {
       }
     });
     await modal.present();
-    /*modal.onDidDismiss()
-    .then( res => alert(JSON.stringify(res)))*/
   }
 
   ngOnInit() {
@@ -121,5 +122,31 @@ export class LecturerHomePagePage implements OnInit {
       });
       console.log("feedbacks taken from the DB");
     });
+    this.filteredFeedbackRequests = this.feedbackRequests;
+    this.filteredGivenFeedbacks = this.feedbacksGiven;
+  }
+
+  filterData(ev: any) {
+    const val = ev.target.value; 
+   
+    this.filteredFeedbackRequests = this.feedbackRequests; 
+    this.filteredGivenFeedbacks = this.feedbacksGiven;
+    
+    if (val && val.trim() != '') {
+      this.filteredFeedbackRequests = this.filteredFeedbackRequests.filter((item) => {
+        return (item.description.toLowerCase().indexOf(val.toLowerCase())>-1);
+      })
+      this.filteredGivenFeedbacks = this.filteredGivenFeedbacks.filter((item) => {
+        return (item.description.toLowerCase().indexOf(val.toLowerCase())>-1);
+      })
+    }
+  }
+
+  toggleSearchBar() {
+    if (this.isSearchBarToggled) {
+      this.filteredFeedbackRequests = this.feedbackRequests;
+      this.filteredGivenFeedbacks = this.feedbacksGiven;
+    }
+    this.isSearchBarToggled = !this.isSearchBarToggled;
   }
 }
