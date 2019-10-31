@@ -14,11 +14,11 @@
   
   <ion-toolbar class="secondary-toolbar">
     <ion-segment>
-      <ion-segment-button value="all" checked ion-button (click)="toggleFeedbackScreen()">
+      <ion-segment-button value="all" checked ion-button (click)="toggleFeedbackScreen(false)">
         Received
       </ion-segment-button>
-      <ion-segment-button value="favorites" ion-button (click)="toggleFeedbackScreen()">
-        Portfolio
+      <ion-segment-button value="favorites" ion-button (click)="toggleFeedbackScreen(true)">
+        Responses
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -36,54 +36,18 @@
         </ion-label>
       </ion-item>
     </ion-list>
-    <!--
-    <ion-list *ngIf="!areRequestsToggled">
-      <ion-item *ngFor="let feedbackGiven of feedbacksGiven">
-        <ion-avatar slot="start" button (click)="showFeedbackGivenModal(feedbackGiven)">
-          <ion-icon color="medium" name="alert"></ion-icon>
-        </ion-avatar>
-        <ion-label button (click)="showFeedbackGivenModal(feedbackGiven)">
-          <h2>{{ feedbackGiven.recipient }}</h2>
-          <h3>{{ feedbackGiven.date }}</h3>
-          <p>{{ feedbackGiven.context }}</p>
-        </ion-label> 
-        <ion-fab-button class="simple-button" [disabled]="!feedbackGiven.hasBeenOpened" button (click)="feedbackOptionsPopover($event)">
-          <ion-icon [ngClass]="feedbackGiven.hasBeenOpened ? 'valid_icon' : 'invalid_icon'" name="more"></ion-icon>
-        </ion-fab-button>
-      </ion-item>
-    </ion-list>
-    -->
     <ion-list *ngIf="!areFeedbacksToggled">
-      <ion-item>
-        <ion-range min="0" max="2000" step="100" ticks="false" snaps="true" value="500">
-            <ion-icon size="medium" slot="start" class="range-icon" name="md-happy"></ion-icon>
-        </ion-range>
+      <ion-item *ngFor="let feedback of feedbackResponses">
+        <ion-avatar slot="start" button (click)="showFeedbackModal(feedback)">
+          <ion-icon color="medium" name="md-checkmark-circle"></ion-icon>
+        </ion-avatar>
+        <ion-label button (click)="showFeedbackModal(feedback)">
+          <h2>{{ lecturerIdNameDictionary.get(feedback.senderId.toString()) }}</h2>
+          <h3>{{ feedback.description }}</h3>
+          <p>{{ feedback.date }}</p>
+        </ion-label>
       </ion-item>
-      
-      <ion-item>
-        <ion-range min="0" max="2000" step="100" ticks="false" snaps="true" value="500">
-            <ion-icon size="medium" slot="start" class="range-icon" name="md-beer"></ion-icon>
-        </ion-range>
-      </ion-item>
-        
-      <ion-item>
-        <ion-range min="0" max="2000" step="100" ticks="false" snaps="true" value="1200">
-            <ion-icon size="medium" slot="start" class="range-icon" name="md-bulb"></ion-icon>
-        </ion-range>
-      </ion-item>
-
-      <ion-item>
-        <ion-range color="" min="0" max="2000" step="100" ticks="false" snaps="true" value="900">
-            <ion-icon size="medium" slot="start" class="range-icon" name="md-build"></ion-icon>
-        </ion-range>
-      </ion-item>
-      
-      <ion-item>
-        <ion-range min="0" max="2000" step="100" ticks="false" snaps="true" value="300">
-            <ion-icon size="medium" slot="start" class="range-icon" name="md-calendar"></ion-icon>
-        </ion-range>
-      </ion-item>
-    </ion-list>
+    </ion-list>  
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button button (click)="requestFeedback()">
         <ion-icon name="md-add"></ion-icon>

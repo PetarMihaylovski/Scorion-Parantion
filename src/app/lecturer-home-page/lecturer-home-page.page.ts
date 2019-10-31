@@ -36,8 +36,12 @@ export class LecturerHomePagePage implements OnInit {
     private studentService: StudentHttpService) { 
   }
   
-  toggleRequestsGivenScreen() {
-    this.areRequestsToggled = !this.areRequestsToggled;
+  toggleRequestsGivenScreen(areWeOnRequestsPage) {
+    if (areWeOnRequestsPage) {
+      this.areRequestsToggled = false;
+    } else if (!areWeOnRequestsPage) {
+      this.areRequestsToggled = true;
+    }
   }
 
   async feedbackOptionsPopover(event) {

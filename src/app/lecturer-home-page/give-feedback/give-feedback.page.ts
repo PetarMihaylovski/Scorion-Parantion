@@ -15,8 +15,6 @@ import { FilePath } from '@ionic-native/file-path/ngx';
   styleUrls: ['./give-feedback.page.scss'],
 })
 
-
-
 export class GiveFeedbackPage implements OnInit {
 
   constructor(private navCtrl: NavController, private http: HttpClient,

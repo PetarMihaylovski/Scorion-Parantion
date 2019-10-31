@@ -22,6 +22,7 @@ import { Student } from '../modal-classes/student.model';
 export class StudentHomePagePage implements OnInit {
   areFeedbacksToggled = true;
   feedbacks: Feedback[] = [];
+  feedbackResponses: Feedback[] = [];
   students: Student[] = [];
   lecturers: Lecturer[] = [];
   lecturerIdNameDictionary = new Map<string, string>();
@@ -33,8 +34,12 @@ export class StudentHomePagePage implements OnInit {
     private studentService: StudentHttpService) { 
   }
   
-  toggleFeedbackScreen() {
-    this.areFeedbacksToggled = !this.areFeedbacksToggled;
+  toggleFeedbackScreen(areWeOnFeedbackPage) {
+    if (areWeOnFeedbackPage) {
+      this.areFeedbacksToggled = false;
+    } else if (!areWeOnFeedbackPage) {
+      this.areFeedbacksToggled = true;
+    }
   }
 
   async settingsPopover(event) {
@@ -71,8 +76,10 @@ export class StudentHomePagePage implements OnInit {
     this.feedbackService.getFeedbacks().subscribe(receivedFeedbacks => {
       receivedFeedbacks.forEach(element => {
         if (element.senderId != undefined) {  
-          if (!element.isRequest && element.recipientId == JSON.parse(localStorage.getItem('user')).id) {
+          if (!element.isRequest && element.respondsTo != -1 && element.recipientId == JSON.parse(localStorage.getItem('user')).id) {
             this.feedbacks.push(element);
+          } else if (!element.isRequest && element.respondsTo == -1 && element.recipientId == JSON.parse(localStorage.getItem('user')).id) {
+            this.feedbackResponses.push(element);
           }
         }
       });

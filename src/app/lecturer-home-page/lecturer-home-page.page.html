@@ -14,10 +14,10 @@
 
 <ion-toolbar class="secondary-toolbar">
   <ion-segment>
-    <ion-segment-button value="all" checked ion-button (click)="toggleRequestsGivenScreen()">
+    <ion-segment-button value="all" checked ion-button (click)="toggleRequestsGivenScreen(false)">
       Requests
     </ion-segment-button>
-    <ion-segment-button value="favorites" ion-button (click)="toggleRequestsGivenScreen()">
+    <ion-segment-button value="favorites" ion-button (click)="toggleRequestsGivenScreen(true)">
       Given
     </ion-segment-button>
   </ion-segment>
