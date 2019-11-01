@@ -130,10 +130,12 @@ export class GiveFeedbackPage implements OnInit {
 
   attachFile() {
     this.fileChooser.open().then((uri) => {
-      alert(uri);
-      
+      if (localStorage.getItem('notifications') == "true") {
+        alert("Uploading: " + uri);
+      }
+
       this.filePath.resolveNativePath(uri).then(filePath => {
-        alert(filePath);
+        //alert(filePath);
         let dirPathSegments = filePath.split('/');
         let fileName = dirPathSegments[dirPathSegments.length-1];
         dirPathSegments.pop();
@@ -141,20 +143,21 @@ export class GiveFeedbackPage implements OnInit {
         this.file.readAsArrayBuffer(dirPath, fileName).then(async (buffer) => {
           await this.upload(buffer, fileName);
         }).catch((err) => {
-          alert(err.toString());
+          //alert(err.toString());
         });
       });
     });
   }
 
   async upload(buffer, name) {
-    alert("uploading")
     let blob = new Blob([buffer], {type: "image/jpeg"})
     
     let storage = firebase.storage();
 
     storage.ref('images/' + name).put(blob).then((d) => {
-      alert("Done");
+      if (localStorage.getItem('notifications') == "true") {
+        alert("File uploaded!");
+      }
     }).catch((error)=>{
       alert(JSON.stringify(error))
     })

@@ -89,6 +89,7 @@ export class LoginPage implements OnInit {
         this.wrongCredentials = false;
       }, 3000);
     }
+    localStorage.setItem('notifications', "true");
   }
 
   ngOnInit() {
