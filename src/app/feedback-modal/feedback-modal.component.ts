@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
+import { NavController, Platform } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { FeedbackHttpService } from '../services/feedback-http.service';
 import { Feedback } from '../modal-classes/feedback.model';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import * as firebase from 'firebase';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-feedback-modal',
@@ -52,9 +58,13 @@ export class FeedbackModalComponent implements OnInit {
   };
   isFormValid = false;
   isRecording = false;
+  speechContents: string[] = [''];
+  descriptionArr: string[] = [];
 
-  constructor(private modalCtrl: ModalController, private http: HttpClient,
-    private feedbackService: FeedbackHttpService) { }
+  constructor(private modalCtrl: ModalController, private navCtrl: NavController, private http: HttpClient,
+    private feedbackService: FeedbackHttpService, private speechRecognition: SpeechRecognition, private plt: Platform, private zone: NgZone,
+    private file: File, private fileChooser: FileChooser,
+    private filePath: FilePath) { }
 
   async close() {
     await this.modalCtrl.dismiss();
@@ -150,16 +160,70 @@ export class FeedbackModalComponent implements OnInit {
     });
   }
 
-  toggleRecording() {
-    this.isRecording = !this.isRecording;
-  }
-
-  attachFile() {}
-
   ngOnInit() {
     let user = JSON.parse(localStorage.getItem('user'));
     console.log(user.id);
     this.feedbackResponse.senderId = user.id;
     this.feedbackResponse.recipientId = this.requestingStudentId;
+    this.speechRecognition.hasPermission()
+      .then((hasPermission: boolean) => {
+        if (!hasPermission) {
+          this.speechRecognition.requestPermission();
+        }
+      });
+  }
+
+  attachFile() {
+    this.fileChooser.open().then((uri) => {
+      if (localStorage.getItem('notifications') == "true") {
+        alert("Uploading: " + uri);
+      }
+
+      this.filePath.resolveNativePath(uri).then(filePath => {
+        //alert(filePath);
+        let dirPathSegments = filePath.split('/');
+        let fileName = dirPathSegments[dirPathSegments.length-1];
+        dirPathSegments.pop();
+        let dirPath = dirPathSegments.join('/');
+        this.file.readAsArrayBuffer(dirPath, fileName).then(async (buffer) => {
+          await this.upload(buffer, fileName);
+        }).catch((err) => {
+          //alert(err.toString());
+        });
+      });
+    });
+  }
+
+  async upload(buffer, name) {
+    let blob = new Blob([buffer], {type: "image/jpeg"})
+    
+    let storage = firebase.storage();
+
+    storage.ref('images/' + name).put(blob).then((d) => {
+      if (localStorage.getItem('notifications') == "true") {
+        alert("File uploaded!");
+      }
+    }).catch((error)=>{
+      alert(JSON.stringify(error))
+    })
+  }
+
+  toggleRecording() {
+    const options = {
+      language: 'en-US',
+      matches: 1,
+      // showPopup: false // this variable sets the amount of suggested results that are returned default is 5
+    };
+    this.speechRecognition.startListening(options).subscribe(matches => {
+      this.zone.run(() => {
+        if (this.feedbackResponse.recipientId === '') {
+          this.feedbackResponse.recipientId += matches;
+        } else if (this.feedbackResponse.context === '') {
+          this.feedbackResponse.context += matches;
+        } else {
+          this.feedbackResponse.description += matches + '. ';
+        }
+      });
+    });
   }
 }

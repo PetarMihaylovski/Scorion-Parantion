@@ -103,16 +103,8 @@ export class GiveFeedbackPage implements OnInit {
         } else {
           this.feedback.description += matches + '. ';
         }
-        // for (let i = 0; i < this.speechContents.length; i++) {
-        // for (let i = 0; i < this.feedback.description.length; i++) {
-        // this.speechContents[i] += matches[i] + '. ';
-        // this.feedback.description[i] += matches[i];
-        // }
       });
     });
-
-    // this.isRecording = !this.isRecording;
-    // this.isRecording = false;
   }
 
   ngOnInit() {

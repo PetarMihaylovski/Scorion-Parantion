@@ -1,9 +1,14 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
+import { NavController, Platform } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { FeedbackHttpService } from '../../services/feedback-http.service';
 import { Feedback } from '../../modal-classes/feedback.model';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import * as firebase from 'firebase';
+import { FilePath } from '@ionic-native/file-path/ngx';
+
 
 @Component({
   selector: 'app-request-feedback',
@@ -11,10 +16,13 @@ import { Feedback } from '../../modal-classes/feedback.model';
   styleUrls: ['./request-feedback.page.scss'],
 })
 export class RequestFeedbackPage implements OnInit {
-  constructor(private navCtrl: NavController, private speechRecognition: SpeechRecognition,
-              private zone: NgZone, private http: HttpClient,
-              private feedbackService: FeedbackHttpService) { }
+  constructor(private navCtrl: NavController, private http: HttpClient,
+    private feedbackService: FeedbackHttpService, private speechRecognition: SpeechRecognition, private plt: Platform, private zone: NgZone,
+    private file: File, private fileChooser: FileChooser,
+    private filePath: FilePath) { }
   isFormValid = false;
+  speechContents: string[] = [''];
+  descriptionArr: string[] = [];
 
   feedback = {
     context: '',
@@ -89,16 +97,21 @@ export class RequestFeedbackPage implements OnInit {
         } else {
           this.feedback.description += matches + '. ';
         }
-
       });
     });
   }
-
 
   ngOnInit() {
     const user = JSON.parse(localStorage.getItem('user'));
     console.log(user.id);
     this.feedback.senderId = user.id;
+    // check microphone permission on activation
+    this.speechRecognition.hasPermission()
+      .then((hasPermission: boolean) => {
+        if (!hasPermission) {
+          this.speechRecognition.requestPermission();
+        }
+      });
   }
 
   goToStudentHomePage() {
@@ -114,5 +127,40 @@ export class RequestFeedbackPage implements OnInit {
     ).subscribe(responseData => {
       console.log(responseData);
     });
+  }
+
+  attachFile() {
+    this.fileChooser.open().then((uri) => {
+      if (localStorage.getItem('notifications') == "true") {
+        alert("Uploading: " + uri);
+      }
+
+      this.filePath.resolveNativePath(uri).then(filePath => {
+        //alert(filePath);
+        let dirPathSegments = filePath.split('/');
+        let fileName = dirPathSegments[dirPathSegments.length-1];
+        dirPathSegments.pop();
+        let dirPath = dirPathSegments.join('/');
+        this.file.readAsArrayBuffer(dirPath, fileName).then(async (buffer) => {
+          await this.upload(buffer, fileName);
+        }).catch((err) => {
+          //alert(err.toString());
+        });
+      });
+    });
+  }
+
+  async upload(buffer, name) {
+    let blob = new Blob([buffer], {type: "image/jpeg"})
+    
+    let storage = firebase.storage();
+
+    storage.ref('images/' + name).put(blob).then((d) => {
+      if (localStorage.getItem('notifications') == "true") {
+        alert("File uploaded!");
+      }
+    }).catch((error)=>{
+      alert(JSON.stringify(error))
+    })
   }
 }
