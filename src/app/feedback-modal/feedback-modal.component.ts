@@ -79,8 +79,7 @@ export class FeedbackModalComponent implements OnInit {
   }
 
   checkDescription() {
-    this.feedbackResponse.description = this.writtenDescription
-    if (this.writtenDescription.length > 0) {
+    if (this.feedbackResponse.description.length > 0) {
       this.isDescriptionValid = true;
       this.isFormValid = true;
       return true;
