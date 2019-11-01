@@ -137,6 +137,7 @@ export class LecturerHomePagePage implements OnInit {
       });
       console.log("feedbacks taken from the DB");
       this.feedbackRequests.reverse();
+      this.feedbacksGiven.reverse();
     });
     this.filteredFeedbackRequests = this.feedbackRequests;
     this.filteredGivenFeedbacks = this.feedbacksGiven;

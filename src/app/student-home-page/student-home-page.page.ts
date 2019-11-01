@@ -88,6 +88,8 @@ export class StudentHomePagePage implements OnInit {
         }
       });
       console.log("feedbacks taken from the DB");
+      this.feedbacks.reverse();
+      this.feedbackResponses.reverse();
     });
     this.filteredFeedbackResponses = this.feedbackResponses;
     this.filteredFeedbacks = this.feedbacks;

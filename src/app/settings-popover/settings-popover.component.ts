@@ -13,9 +13,9 @@ export class SettingsPopoverComponent implements OnInit {
 
   ngOnInit() { 
     if (localStorage.getItem('notifications') == "true") {
-      this.areNotificationsDisabled = true;
-    } else if (localStorage.getItem('notifications') == "false") {
       this.areNotificationsDisabled = false;
+    } else if (localStorage.getItem('notifications') == "false") {
+      this.areNotificationsDisabled = true;
     }
   }
 
@@ -26,10 +26,10 @@ export class SettingsPopoverComponent implements OnInit {
   toggleNotifications() {
     if (localStorage.getItem('notifications') == "true") {
       localStorage.setItem('notifications', "false");
-      this.areNotificationsDisabled = false;
+      this.areNotificationsDisabled = true;
     } else if (localStorage.getItem('notifications') == "false") {
       localStorage.setItem('notifications', "true");
-      this.areNotificationsDisabled = true;
+      this.areNotificationsDisabled = false;
     }
   }
 

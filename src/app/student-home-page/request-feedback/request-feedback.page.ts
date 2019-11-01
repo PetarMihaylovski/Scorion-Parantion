@@ -32,7 +32,7 @@ export class RequestFeedbackPage implements OnInit {
     isRead: false,
     isRequest: true,
     respondsTo: -1,
-    date: '25-10-2019'
+    date: '01-11-2019'
   };
   isLecturerValid = false;
   isContextValid = false;

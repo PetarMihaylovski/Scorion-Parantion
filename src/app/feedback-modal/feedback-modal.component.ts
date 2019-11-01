@@ -54,7 +54,7 @@ export class FeedbackModalComponent implements OnInit {
     isRead: false,
     isRequest: false,
     respondsTo: 0,
-    date: '25-10-2019'
+    date: '01-11-2019'
   };
   isFormValid = false;
   isRecording = false;
@@ -216,9 +216,7 @@ export class FeedbackModalComponent implements OnInit {
     };
     this.speechRecognition.startListening(options).subscribe(matches => {
       this.zone.run(() => {
-        if (this.feedbackResponse.recipientId === '') {
-          this.feedbackResponse.recipientId += matches;
-        } else if (this.feedbackResponse.context === '') {
+        if (this.feedbackResponse.context === '') {
           this.feedbackResponse.context += matches;
         } else {
           this.feedbackResponse.description += matches + '. ';
