@@ -87,6 +87,21 @@ export class LecturerHomePagePage implements OnInit {
     await modal.present();
   }
 
+  // TODO: fix
+  // hacky way of doing it (we are pretending the student is the lecturer)
+  async showFeedbackModal(feedback) {
+    const modal = await this.modalCtrl.create({
+      component: FeedbackModalComponent,
+      componentProps: {
+        isStudentReadingFeedback: true,
+        data: feedback
+      }
+    });
+    await modal.present();
+    /*modal.onDidDismiss()
+    .then( res => alert(JSON.stringify(res)))*/
+  }
+  
   async showGivenFeedbackModal(feedbackGiven) {
     const modal = await this.modalCtrl.create({
       component: FeedbackModalComponent,

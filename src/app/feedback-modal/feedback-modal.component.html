@@ -83,62 +83,8 @@
 </ion-content>
 -->
 
-<!--RESPONDING TO REQUEST LECTURER-->
-<ion-toolbar *ngIf="isLecturerRespondingToFeedbackRequest">
-  <ion-buttons *ngIf="isLecturerWritingResponseFeedback" slot="start">
-    <ion-button (click)="checkRequest()">
-      <ion-icon slot="icon-only" name="md-return-left"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-  <ion-title *ngIf="!isLecturerWritingResponseFeedback && isLecturerRespondingToFeedbackRequest">Feedback request</ion-title>
-  <ion-title *ngIf="isLecturerWritingResponseFeedback && isLecturerRespondingToFeedbackRequest">Feedback request response</ion-title>
-  <ion-buttons slot="end">
-    <ion-button (click)="close()">
-      <ion-icon slot="icon-only" name="close"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-</ion-toolbar>
-
-<ion-content *ngIf="!isLecturerWritingResponseFeedback && isLecturerRespondingToFeedbackRequest" class="ion-padding">
-  <p class="context-title" *ngIf="data.context.length > 0">Context</p> <p class="context-data" *ngIf="data.context.length > 0">{{ data.context }}</p>
-  <p class="description-title">Description</p> <p class="description-data">{{ data.description }}</p>
-  <p><ion-button (click)="writeFeedback()" class="valid_btn">Respond</ion-button></p>
-</ion-content>
-
-<ion-content *ngIf="isLecturerWritingResponseFeedback && isLecturerRespondingToFeedbackRequest" class="ion-padding">
-  <form (ngSubmit)="sendForm()" (keyup)="checkDescription()">
-    <ion-item>
-      <ion-label position="floating">Context</ion-label>
-      <ion-input type="text" placeholder="Context" name="context" id="context" [(ngModel)]="feedbackResponse.context"
-      minLength="1" maxLength="12" #context="ngModel"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Description</ion-label>
-      <ion-textarea type="text" rows="8" [(ngModel)]="writtenDescription" name="desciption"></ion-textarea>
-    </ion-item>
-  </form>
-</ion-content>
-
-<!--READING FEEDBACK-->
-<ion-toolbar *ngIf="isStudentReadingFeedback || isLecturerReadingFeedback">
-  <ion-title *ngIf="isLecturerReadingFeedback">Reading Given Feedback</ion-title>
-  <ion-title *ngIf="isStudentReadingFeedback">Reading Given Feedback</ion-title>  
-  <ion-buttons slot="end">
-    <ion-button (click)="close()">
-      <ion-icon slot="icon-only" name="close"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-</ion-toolbar>
-
-<ion-content class="ion-padding" *ngIf="isStudentReadingFeedback || isLecturerReadingFeedback">
-  <p class="context-title" *ngIf="data.context.length > 0">Context</p> <p class="context-data" *ngIf="data.context.length > 0">{{ data.context }}</p>
-  <p class="description-title">Description</p> <p class="description-data">{{ data.description }}</p>
-  <p *ngIf="isLecturerReadingFeedback"><ion-button (click)="editFeedback()" class="valid_btn">Edit</ion-button></p>
-  <p *ngIf="isLecturerReadingFeedback"><ion-button disabled="true" class="invalid_btn">Delete</ion-button></p>
-</ion-content>
-
 <!-- READING GIVEN FEEDBACK / EDITTING GIVEN FEEDBACK -->
+<!--
 <ion-toolbar *ngIf="isLecturerReadingGivenFeedback">
   <ion-buttons *ngIf="isLecturerEditingGivenFeedback" slot="start">
     <ion-button (click)="checkFeedback()">
@@ -183,7 +129,62 @@
     </ion-item>
   </form>
 </ion-content>
+-->
 
+<!--RESPONDING TO REQUEST LECTURER-->
+<ion-toolbar *ngIf="isLecturerRespondingToFeedbackRequest">
+  <ion-buttons *ngIf="isLecturerWritingResponseFeedback" slot="start">
+    <ion-button (click)="checkRequest()">
+      <ion-icon slot="icon-only" name="md-return-left"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title *ngIf="!isLecturerWritingResponseFeedback && isLecturerRespondingToFeedbackRequest">Request</ion-title>
+  <ion-title *ngIf="isLecturerWritingResponseFeedback && isLecturerRespondingToFeedbackRequest">Response</ion-title>
+  <ion-buttons slot="end">
+    <ion-button (click)="close()">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content *ngIf="!isLecturerWritingResponseFeedback && isLecturerRespondingToFeedbackRequest" class="ion-padding">
+  <p class="context-title">Context</p><ion-input class="context-data" readonly value="{{ data.context }}"></ion-input>
+  <p class="description-title">Description</p><ion-textarea rows="8" class="description-data" readonly value="{{ data.description }}"></ion-textarea>
+  <p><ion-button (click)="writeFeedback()" class="valid_btn">Respond</ion-button></p>
+</ion-content>
+
+<ion-content *ngIf="isLecturerWritingResponseFeedback && isLecturerRespondingToFeedbackRequest" class="ion-padding">
+  <form (ngSubmit)="sendForm()" (keyup)="checkDescription()">
+    <ion-item>
+      <ion-label position="floating">Context</ion-label>
+      <ion-input type="text" placeholder="Context" name="context" id="context" [(ngModel)]="feedbackResponse.context"
+      minLength="1" maxLength="12" #context="ngModel"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea type="text" rows="8" placeholder="Description" name="description" id="description" [(ngModel)]="writtenDescription"></ion-textarea>
+    </ion-item>
+  </form>
+</ion-content>
+
+<!--READING FEEDBACK-->
+<ion-toolbar *ngIf="isStudentReadingFeedback || isLecturerReadingFeedback">
+  <ion-title *ngIf="isLecturerReadingFeedback">Review</ion-title>
+  <ion-title *ngIf="isStudentReadingFeedback">Review</ion-title>  
+  <ion-buttons slot="end">
+    <ion-button (click)="close()">
+      <ion-icon slot="icon-only" name="close"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content class="ion-padding" *ngIf="isStudentReadingFeedback || isLecturerReadingFeedback">
+  <p class="context-title">Context</p><ion-input class="context-data" readonly value="{{ data.context }}"></ion-input>
+  <p class="description-title">Description</p><ion-textarea rows="8" class="description-data" readonly value="{{ data.description }}"></ion-textarea>
+  <p *ngIf="isLecturerReadingFeedback"><ion-button (click)="editFeedback()" class="valid_btn">Edit</ion-button></p>
+  <p *ngIf="isLecturerReadingFeedback"><ion-button disabled="true" class="invalid_btn">Delete</ion-button></p>
+</ion-content>
 
 <!-- FEEDBACK WRITING ACTIONS -->
 <ion-item class="feedback-actions" *ngIf="isStudentRequestingFeedback || isLecturerWritingResponseFeedback || isLecturerEditingGivenFeedback || isLecturerWritingFeedback">

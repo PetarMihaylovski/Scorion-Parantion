@@ -39,17 +39,17 @@
   </ion-list>
   <ion-list *ngIf="!areRequestsToggled">
     <ion-item *ngFor="let feedback of filteredGivenFeedbacks">
-      <ion-avatar slot="start" button (click)="showGivenFeedbackModal(feedback)">
+      <ion-avatar slot="start" button (click)="showFeedbackModal(feedback)">
         <ion-icon color="medium" name="today"></ion-icon>
       </ion-avatar>
-      <ion-label button (click)="showGivenFeedbackModal(feedback)">
+      <ion-label button (click)="showFeedbackModal(feedback)">
         <h2>{{ studentIdNameDictionary.get(feedback.recipientId.toString()) }}</h2>
         <h3>{{ feedback.date }}</h3>
         <p>{{ feedback.description }}</p>
       </ion-label> 
-      <ion-fab-button class="simple-button" [disabled]="feedback.isRead" button (click)="feedbackOptionsPopover($event, feedback)">
+      <!--<ion-fab-button class="simple-button" [disabled]="feedback.isRead" button (click)="feedbackOptionsPopover($event, feedback)">
         <ion-icon [ngClass]="!feedback.isRead ? 'valid_icon' : 'invalid_icon'" name="more"></ion-icon>
-      </ion-fab-button>
+      </ion-fab-button>-->
     </ion-item>
   </ion-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
